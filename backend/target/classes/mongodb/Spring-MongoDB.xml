@@ -9,8 +9,11 @@
  
 <mongo:mongo host="localhost" port="27017" id="mongo" />
 <mongo:db-factory dbname="userdb" mongo-ref="mongo" id="mongoDbFactory" />
- 
+
 <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
     <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+</bean>
+<bean id="userDAO" class="database.mongodb.MongoDAOImpl">
+    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
 </beans>
