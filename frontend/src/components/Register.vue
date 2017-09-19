@@ -30,12 +30,14 @@
                 <el-select class="register--form-item" v-model="form.department" placeholder="Department">
                   <el-option label="Engineer" value="Engineer"></el-option>
                   <el-option label="Business" value="Business"></el-option>
+                  <el-option label="Architecture" value="Architecture"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item class="register--form-item" label="Position">
                 <el-select class="register--form-item" v-model="form.position" placeholder="Position">
                   <el-option label="Intern" value="Intern"></el-option>
-                  <el-option label="2" value="2"></el-option>
+                  <el-option label="Professor" value="Professor"></el-option>
+                  <el-option label="Student" value="Student"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item class="register--form-item" label="Email">
@@ -90,7 +92,7 @@ export default {
     },
     register () {
       let self = this
-      Axios.get(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.userId}/${this.form.userPass}`).then(function (response) {
+      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.userId}/${this.form.userPass}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
