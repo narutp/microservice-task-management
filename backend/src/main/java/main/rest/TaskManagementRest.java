@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -59,7 +60,7 @@ public class TaskManagementRest {
 		return check;
 	}
 	
-	@GET
+	@POST
 	@Path("register/{name}/{birth}/{phone}/{department}/{position}/{email}/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean registerAPI(
@@ -200,6 +201,38 @@ public class TaskManagementRest {
 		positionDAO.createPosition(position);
 		System.out.println("ID : " + position.getIdPosition());
 		System.out.println("Set Name: " + position.getName());
+		return true;
+	}
+	
+	@GET
+	@Path("departments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Department> getAllDepartmentAPI() {
+		List<Department> departmentList = departmentDAO.getAllDepartment();
+		return departmentList;
+	}
+	
+	@GET
+	@Path("positions")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Position> getAllPositionAPI() {
+		List<Position> positionList = positionDAO.getAllPosition();
+		return positionList;
+	}
+	
+	@GET
+	@Path("delete/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deleteAPI(@PathParam("name") String name) {
+		departmentDAO.deleteDepartment(name);;
+		return true;
+	}
+	
+	@GET
+	@Path("deletep/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deletepAPI(@PathParam("name") String name) {
+		positionDAO.deletePosition(name);;
 		return true;
 	}
 	

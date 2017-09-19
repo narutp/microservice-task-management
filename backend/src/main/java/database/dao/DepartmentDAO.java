@@ -11,4 +11,6 @@ public interface DepartmentDAO {
 	public List<Department> getAllDepartment();
 	
 	public void createDepartment (Department department);
+	
+	public void deleteDepartment (String name);
 }

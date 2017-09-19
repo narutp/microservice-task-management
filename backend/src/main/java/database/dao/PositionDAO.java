@@ -12,4 +12,6 @@ public interface PositionDAO {
 	public List<Position> getAllPosition();
 	
 	public void createPosition (Position position);
+	
+	public void deletePosition (String name);
 }

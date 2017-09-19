@@ -27,6 +27,26 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	
 	public MongoDAOImpl (MongoOperations mongoOps) {
 		this.mongoOps = mongoOps;
+		
+		String [] departmentArr = {"Architecture", "Business", "Engineer"};
+		String [] positionArr = {"Intern", "Professor", "Student"};
+		List<Department> departmentList = getAllDepartment();
+		List<Position> positionList = getAllPosition();
+		if(departmentList.size() != 3) {
+			for(int i=0 ; i<departmentArr.length ; i++) {
+				Department department = new Department();
+				department.setName(departmentArr[i]);
+				createDepartment(department);
+			}
+		}
+		
+		if(positionList.size() != 3) {
+			for(int i=0 ; i<positionArr.length ; i++) {
+				Position position = new Position();
+				position.setName(positionArr[i]);
+				createPosition(position);
+			}
+		}
 	}
 	
 	public MongoDAOImpl() {
@@ -166,6 +186,22 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		collection = MongoDBMain.getDepartmentCollection();
 		System.out.println("DAO: Add new department");
 		this.mongoOps.insert(department, collection);
+	}
+	
+	@Override
+	public void deleteDepartment(String name) {
+		collection = MongoDBMain.getDepartmentCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		WriteResult result = this.mongoOps.remove(query, Department.class, collection);
+	}
+	
+	@Override
+	public void deletePosition(String name) {
+		collection = MongoDBMain.getPositionCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		WriteResult result = this.mongoOps.remove(query, Position.class, collection);
 	}
 
 }
