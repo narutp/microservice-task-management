@@ -1,47 +1,67 @@
 <template lang="html">
   <div class="register--container">
-    <div class="hero is-info">
-      <div class="hero-body">
-        <p class="title">
-          Spring Framework practice
-        </p>
-        <p class="subtitle">
-          Everything you need to <strong>create a website</strong> with Vue, Bulma and MongoDb 2017/09/03
-        </p>
-      </div>
-    </div>
     <div class="register--body">
-      <div class="columns">
-        <div class="column register--register-box">
-          <div class="field">
-            <p class="control has-icons-left has-icons-right">
-              <input v-model="username" class="input" type="" placeholder="Username">
-              <span class="icon is-small is-left">
-                <i class="fa fa-envelope"></i>
-              </span>
-            </p>
+      <el-row>
+        <el-col>
+          <div class="hero is-info">
+            <div class="hero-body">
+              <p class="title">
+                Registration
+              </p>
+            </div>
           </div>
-          <div class="field">
-            <p class="control has-icons-left">
-              <input v-model="password" class="input" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock"></i>
-              </span>
-            </p>
+          <div class="register--register-box">
+            <el-form label-position="left" label-width="150px" :model="form">
+              <el-form-item class="register--form-item" label="Name">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Birthdate">
+                <el-date-picker
+                  class="register--form-item"
+                  v-model="form.birthdate"
+                  type="date"
+                  placeholder="Pick a day">
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Phone">
+                <el-input v-model="form.phone"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Department">
+                <el-select class="register--form-item" v-model="form.department" placeholder="Department">
+                  <el-option label="Engineer" value="Engineer"></el-option>
+                  <el-option label="Business" value="Business"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Position">
+                <el-select class="register--form-item" v-model="form.position" placeholder="Position">
+                  <el-option label="Intern" value="Intern"></el-option>
+                  <el-option label="2" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Email">
+                <el-input v-model="form.email"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="ID">
+                <el-input v-model="form.userId"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Password">
+                <el-input v-model="form.userPass"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Re-password">
+                <el-input></el-input>
+              </el-form-item>
+            </el-form>
+            <div align="right">
+              <button class="button is-success" @click="register()">
+                Register
+              </button>
+              <button class="button is-danger" @click="backLogin()">
+                Cancle
+              </button>
+            </div>
           </div>
-          <div align="right">
-            <button class="button is-success" @click="register()">
-              Submit
-            </button>
-            <button class="button is-danger" @click="backLogin()">
-              Back
-            </button>
-          </div>
-        </div>
-        <div class="column">
-          <img src="https://www.flmontreal.com/wp-content/uploads/2014/09/Register-Icon.png" width="200px">
-        </div>
-      </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -52,8 +72,16 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      username: '',
-      password: ''
+      form: {
+        name: '',
+        birthdate: '',
+        phone: '',
+        department: '',
+        position: '',
+        email: '',
+        userId: '',
+        userPass: ''
+      }
     }
   },
   methods: {
@@ -62,7 +90,7 @@ export default {
     },
     register () {
       let self = this
-      Axios.get(`http://localhost:8090/register/${this.username}/${this.password}`).then(function (response) {
+      Axios.get(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.userId}/${this.form.userPass}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
@@ -73,12 +101,31 @@ export default {
 </script>
 
 <style scoped>
+.register--container {
+  background-color: white;
+  /*padding: 30px;*/
+  border-radius: 6px;
+  margin-top: 30px;
+}
+
 .register--register-box {
   border: 1px solid #c2cbd1;
-  padding: 15px 15px 15px 15px;
+  padding: 50px;
 }
 
 .register--body {
-  margin: 30px;
+  /*margin: 30px;*/
+}
+
+.register--register-field {
+  margin-bottom: 15px;
+}
+
+.register--register-field span {
+  float: left;
+}
+
+.register--form-item {
+  width: 100%;
 }
 </style>

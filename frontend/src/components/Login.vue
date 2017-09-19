@@ -3,15 +3,15 @@
     <div class="hero is-primary">
       <div class="hero-body">
         <p class="title">
-          Spring Framework practice
-        </p>
-        <p class="subtitle">
-          Everything you need to <strong>create a website</strong> with Vue, Bulma, Buefy and MongoDb 2017/09/03
+          Task Management System
         </p>
       </div>
     </div>
     <div class="login--body">
       <div class="columns">
+        <div class="column">
+          <!-- Left column -->
+        </div>
         <div class="column login--login-box">
           <div class="field">
             <p class="control has-icons-left has-icons-right">
@@ -29,7 +29,7 @@
               </span>
             </p>
           </div>
-          <div align="right">
+          <div align="center">
             <button class="button is-success" @click="login()">
               Login
             </button>
@@ -37,19 +37,12 @@
               Register
             </button>
           </div>
-        </div>
-        <div class="column">
-          <img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" width="200px;">
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
           <div class="notification is-danger" v-if="checkLoginFailed">
-            Wrong username or password <strong>Please register</strong> first.
+            Wrong username or password
           </div>
         </div>
         <div class="column">
-
+          <!-- Right column -->
         </div>
       </div>
     </div>
@@ -96,27 +89,22 @@ export default {
 <style scoped>
 .login--login-box {
   border: 1px solid #c2cbd1;
-  padding: 15px 15px 15px 15px;
+  padding: 30px;
+  margin-top: 50px;
+  margin-bottom: 75px;
 }
 
 .login--body {
   margin: 30px;
 }
-h1, h2 {
-  font-weight: normal;
+
+.notification.is-danger {
+  margin-top: 15px;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.login--container {
+  background-color: white;
+  border-radius: 6px;
+  margin-top: 30px;
 }
 </style>
