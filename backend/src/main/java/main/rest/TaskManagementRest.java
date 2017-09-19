@@ -83,6 +83,7 @@ public class TaskManagementRest {
 		user.setBirthday(birth);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
+		System.out.println("GJEILGAELIHGGEALEAGBLBGAELGELEGBLGEAB");
 		user.setIdDepartment(idDepartment);
 		String idPosition = positionDAO.getPositionByName(position).getIdPosition();
 		user.setIdPosition(idPosition);
@@ -122,6 +123,84 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean checkEmailExistAPI(@PathParam("email") String email) {
 		return userDAO.isEmailExist(email);
+	}
+	
+	@GET
+	@Path("users")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getAllUserAPI() {
+		List<User> userList = userDAO.getAllUser();
+		return userList;
+	}
+	
+	@GET
+	@Path("check/password/{id}/{password}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean checkPasswordAPI(
+			@PathParam("id") String id, 
+			@PathParam("password") String password ) {
+		return userDAO.checkPasswordById(id, password);
+	}
+	
+	@GET
+	@Path("edit/user/{id}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean editUserAPI(
+			@PathParam("id") String id,
+			@PathParam("name") String name, 
+			@PathParam("birth") String birth, 
+			@PathParam("phone") String phone, 
+			@PathParam("department") String department, 
+			@PathParam("position") String position, 
+			@PathParam("email") String email,
+			@PathParam("password") String password ){
+		user = userDAO.getUserById(id);
+		if(userDAO.isEmailExist(email)) {
+			System.out.println(email + " : Email has been used");
+			return false;
+		}
+		user.setName(name);
+		user.setBirthday(birth);
+		user.setMobilePhone(phone);
+		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
+		user.setIdDepartment(idDepartment);
+		String idPosition = positionDAO.getPositionByName(position).getIdPosition();
+		user.setIdPosition(idPosition);
+		user.setEmail(email);
+		user.setPassword(password);
+		userDAO.editUserById(id, user);
+		System.out.println("Set Id: " + user.getIdUser());
+		System.out.println("Set Name: " + user.getName());
+		System.out.println("Set Birth: " + user.getPassword());
+		System.out.println("Set Phone: " + user.getPassword());
+		System.out.println("Set Department: " + user.getPassword());
+		System.out.println("Set Position: " + user.getPassword());
+		System.out.println("Set Email: " + user.getPassword());
+		System.out.println("Set Username: " + user.getPassword());
+		System.out.println("Set Password: " + user.getPassword());
+		return true;
+	}
+	
+	@GET
+	@Path("create/department/{name}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean createDepartmentAPI(@PathParam("name") String name){
+		department.setName(name);
+		departmentDAO.createDepartment(department);
+		System.out.println("ID : " + department.getIdDepartment());
+		System.out.println("Set Name: " + department.getName());
+		return true;
+	}
+	
+	@GET
+	@Path("create/position/{name}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean createPositionAPI(@PathParam("name") String name){
+		position.setName(name);
+		positionDAO.createPosition(position);
+		System.out.println("ID : " + position.getIdPosition());
+		System.out.println("Set Name: " + position.getName());
+		return true;
 	}
 	
 }

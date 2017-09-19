@@ -6,6 +6,7 @@ public class Position {
 	
 	@Id
 	private String idPosition;
+	
 	private String name;
 	
 	public String getIdPosition() {

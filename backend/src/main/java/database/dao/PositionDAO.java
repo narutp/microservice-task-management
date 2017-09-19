@@ -10,4 +10,6 @@ public interface PositionDAO {
 	public Position getPositionByName (String name);
 	
 	public List<Position> getAllPosition();
+	
+	public void createPosition (Position position);
 }

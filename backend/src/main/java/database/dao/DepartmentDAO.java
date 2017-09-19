@@ -9,4 +9,6 @@ public interface DepartmentDAO {
 	public Department getDepartmentByName(String name);
 	
 	public List<Department> getAllDepartment();
+	
+	public void createDepartment (Department department);
 }

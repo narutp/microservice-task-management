@@ -12,7 +12,7 @@ public interface UserDAO {
 	
 	public User getUserById (String id);
 	
-	public void updateUserById (String id, User user);
+	public void editUserById (String id, User user);
 	
 	public void deleteUserById (String name);
 	
@@ -21,4 +21,6 @@ public interface UserDAO {
 	public boolean isUsernameExist (String username);
 	
 	public boolean isEmailExist (String email);
+	
+	public boolean checkPasswordById (String id, String password);
 }

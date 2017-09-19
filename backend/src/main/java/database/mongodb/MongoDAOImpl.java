@@ -55,13 +55,19 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	}
 
 	@Override
-	public void updateUserById(String id, User user) {
+	public void editUserById(String id, User user) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idUser").is(id));
 		Update update = new Update();
 		update.set("name", user.getName());
-		update.set("password", user.getPassword());
+		update.set("birthday", user.getBirthday());
+		update.set("mobilePhone", user.getMobilePhone());
+		update.set("idDepartment", user.getIdDepartment());
+		update.set("idPosition", user.getIdPosition());
+		update.set("email", user.getEmail());
+		if(!user.getPassword().equals(""))
+			update.set("password", user.getPassword());
 		this.mongoOps.findAndModify(query, update, User.class, collection);
 	}
 
@@ -88,6 +94,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	@Override
 	public boolean isUsernameExist(String username) {
 		List<User> userList = getAllUser();
+		if(userList == null)
+			return false;
 		for(User user : userList) {
 			System.out.println("Check Username: " + user.getUsername());
 			if (username.equals(user.getUsername())) {
@@ -100,6 +108,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	@Override
 	public boolean isEmailExist(String email) {
 		List<User> userList = getAllUser();
+		if(userList == null)
+			return false;
 		for(User user : userList) {
 			System.out.println("Check email: " + user.getEmail());
 			if (email.equals(user.getEmail())) {
@@ -119,7 +129,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 
 	@Override
 	public Department getDepartmentByName(String name) {
-		collection = MongoDBMain.getUserCollection();
+		collection = MongoDBMain.getDepartmentCollection();
 		Query query = new Query();
 		query.addCriteria(Criteria.where("name").is(name));
 		return this.mongoOps.findOne(query, Department.class, collection);
@@ -135,6 +145,27 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public List<Department> getAllDepartment() {
 		collection = MongoDBMain.getDepartmentCollection();
 		return this.mongoOps.findAll(Department.class, collection);
+	}
+
+	@Override
+	public boolean checkPasswordById (String id, String password) {
+		collection = MongoDBMain.getUserCollection();
+		User user = getUserById(id);
+		return user.getPassword().equals(password);
+	}
+
+	@Override
+	public void createPosition(Position position) {
+		collection = MongoDBMain.getPositionCollection();
+		System.out.println("DAO: Add new position");
+		this.mongoOps.insert(position, collection);
+	}
+
+	@Override
+	public void createDepartment(Department department) {
+		collection = MongoDBMain.getDepartmentCollection();
+		System.out.println("DAO: Add new department");
+		this.mongoOps.insert(department, collection);
 	}
 
 }
