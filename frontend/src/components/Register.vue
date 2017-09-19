@@ -8,43 +8,60 @@
       </div>
     </div>
     <div class="register--body">
-      <div class="columns">
-        <div class="column">
-
-        </div>
-        <div class="column register--register-box">
-          <el-form :label-position="left" label-width="100px" :model="form">
-            <el-form-item label="Name">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="Activity zone">
-              <el-input v-model="form.region"></el-input>
-            </el-form-item>
-            <el-form-item label="Activity form">
-              <el-input v-model="form.type"></el-input>
-            </el-form-item>
-          </el-form>
-          <div class="register--register-field">
-            <span>Name</span>
-            <input v-model="username" class="input" placeholder="Username">
+      <el-row>
+        <el-col :span="10" :offset="7">
+          <div class="register--register-box">
+            <el-form label-position="left" label-width="150px" :model="form">
+              <el-form-item class="register--form-item" label="Name">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Birthdate">
+                <el-date-picker
+                  class="register--form-item"
+                  v-model="form.birthdate"
+                  type="date"
+                  placeholder="Pick a day">
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Phone">
+                <el-input v-model="form.phone"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Department">
+                <el-select class="register--form-item" v-model="form.department" placeholder="Department">
+                  <el-option label="Engineer" value="Engineer"></el-option>
+                  <el-option label="Business" value="Business"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Position">
+                <el-select class="register--form-item" v-model="form.position" placeholder="Position">
+                  <el-option label="1" value="1"></el-option>
+                  <el-option label="2" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Email">
+                <el-input v-model="form.email"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="ID">
+                <el-input v-model="form.userId"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Password">
+                <el-input v-model="form.userPass"></el-input>
+              </el-form-item>
+              <el-form-item class="register--form-item" label="Re-password">
+                <el-input></el-input>
+              </el-form-item>
+            </el-form>
+            <div align="right">
+              <button class="button is-success" @click="register()">
+                Register
+              </button>
+              <button class="button is-danger" @click="backLogin()">
+                Cancle
+              </button>
+            </div>
           </div>
-          <div class="register--register-field">
-            <span>Birthdate</span>
-            <input v-model="password" class="input" type="password" placeholder="Password">
-          </div>
-          <div align="right">
-            <button class="button is-success" @click="register()">
-              Submit
-            </button>
-            <button class="button is-danger" @click="backLogin()">
-              Back
-            </button>
-          </div>
-        </div>
-        <div class="column">
-
-        </div>
-      </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -57,11 +74,14 @@ export default {
     return {
       form: {
         name: '',
-        region: '',
-        type: ''
-      },
-      username: '',
-      password: ''
+        birthdate: '',
+        phone: '',
+        department: '',
+        position: '',
+        email: '',
+        userId: '',
+        userPass: ''
+      }
     }
   },
   methods: {
@@ -70,7 +90,7 @@ export default {
     },
     register () {
       let self = this
-      Axios.get(`http://localhost:8090/register/${this.username}/${this.password}`).then(function (response) {
+      Axios.get(`http://localhost:8090/register/${this.form.userId}/${this.form.userPass}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
@@ -93,7 +113,12 @@ export default {
 .register--register-field {
   margin-bottom: 15px;
 }
+
 .register--register-field span {
   float: left;
+}
+
+.register--form-item {
+  width: 100%;
 }
 </style>
