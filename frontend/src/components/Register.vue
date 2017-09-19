@@ -1,15 +1,15 @@
 <template lang="html">
   <div class="register--container">
-    <div class="hero is-info">
-      <div class="hero-body">
-        <p class="title">
-          Task Management System
-        </p>
-      </div>
-    </div>
     <div class="register--body">
       <el-row>
-        <el-col :span="10" :offset="7">
+        <el-col>
+          <div class="hero is-info">
+            <div class="hero-body">
+              <p class="title">
+                Registration
+              </p>
+            </div>
+          </div>
           <div class="register--register-box">
             <el-form label-position="left" label-width="150px" :model="form">
               <el-form-item class="register--form-item" label="Name">
@@ -34,7 +34,7 @@
               </el-form-item>
               <el-form-item class="register--form-item" label="Position">
                 <el-select class="register--form-item" v-model="form.position" placeholder="Position">
-                  <el-option label="1" value="1"></el-option>
+                  <el-option label="Intern" value="Intern"></el-option>
                   <el-option label="2" value="2"></el-option>
                 </el-select>
               </el-form-item>
@@ -90,7 +90,7 @@ export default {
     },
     register () {
       let self = this
-      Axios.get(`http://localhost:8090/register/${this.form.userId}/${this.form.userPass}`).then(function (response) {
+      Axios.get(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.userId}/${this.form.userPass}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
@@ -101,13 +101,20 @@ export default {
 </script>
 
 <style scoped>
+.register--container {
+  background-color: white;
+  /*padding: 30px;*/
+  border-radius: 6px;
+  margin-top: 30px;
+}
+
 .register--register-box {
   border: 1px solid #c2cbd1;
-  padding: 15px 15px 15px 15px;
+  padding: 50px;
 }
 
 .register--body {
-  margin: 30px;
+  /*margin: 30px;*/
 }
 
 .register--register-field {
