@@ -3,31 +3,34 @@
     <div class="hero is-info">
       <div class="hero-body">
         <p class="title">
-          Spring Framework practice
-        </p>
-        <p class="subtitle">
-          Everything you need to <strong>create a website</strong> with Vue, Bulma and MongoDb 2017/09/03
+          Task Management System
         </p>
       </div>
     </div>
     <div class="register--body">
       <div class="columns">
+        <div class="column">
+
+        </div>
         <div class="column register--register-box">
-          <div class="field">
-            <p class="control has-icons-left has-icons-right">
-              <input v-model="username" class="input" type="" placeholder="Username">
-              <span class="icon is-small is-left">
-                <i class="fa fa-envelope"></i>
-              </span>
-            </p>
+          <el-form :label-position="left" label-width="100px" :model="form">
+            <el-form-item label="Name">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="Activity zone">
+              <el-input v-model="form.region"></el-input>
+            </el-form-item>
+            <el-form-item label="Activity form">
+              <el-input v-model="form.type"></el-input>
+            </el-form-item>
+          </el-form>
+          <div class="register--register-field">
+            <span>Name</span>
+            <input v-model="username" class="input" placeholder="Username">
           </div>
-          <div class="field">
-            <p class="control has-icons-left">
-              <input v-model="password" class="input" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock"></i>
-              </span>
-            </p>
+          <div class="register--register-field">
+            <span>Birthdate</span>
+            <input v-model="password" class="input" type="password" placeholder="Password">
           </div>
           <div align="right">
             <button class="button is-success" @click="register()">
@@ -39,7 +42,7 @@
           </div>
         </div>
         <div class="column">
-          <img src="https://www.flmontreal.com/wp-content/uploads/2014/09/Register-Icon.png" width="200px">
+
         </div>
       </div>
     </div>
@@ -52,6 +55,11 @@ import Axios from 'axios'
 export default {
   data () {
     return {
+      form: {
+        name: '',
+        region: '',
+        type: ''
+      },
       username: '',
       password: ''
     }
@@ -80,5 +88,12 @@ export default {
 
 .register--body {
   margin: 30px;
+}
+
+.register--register-field {
+  margin-bottom: 15px;
+}
+.register--register-field span {
+  float: left;
 }
 </style>
