@@ -8,13 +8,17 @@ public interface UserDAO {
 	
 	public void createUser (User user);
 	
-	public List<User> getAllUsers ();
+	public List<User> getAllUser ();
 	
-	public User getUserByName (String name);
+	public User getUserById (String id);
 	
-	public void updateUserByName (String name, User user);
+	public void updateUserById (String id, User user);
 	
-	public void deleteUserByName (String name);
+	public void deleteUserById (String name);
 	
-	public boolean checkLogin(String name, String password);
+	public boolean checkLogin (String username, String password);
+	
+	public boolean isUsernameExist (String username);
+	
+	public boolean isEmailExist (String email);
 }

@@ -11,10 +11,15 @@ import org.springframework.data.mongodb.core.query.Update;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 
+import database.dao.DepartmentDAO;
+import database.dao.PositionDAO;
 import database.dao.UserDAO;
+import database.dao.UserLogDAO;
+import main.model.Department;
+import main.model.Position;
 import main.model.User;
 
-public class MongoDAOImpl implements UserDAO {
+public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLogDAO {
 	
 	private MongoOperations mongoOps;
 	private static String collection = MongoDBMain.getUserCollection();
@@ -36,24 +41,24 @@ public class MongoDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<User> getAllUser() {
 		collection = MongoDBMain.getUserCollection();
 		return this.mongoOps.findAll(User.class, collection);
 	}
 
 	@Override
-	public User getUserByName(String name) {
+	public User getUserById(String id) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
+		query.addCriteria(Criteria.where("idUser").is(id));
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
 
 	@Override
-	public void updateUserByName(String name, User user) {
+	public void updateUserById(String id, User user) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
+		query.addCriteria(Criteria.where("idUser").is(id));
 		Update update = new Update();
 		update.set("name", user.getName());
 		update.set("password", user.getPassword());
@@ -61,23 +66,75 @@ public class MongoDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void deleteUserByName(String name) {
+	public void deleteUserById(String id) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
+		query.addCriteria(Criteria.where("idUser").is(id));
 		WriteResult result = this.mongoOps.remove(query, User.class, collection);
 	}
 	
 	@Override
-	public boolean checkLogin(String name, String password) {
-		List<User> userList = getAllUsers();
+	public boolean checkLogin(String username, String password) {
+		List<User> userList = getAllUser();
 		for(User user : userList) {
-			System.out.println("Check login: " + user.getName() + ", " + user.getPassword());
-			if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+			System.out.println("Check login: " + user.getUsername() + ", " + user.getPassword());
+			if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean isUsernameExist(String username) {
+		List<User> userList = getAllUser();
+		for(User user : userList) {
+			System.out.println("Check Username: " + user.getUsername());
+			if (username.equals(user.getUsername())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean isEmailExist(String email) {
+		List<User> userList = getAllUser();
+		for(User user : userList) {
+			System.out.println("Check email: " + user.getEmail());
+			if (email.equals(user.getEmail())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Position getPositionByName(String name) {
+		collection = MongoDBMain.getPositionCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		return this.mongoOps.findOne(query, Position.class, collection);
+	}
+
+	@Override
+	public Department getDepartmentByName(String name) {
+		collection = MongoDBMain.getUserCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		return this.mongoOps.findOne(query, Department.class, collection);
+	}
+
+	@Override
+	public List<Position> getAllPosition() {
+		collection = MongoDBMain.getPositionCollection();
+		return this.mongoOps.findAll(Position.class, collection);
+	}
+
+	@Override
+	public List<Department> getAllDepartment() {
+		collection = MongoDBMain.getDepartmentCollection();
+		return this.mongoOps.findAll(Department.class, collection);
 	}
 
 }

@@ -16,4 +16,13 @@
 <bean id="userDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
+<bean id="departmentDAO" class="database.mongodb.MongoDAOImpl">
+    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
+</bean>
+<bean id="positionDAO" class="database.mongodb.MongoDAOImpl">
+    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
+</bean>
+<bean id="userlogDAO" class="database.mongodb.MongoDAOImpl">
+    <constructor-arg name="mongoOps" ref="mongoTemplate"/>
+</bean>
 </beans>
