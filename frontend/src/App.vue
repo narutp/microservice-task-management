@@ -8,13 +8,25 @@
       <el-row>
         <el-col class="left" :span="4">
           <!--  Navbar when not login yet  -->
-          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark">
+          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
             <el-submenu index="1">
               <template slot="title">Navigator One</template>
               <el-menu-item-group title="Group One">
                 <el-menu-item index="1-1">item one</el-menu-item>
                 <el-menu-item index="1-2">item two</el-menu-item>
               </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+
+          <!--  Navbar when already login  -->
+          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-else>
+            <el-submenu index="1">
+              <template slot="title">LOGIN</template>
+              <el-menu-item-group title="Group One">
+                <el-menu-item index="1-1">item one</el-menu-item>
+                <el-menu-item index="1-2">item two</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
           </el-menu>
         </el-col>
         <el-col class="right" :span="20">
