@@ -4,22 +4,23 @@ import Axios from 'axios'
 Vue.use(Vuex)
 
 let vuex = {
+  strict: process.env.NODE_ENV !== 'production',
   state: {
-    getUser: []
+    user: []
   },
   getters: {
-    getUser: state => state.getUser
+    GET_USER: (state, getters) => state.user
   },
   mutations: {
-    getUser (state, data) {
-      state.coupons = data
+    SET_USER (state, data) {
+      state.user = data
     }
   },
   actions: {
-    getUser ({ commit }) {
+    SET_USER ({ commit, data }) {
       Axios.get(`http://localhost:8090/users/`).then(function (response) {
-        console.log('get user' + response)
-        commit('getUser', response.data)
+        console.log('get user' + response.data)
+        commit('SET_USER', response.data)
       }).catch(function (error) {
         console.log(error)
       })

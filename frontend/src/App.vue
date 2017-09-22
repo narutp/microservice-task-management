@@ -30,7 +30,6 @@
           </el-menu>
         </el-col>
         <el-col class="right" :span="20">
-          {{ getUser }}
           <router-view></router-view>
         </el-col>
       </el-row>
@@ -50,7 +49,7 @@ export default {
     Footerbar
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['user'])
   }
 }
 </script>
