@@ -1,18 +1,29 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
-import * as getters from './getters'
-import * as actions from './actions'
-import * as mutations from './mutations'
+import Axios from 'axios'
+Vue.use(Vuex)
 
-const state = {
-  user: {}
+let vuex = {
+  state: {
+    getUser: []
+  },
+  getters: {
+    getUser: state => state.getUser
+  },
+  mutations: {
+    getUser (state, data) {
+      state.coupons = data
+    }
+  },
+  actions: {
+    getUser ({ commit }) {
+      Axios.get(`http://localhost:8090/users/`).then(function (response) {
+        console.log('get user' + response)
+        commit('getUser', response.data)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    }
+  }
 }
-
-const store = () => {
-  return new Vuex.Store({
-    state,
-    actions,
-    mutations,
-    getters
-  })
-}
-export default store
+export let store = new Vuex.Store(vuex)

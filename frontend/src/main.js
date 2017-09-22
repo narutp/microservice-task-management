@@ -7,6 +7,7 @@ import bulma from 'bulma/css/bulma.css'
 import Buefy from 'buefy'
 import moment from 'moment'
 import ElementUI from 'element-ui'
+import { store } from './store'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-default/index.css'
 import 'buefy/lib/buefy.css'
@@ -20,6 +21,7 @@ Vue.use(moment)
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

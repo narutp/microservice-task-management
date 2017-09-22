@@ -30,6 +30,7 @@
           </el-menu>
         </el-col>
         <el-col class="right" :span="20">
+          {{ getUser }}
           <router-view></router-view>
         </el-col>
       </el-row>
@@ -41,11 +42,15 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   components: {
     Navbar,
     Footerbar
+  },
+  computed: {
+    ...mapGetters(['getUser'])
   }
 }
 </script>

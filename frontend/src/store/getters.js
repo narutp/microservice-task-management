@@ -1,1 +1,0 @@
-user: state => state.user
