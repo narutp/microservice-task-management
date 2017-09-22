@@ -6,9 +6,19 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <div class="app--body">
       <el-row>
-        <el-col :span="16" :offset="4">
+        <el-col class="left" :span="4">
+          <!--  Navbar when not login yet  -->
+          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark">
+            <el-submenu index="1">
+              <template slot="title">Navigator One</template>
+              <el-menu-item-group title="Group One">
+                <el-menu-item index="1-1">item one</el-menu-item>
+                <el-menu-item index="1-2">item two</el-menu-item>
+              </el-menu-item-group>
+          </el-menu>
+        </el-col>
+        <el-col class="right" :span="20">
           <router-view></router-view>
-          <footerbar></footerbar>
         </el-col>
       </el-row>
     </div>
@@ -35,6 +45,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: #f6f7f7;
+  /*background-color: #f6f7f7;*/
+}
+
+.left {
+  background-color: #2A323B;
+  height: 1000px;
+  padding-top: 10px;
+}
+
+.right {
+  padding: 30px;
 }
 </style>

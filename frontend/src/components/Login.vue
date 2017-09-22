@@ -72,7 +72,7 @@ export default {
       let self = this
       Axios.get(`http://localhost:8090/login/${this.username}/${this.password}`).then(function (response) {
         if (response.data === true) {
-          self.$router.replace({ path: '/document' })
+          self.$router.replace({ path: '/home' })
           self.checkLoginFailed = false
         } else {
           self.checkLoginFailed = true
@@ -105,6 +105,6 @@ export default {
 .login--container {
   background-color: white;
   border-radius: 6px;
-  margin-top: 30px;
+  /*margin-top: 30px;*/
 }
 </style>

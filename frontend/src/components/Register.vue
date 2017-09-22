@@ -107,16 +107,11 @@ export default {
   background-color: white;
   /*padding: 30px;*/
   border-radius: 6px;
-  margin-top: 30px;
 }
 
 .register--register-box {
   border: 1px solid #c2cbd1;
   padding: 50px;
-}
-
-.register--body {
-  /*margin: 30px;*/
 }
 
 .register--register-field {
