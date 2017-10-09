@@ -105,29 +105,29 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("user/{id}")
+	@Path("check/email/{email}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserAPI(@PathParam("id") String id) {
-		User user = userDAO.getUserById(id);
-		return user;
+	public boolean checkEmailAPI(@PathParam("email") String email) {
+		return userDAO.isEmailExist(email);
 	}
 	
 	@GET
 	@Path("check/username/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean checkUsernameExistAPI(@PathParam("username") String username) {
+	public boolean checkUsernameAPI(@PathParam("username") String username) {
 		return userDAO.isUsernameExist(username);
 	}
 	
 	@GET
-	@Path("check/email/{email}")
+	@Path("get/user/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean checkEmailExistAPI(@PathParam("email") String email) {
-		return userDAO.isEmailExist(email);
+	public User getUserByIdAPI(@PathParam("id") String id) {
+		User user = userDAO.getUserById(id);
+		return user;
 	}
 	
 	@GET
-	@Path("users")
+	@Path("get/all-user")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getAllUserAPI() {
 		List<User> userList = userDAO.getAllUser();
@@ -137,10 +137,24 @@ public class TaskManagementRest {
 	@GET
 	@Path("check/password/{id}/{password}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean checkPasswordAPI(
+	public boolean checkPasswordByIdAPI(
 			@PathParam("id") String id, 
 			@PathParam("password") String password ) {
 		return userDAO.checkPasswordById(id, password);
+	}
+	
+	@GET
+	@Path("get/all-user-log/{user-id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<UserLog> getAllUserLogByUserIdAPI(@PathParam("user-id") String userId) {
+		return userLogDAO.getAllUserLogByUserId(userId);
+	}
+	
+	@GET
+	@Path("get/all-user-log")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<UserLog> getAllUserLog() {
+		return userLogDAO.getAllUserLog();
 	}
 	
 	@GET
@@ -205,7 +219,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("departments")
+	@Path("get/all-department")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Department> getAllDepartmentAPI() {
 		List<Department> departmentList = departmentDAO.getAllDepartment();
@@ -213,7 +227,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("positions")
+	@Path("get/all-position")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Position> getAllPositionAPI() {
 		List<Position> positionList = positionDAO.getAllPosition();
@@ -221,7 +235,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("delete/{name}")
+	@Path("delete-department/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteAPI(@PathParam("name") String name) {
 		departmentDAO.deleteDepartment(name);;
@@ -229,7 +243,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("deletep/{name}")
+	@Path("delete-position/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deletepAPI(@PathParam("name") String name) {
 		positionDAO.deletePosition(name);;

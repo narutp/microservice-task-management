@@ -18,6 +18,7 @@ import database.dao.UserLogDAO;
 import main.model.Department;
 import main.model.Position;
 import main.model.User;
+import main.model.UserLog;
 
 public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLogDAO {
 	
@@ -202,6 +203,20 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		Query query = new Query();
 		query.addCriteria(Criteria.where("name").is(name));
 		WriteResult result = this.mongoOps.remove(query, Position.class, collection);
+	}
+
+	@Override
+	public List<UserLog> getAllUserLog() {
+		collection = MongoDBMain.getUserLogCollection();
+		return this.mongoOps.findAll(UserLog.class, collection);
+	}
+
+	@Override
+	public List<UserLog> getAllUserLogByUserId(String userId) {
+		collection = MongoDBMain.getUserLogCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(userId));
+		return this.mongoOps.find(query, UserLog.class, collection);
 	}
 
 }
