@@ -6,6 +6,17 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <div class="app--body">
       <el-row>
+        <div class="app--title">
+          <b>Task Management | </b>
+          <span v-if="$route.path === '/'">Sign in</span>
+          <span v-if="$route.path === '/register'">Sign up</span>
+          <span v-if="index == 1">Dashboard</span>
+          <span v-if="index == 2">My Task</span>
+          <span v-if="index == 3">Department Task</span>
+          <span v-if="index == 4">Termination Task</span>
+          <span v-if="index == 5">Task Management</span>
+          <span v-if="index == 6">Request Task</span>
+        </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <!--  Navbar when not login yet  -->
           <!-- <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
@@ -115,7 +126,15 @@ export default {
   color: #2c3e50;
   /*background-color: #f6f7f7;*/
 }
-
+.app--title {
+  height: 50px;
+  /* Same height to div for vertically center */
+  line-height: 50px;
+  background-color: black;
+  color: white;
+  text-align: left;
+  padding-left: 20px;
+}
 .left {
   background-color: #2A323B;
   height: 1000px;

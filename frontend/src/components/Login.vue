@@ -1,7 +1,7 @@
 <template>
   <div class="login--container">
     <div class="login--title">
-      Task Management System | Sign in
+      <b>Task Management System | Sign in</b>
     </div>
     <div class="login--body">
       <div class="columns">
@@ -26,13 +26,14 @@
               </span>
             </p>
           </div>
-          <div align="center">
-            <button class="button is-success" @click="login()">
+          <div>
+            <button class="button is-danger is-outlined login--button" @click="login()">
               Login
             </button>
-            <button class="button is-info" @click="register()">
+            <span class="login--signup" @click="register()">Forget your password? <b>Sign up</b></span>
+            <!-- <button class="button is-info" @click="register()">
               Register
-            </button>
+            </button> -->
           </div>
           <div class="notification is-danger" v-if="checkLoginFailed">
             Wrong username or password
@@ -86,6 +87,7 @@ export default {
 <style scoped>
 .login--container {
   background-color: #2A323B;
+  height: 700px;
 }
 .login--title {
   height: 50px;
@@ -101,10 +103,21 @@ export default {
   margin-bottom: 75px;
 }
 .login--user-icon {
-  margin-bottom: 15px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   background-color: black;
   color: white;
   border-radius: 50%;
+}
+.login--button {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.login--signup {
+  color: #8E9296;
+  font-size: 14px;
+  cursor: pointer;
 }
 .notification.is-danger {
   margin-top: 15px;
