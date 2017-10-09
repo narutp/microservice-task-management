@@ -1,5 +1,7 @@
 <template lang="html">
-
+  <div class="my-task--container">
+    My Task
+  </div>
 </template>
 
 <script>

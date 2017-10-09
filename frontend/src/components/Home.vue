@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="">
-    <button type="button" name="button" @click="get()">A</button>
     <new-chart></new-chart>
     {{ getUser }}
   </div>

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <div class="app--body">
       <el-row>
-        <el-col class="left" :span="4" v-if="$route.path === '/home'">
+        <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <!--  Navbar when not login yet  -->
           <!-- <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
             <el-submenu index="1">
@@ -17,25 +17,27 @@
               </el-menu-item-group>
             </el-submenu>
           </el-menu> -->
-
           <!--  Navbar when already login  -->
-          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/home'">
-            <el-menu-item index="1">
+          <div class="app--user">
+            <i class="fa fa-user-circle" style="width: 20px; height: 20px"></i>
+          </div>
+          <el-menu :default-active="index" class="el-menu-vertical-demo" theme="dark" v-if="$route.path !== '/' && $route.path !== '/register'">
+            <el-menu-item index="1" @click="TaskStatementClicked()">
               <template slot="title">Task Statement</template>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="2" @click="MyTaskClicked()">
               <template slot="title">My Task</template>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="3" @click="DepartmentTaskClicked()">
               <template slot="title">Department Task</template>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" @click="TerminationTaskClicked()">
               <template slot="title">Termination Task</template>
             </el-menu-item>
-            <el-menu-item index="5">
+            <el-menu-item index="5" @click="TaskManagementClicked()">
               <template slot="title">Task Management</template>
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="6" @click="RequestTaskClicked()">
               <template slot="title">Request Task</template>
             </el-menu-item>
           </el-menu>
@@ -52,15 +54,51 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'app',
   components: {
     Navbar,
     Footerbar
   },
+  async mounted () {
+    await this.setUser()
+  },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters({
+      getUser: 'GET_USER'
+    }),
+    index () {
+      if (this.$route.path === '/home') { return '1' }
+      if (this.$route.path === '/my-task') { return '2' }
+      if (this.$route.path === '/department-task') { return '3' }
+      if (this.$route.path === '/termination-task') { return '4' }
+      if (this.$route.path === '/task-management') { return '5' }
+      if (this.$route.path === '/request-task') { return '6' }
+    }
+  },
+  methods: {
+    ...mapActions({
+      setUser: 'SET_USER'
+    }),
+    TaskStatementClicked () {
+      this.$router.replace({ path: '/home' })
+    },
+    MyTaskClicked () {
+      this.$router.replace({ path: '/my-task' })
+    },
+    TaskManagementClicked () {
+      this.$router.replace({ path: '/task-management' })
+    },
+    TerminationTaskClicked () {
+      this.$router.replace({ path: '/termination-task' })
+    },
+    RequestTaskClicked () {
+      this.$router.replace({ path: '/request-task' })
+    },
+    DepartmentTaskClicked () {
+      this.$router.replace({ path: '/department-task' })
+    }
   }
 }
 </script>
