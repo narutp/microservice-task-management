@@ -105,6 +105,5 @@ export default {
 .login--container {
   background-color: white;
   border-radius: 6px;
-  /*margin-top: 30px;*/
 }
 </style>

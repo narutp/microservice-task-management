@@ -1,22 +1,16 @@
 <template lang="html">
   <div class="home--container">
-    <div class="home--chart">
-      <el-row>
-        <el-col :span="12">
-          <bar-task></bar-task>
-        </el-col>
-        <el-col :span="12">
-          <el-row>
-            <horizontal-bar-participant></horizontal-bar-participant>
-          </el-row>
-          <el-row>
-            <doughnut-department></doughnut-department>
-          </el-row>
-        </el-col>
-      </el-row>
-    </div>
+    <el-row class="home--chart">
+      <el-col :span="12">
+        <horizontal-bar-participant></horizontal-bar-participant>
+      </el-col>
+      <el-col :span="12">
+        <doughnut-department></doughnut-department>
+      </el-col>
+      <bar-task :height="120"></bar-task>
+    </el-row>
 
-    {{ getUser }}
+    <!-- {{ getUser }} -->
   </div>
 </template>
 
@@ -47,5 +41,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.home--chart {
+  max-height: 600px;
+}
 </style>

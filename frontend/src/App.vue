@@ -42,7 +42,10 @@
             </el-menu-item>
           </el-menu>
         </el-col>
-        <el-col class="right" :span="20">
+        <el-col class="right-app" :span="20" v-if="$route.path !== '/' && $route.path !== '/register'">
+          <router-view></router-view>
+        </el-col>
+        <el-col class="right-login" :span="24" v-else>
           <router-view></router-view>
         </el-col>
       </el-row>
@@ -119,7 +122,7 @@ export default {
   padding-top: 10px;
 }
 
-.right {
+.right-app {
   padding: 50px;
 }
 </style>
