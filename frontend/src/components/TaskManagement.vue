@@ -1,82 +1,47 @@
 <template lang="html">
   <div class="task-management--container">
     <section class="document-table--body">
-      <div class="document-table--button" align="right">
-        <button class="button is-primary" @click="generateDocument()">
-          <i class="fa fa-plus" aria-hidden="true">  Document</i>
-        </button>
-        <button class="button is-danger" @click="logout()">
-          <i class="fa fa-sign-out" aria-hidden="true"> Log out</i>
+      <div class="task-management--button" align="left">
+        <button class="button is-primary" @click="registerTask()">
+          <i class="fa fa-plus" aria-hidden="true"> Register a Task</i>
         </button>
       </div>
       <b-table
+          class="task-management--table"
           :data="tableData"
           :paginated="isPaginated"
-          :per-page="5"
+          :per-page="7"
           default-sort="title">
 
           <template scope="props">
-              <b-table-column field="id" label="ID" width="40" sortable numeric>
-                  {{ props.row.id }}
+              <b-table-column field="no" label="No" width="50" sortable numeric centered>
+                  {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="title" label="Title" sortable>
-                  {{ props.row.title }}
+              <b-table-column field="taskName" label="Task Name" sortable>
+                  {{ props.row.taskName }}
+              </b-table-column>
+
+              <b-table-column field="taskCardName" label="Task Card Name" sortable>
+                  {{ props.row.taskCardName }}
+              </b-table-column>
+
+              <b-table-column field="registeredDate" label="Registered Date" sortable>
+                  {{ props.row.registeredDate }}
               </b-table-column>
 
               <b-table-column field="writer" label="Writer" sortable>
                   {{ props.row.writer }}
               </b-table-column>
 
-              <b-table-column field="createdate" label="Create Date" sortable centered>
-                  <span class="tag is-success">
-                      {{ formatDate(props.row.createdate) }}
+              <b-table-column field="status" label="Status" sortable centered>
+                  <span class="tag is-info" v-if="props.row.status === 'In progress'">
+                      {{ props.row.status }}
+                  </span>
+                  <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
+                      {{ props.row.status }}
                   </span>
               </b-table-column>
-
-              <b-table-column field="lastdate" label="Last Edit Date" sortable centered>
-                  <span class="tag is-success">
-                      {{ formatDate(props.row.lastdate) }}
-                  </span>
-              </b-table-column>
-
-              <b-table-column label="Option" centered>
-                <button class="button is-warning is-small" @click="toggleEditDialog(props.row)">
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"> Edit</i>
-                </button>
-                <button class="button is-danger is-small" @click="deleteTable(props.row)">
-                  <i class="fa fa-trash-o" aria-hidden="true">Delete</i>
-                </button>
-              </b-table-column>
-
-              <el-dialog title="Edit document":visible.sync="isEditFormOpen" size="tiny">
-                <hr>
-                <b-field label="Title">
-                    <b-input v-model="tempRow.title"></b-input>
-                </b-field>
-                <b-field label="Writer">
-                    <b-input v-model="tempRow.writer"></b-input>
-                </b-field>
-                <b-field label="Content">
-                    <b-input v-model="tempRow.contents" type="text"></b-input>
-                </b-field>
-                <b-field label="Password">
-                    <b-input v-model="tempRow.password" type="text"></b-input>
-                </b-field>
-                <button class="button is-primary" @click="edit()">
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"> Submit</i>
-                </button>
-              </el-dialog>
-
-              <!-- {{ props.row.title }} -->
-              <!-- <edit-form :tableData="props.row" v-if="isEditFormOpen"></edit-form> -->
-
-              <!-- <b-table-column label="Option">
-                  <b-icon pack="fa"
-                      :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                  </b-icon>
-                  {{ props.row.gender }}
-              </b-table-column> -->
           </template>
       </b-table>
     </section>
@@ -87,7 +52,9 @@
 export default {
   data () {
     return {
-      tableData: [{'id': 1, 'title': 'a', 'writer': 'b', 'content': 'c', 'password': 'd', 'createdate': 'e', 'lastdate': 'f'}],
+      tableData: [{ 'no': 1, 'taskName': 'Test Task1', 'taskCardName': 'Test Task Card1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 2, 'taskName': 'Test Task2', 'taskCardName': 'Test Task Card2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 3, 'taskName': 'Net Task', 'taskCardName': 'Net Task Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
       isPaginated: true,
       isPaginationSimple: false
     }
@@ -95,5 +62,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.task-management--table {
+  margin-top: 20px;
+}
 </style>
