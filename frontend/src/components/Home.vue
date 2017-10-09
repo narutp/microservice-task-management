@@ -1,18 +1,20 @@
 <template lang="html">
   <div class="home--container">
-    <el-row>
-      <el-col :span="12">
-        <new-chart></new-chart>
-      </el-col>
-      <el-col :span="12">
-        <el-row>
-          b
-        </el-row>
-        <el-row>
-          <doughnut-chart></doughnut-chart>
-        </el-row>
-      </el-col>
-    </el-row>
+    <div class="home--chart">
+      <el-row>
+        <el-col :span="12">
+          <bar-task></bar-task>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <horizontal-bar-participant></horizontal-bar-participant>
+          </el-row>
+          <el-row>
+            <doughnut-department></doughnut-department>
+          </el-row>
+        </el-col>
+      </el-row>
+    </div>
 
     {{ getUser }}
   </div>
@@ -20,8 +22,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import NewChart from '@/components/Chart/NewChart'
-import DoughnutChart from '@/components/Chart/DoughnutChart'
+import BarTask from '@/components/Chart/BarTask'
+import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
+import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
 export default {
   async mounted () {
     await this.setUser()
@@ -37,8 +40,9 @@ export default {
     })
   },
   components: {
-    NewChart,
-    DoughnutChart
+    BarTask,
+    DoughnutDepartment,
+    HorizontalBarParticipant
   }
 }
 </script>
