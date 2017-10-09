@@ -1,11 +1,7 @@
 <template>
   <div class="login--container">
-    <div class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          Task Management System
-        </p>
-      </div>
+    <div class="login--title">
+      Task Management System | Sign in
     </div>
     <div class="login--body">
       <div class="columns">
@@ -13,6 +9,7 @@
           <!-- Left column -->
         </div>
         <div class="column login--login-box">
+          <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
           <div class="field">
             <p class="control has-icons-left has-icons-right">
               <input v-model="username" class="input" type="" placeholder="Username">
@@ -87,23 +84,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.login--container {
+  background-color: #2A323B;
+}
+.login--title {
+  height: 50px;
+  /* Same height to div for vertically center */
+  line-height: 50px;
+  background-color: black;
+  color: white;
+  text-align: left;
+  padding-left: 20px;
+}
 .login--login-box {
-  border: 1px solid #c2cbd1;
   padding: 30px;
-  margin-top: 50px;
   margin-bottom: 75px;
 }
-
-.login--body {
-  margin: 30px;
+.login--user-icon {
+  margin-bottom: 15px;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
 }
-
 .notification.is-danger {
   margin-top: 15px;
-}
-
-.login--container {
-  background-color: white;
-  border-radius: 6px;
 }
 </style>
