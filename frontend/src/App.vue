@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <div class="app--body">
       <el-row>
-        <el-col class="left" :span="4">
+        <el-col class="left" :span="4" v-if="$route.path === '/home'">
           <!--  Navbar when not login yet  -->
-          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
+          <!-- <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
             <el-submenu index="1">
               <template slot="title">Navigator One</template>
               <el-menu-item-group title="Group One">
@@ -16,17 +16,28 @@
                 <el-menu-item index="1-2">item two</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-          </el-menu>
+          </el-menu> -->
 
           <!--  Navbar when already login  -->
-          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-else>
-            <el-submenu index="1">
-              <template slot="title">LOGIN</template>
-              <el-menu-item-group title="Group One">
-                <el-menu-item index="1-1">item one</el-menu-item>
-                <el-menu-item index="1-2">item two</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+          <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/home'">
+            <el-menu-item index="1">
+              <template slot="title">Task Statement</template>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <template slot="title">My Task</template>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <template slot="title">Department Task</template>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <template slot="title">Termination Task</template>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <template slot="title">Task Management</template>
+            </el-menu-item>
+            <el-menu-item index="6">
+              <template slot="title">Request Task</template>
+            </el-menu-item>
           </el-menu>
         </el-col>
         <el-col class="right" :span="20">
