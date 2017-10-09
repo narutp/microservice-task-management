@@ -9,8 +9,6 @@
       </el-col>
       <bar-task :height="120"></bar-task>
     </el-row>
-
-    <!-- {{ getUser }} -->
   </div>
 </template>
 

@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="task-management--container">
     <section class="document-table--body">
-      <div class="task-management--button" align="left">
+      <div class="task-management--button" align="right">
         <button class="button is-primary" @click="registerTask()">
-          <i class="fa fa-plus" aria-hidden="true"> Register a Task</i>
+          <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
         </button>
       </div>
       <b-table

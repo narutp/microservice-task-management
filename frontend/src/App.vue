@@ -19,29 +19,34 @@
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <div class="app--user">
-            <i class="fa fa-user-circle" style="width: 20px; height: 20px"></i>
+            <i class="fa fa-user-circle fa-lg" style="width: 20px; height: 20px"></i>
+            <div class="">
+              {{ getUser[0].name }}
+            </div>
           </div>
-          <el-menu :default-active="index" class="el-menu-vertical-demo" v-if="$route.path !== '/' && $route.path !== '/register'">
-            <hr><span>Task</span>
-            <el-menu-item index="1" @click="TaskStatementClicked()">
-              <template slot="title">Task Statement</template>
-            </el-menu-item>
-            <el-menu-item index="2" @click="MyTaskClicked()">
-              <template slot="title">My Task</template>
-            </el-menu-item>
-            <el-menu-item index="3" @click="DepartmentTaskClicked()">
-              <template slot="title">Department Task</template>
-            </el-menu-item>
-            <el-menu-item index="4" @click="TerminationTaskClicked()">
-              <template slot="title">Termination Task</template>
-            </el-menu-item>
-            <hr><span>Management</span>
-            <el-menu-item index="5" @click="TaskManagementClicked()">
-              <template slot="title">Task Management</template>
-            </el-menu-item>
-            <el-menu-item index="6" @click="RequestTaskClicked()">
-              <template slot="title">Request Task</template>
-            </el-menu-item>
+          <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
+            <hr><el-menu-item-group title="Task">
+              <el-menu-item index="1" class="app--menu-item" @click="TaskStatementClicked()">
+                <template slot="title">Task Statement</template>
+              </el-menu-item>
+              <el-menu-item index="2" class="app--menu-item" @click="MyTaskClicked()">
+                <template slot="title">My Task</template>
+              </el-menu-item>
+              <el-menu-item index="3" class="app--menu-item" @click="DepartmentTaskClicked()">
+                <template slot="title">Department Task</template>
+              </el-menu-item>
+              <el-menu-item index="4" class="app--menu-item" @click="TerminationTaskClicked()">
+                <template slot="title">Termination Task</template>
+              </el-menu-item>
+            </el-menu-item-group>
+            <hr><el-menu-item-group title="Management">
+              <el-menu-item index="5" class="app--menu-item" @click="TaskManagementClicked()">
+                <template slot="title">Task Management</template>
+              </el-menu-item>
+              <el-menu-item index="6" class="app--menu-item" @click="RequestTaskClicked()">
+                <template slot="title">Request Task</template>
+              </el-menu-item>
+            </el-menu-item-group>
           </el-menu>
         </el-col>
         <el-col class="right-app" :span="20" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -127,11 +132,18 @@ export default {
   padding-left: 20px;
   position: relative;
 }
+.app--menu-item {
+  padding-left: 40px !important;
+}
+.app--menu-item.is-active {
+  background-color: #2A323B;
+  color: white;
+}
 .left {
   /*background-color: #2A323B;*/
   background-color: #EEF1F6;
   height: 1000px;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .right-app {
