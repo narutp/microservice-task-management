@@ -21,7 +21,8 @@
           <div class="app--user">
             <i class="fa fa-user-circle" style="width: 20px; height: 20px"></i>
           </div>
-          <el-menu :default-active="index" class="el-menu-vertical-demo" theme="dark" v-if="$route.path !== '/' && $route.path !== '/register'">
+          <el-menu :default-active="index" class="el-menu-vertical-demo" v-if="$route.path !== '/' && $route.path !== '/register'">
+            <hr><span>Task</span>
             <el-menu-item index="1" @click="TaskStatementClicked()">
               <template slot="title">Task Statement</template>
             </el-menu-item>
@@ -34,6 +35,7 @@
             <el-menu-item index="4" @click="TerminationTaskClicked()">
               <template slot="title">Termination Task</template>
             </el-menu-item>
+            <hr><span>Management</span>
             <el-menu-item index="5" @click="TaskManagementClicked()">
               <template slot="title">Task Management</template>
             </el-menu-item>
@@ -126,7 +128,8 @@ export default {
   position: relative;
 }
 .left {
-  background-color: #2A323B;
+  /*background-color: #2A323B;*/
+  background-color: #EEF1F6;
   height: 1000px;
   padding-top: 10px;
 }

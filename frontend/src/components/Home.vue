@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="home--container">
-    <div class="home--title">
-      <b>Task Management System | Dashboard</b>
-    </div>
     <el-row class="home--chart">
       <el-col :span="12">
         <horizontal-bar-participant></horizontal-bar-participant>
