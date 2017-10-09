@@ -18,17 +18,6 @@
           <span v-if="index == 6">Request Task</span>
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
-          <!--  Navbar when not login yet  -->
-          <!-- <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark" v-if="$route.path === '/' || $route.path === '/register'">
-            <el-submenu index="1">
-              <template slot="title">Navigator One</template>
-              <el-menu-item-group title="Group One">
-                <el-menu-item index="1-1">item one</el-menu-item>
-                <el-menu-item index="1-2">item two</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </el-menu> -->
-          <!--  Navbar when already login  -->
           <div class="app--user">
             <i class="fa fa-user-circle" style="width: 20px; height: 20px"></i>
           </div>
@@ -134,6 +123,7 @@ export default {
   color: white;
   text-align: left;
   padding-left: 20px;
+  position: relative;
 }
 .left {
   background-color: #2A323B;

@@ -3,9 +3,6 @@
     <div class="register--body">
       <el-row>
         <el-col>
-          <div class="register--title">
-            <b>Task Management System | Sign up</b>
-          </div>
           <div class="register--register-box">
             <el-form label-position="left" label-width="150px" :model="form">
               <el-form-item class="register--form-item" label="Name">
@@ -99,14 +96,6 @@ export default {
 </script>
 
 <style scoped>
-.register--title {
-  height: 50px;
-  /* Same height to div for vertically center */
-  line-height: 50px;
-  background-color: black;
-  text-align: left;
-  padding-left: 20px;
-}
 .register--container {
   background-color: #2A323B;
   color: white;

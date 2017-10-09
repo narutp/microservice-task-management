@@ -1,8 +1,5 @@
 <template>
   <div class="login--container">
-    <div class="login--title">
-      <b>Task Management System | Sign in</b>
-    </div>
     <div class="login--body">
       <div class="columns">
         <div class="column">
@@ -88,15 +85,6 @@ export default {
 .login--container {
   background-color: #2A323B;
   height: 700px;
-}
-.login--title {
-  height: 50px;
-  /* Same height to div for vertically center */
-  line-height: 50px;
-  background-color: black;
-  color: white;
-  text-align: left;
-  padding-left: 20px;
 }
 .login--login-box {
   padding: 30px;
