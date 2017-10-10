@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Home from '@/components/Home'
-import GenerateTask from '@/components/GenerateTask'
+import AddParticipants from '@/components/AddParticipants'
+import CreateTask from '@/components/CreateTask'
+import UpdateTask from '@/components/UpdateTask'
 import MyTask from '@/components/MyTask'
 import TaskManagement from '@/components/TaskManagement'
 
@@ -32,9 +34,19 @@ export default new Router({
       component: MyTask
     },
     {
-      path: '/generate-task',
-      name: 'GenerateTask',
-      component: GenerateTask
+      path: '/create-task',
+      name: 'CreateTask',
+      component: CreateTask
+    },
+    {
+      path: '/update-task',
+      name: 'UpdateTask',
+      component: UpdateTask
+    },
+    {
+      path: '/add-participants',
+      name: 'AddParticipants',
+      component: AddParticipants
     },
     {
       path: '/task-management',
