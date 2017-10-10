@@ -3,7 +3,7 @@
 
     <div class="columns">
       <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>Add participants +</b></h6>
+        <h6 style="margin-top: 16px"><b>New Task Card +</b></h6>
       </div>
       <div class="column" align="right">
         <button class="button no-border">
@@ -13,72 +13,54 @@
     </div>
 
     <div class="columns">
-      <div class="column limit-height">
-        <table class="table">
-          <thead>
-            <tr>
-              <th><abbr title="Position">No</abbr></th>
-              <th>Department</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="is-selected">
-              <th>1</th>
-              <th>Department A</th>
-            </tr>
-            <tr class="is-selected">
-              <th>2</th>
-              <th>Department B</th>
-            </tr>
-            <tr>
-              <th>3</th>
-              <th>Department C</th>
-            </tr>
-            <tr>
-              <th>4</th>
-              <th>Department D</th>
-            </tr>
-            <tr>
-              <th>5</th>
-              <th>Department E</th>
-            </tr>
-            <tr>
-              <th>6</th>
-              <th>Department F</th>
-            </tr>
-            <tr>
-              <th>7</th>
-              <th>Department G</th>
-            </tr>
-            <tr>
-              <th>8</th>
-              <th>Department H</th>
-            </tr>
-            <tr>
-              <th>9</th>
-              <th>Department I</th>
-            </tr>
-            <tr>
-              <th>10</th>
-              <th>Department J</th>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
       <div class="column">
-        <section class="my-task-table--body">
-          <b-table
-              class="my-task--table"
-              :data="tableData"
-              default-sort="title">
-              <template scope="props">
-                  <b-table-column field="taskName" label="Name" sortable>
-                      {{ props.row.taskName }}
-                  </b-table-column>
-              </template>
-          </b-table>
-        </section>
+        <input class="input title-field" type="text" placeholder="Task card name">
+      </div>
+      <div class="column" align="right">
+        <b-dropdown style="margin-top: 8px" align="left">
+            <button class="button" slot="trigger" style="width: 200px">
+              <span> Select project </span>
+              <b-icon icon="arrow_drop_down"></b-icon>
+            </button>
+            <b-dropdown-item>Microservice</b-dropdown-item>
+            <b-dropdown-item>Embedded System</b-dropdown-item>
+            <b-dropdown-item>Digital UK</b-dropdown-item>
+        </b-dropdown>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <textarea class="textarea" placeholder="Description"></textarea>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-three-quarters" align="left">
+        <b-dropdown style="margin-top: 8px" align="left">
+            <button class="button" slot="trigger" style="width: 200px">
+              <span> Start date </span>
+              <b-icon icon="arrow_drop_down"></b-icon>
+            </button>
+            <b-dropdown-item>Microservice</b-dropdown-item>
+            <b-dropdown-item>Embedded System</b-dropdown-item>
+            <b-dropdown-item>Digital UK</b-dropdown-item>
+        </b-dropdown>
+        <b-dropdown style="margin-top: 8px" align="left">
+            <button class="button" slot="trigger" style="width: 200px">
+              <span> Finish date </span>
+              <b-icon icon="arrow_drop_down"></b-icon>
+            </button>
+            <b-dropdown-item>Microservice</b-dropdown-item>
+            <b-dropdown-item>Embedded System</b-dropdown-item>
+            <b-dropdown-item>Digital UK</b-dropdown-item>
+        </b-dropdown>
+
+      </div>
+      <div class="column" align="right">
+        <button class="button" style="width: 200px">
+          <span> Add participants + </span>
+        </button>
       </div>
     </div>
 
@@ -124,7 +106,7 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Add participants+</a>
+          <a class="button is-dark">Create task card</a>
       </div>
     </div>
   </div>
@@ -169,9 +151,4 @@ textarea {
   background-color: #fff;
   height: 300px;
 }
-.limit-height {
-  height: 300px;
-  overflow-y: scroll;
-}
-
 </style>
