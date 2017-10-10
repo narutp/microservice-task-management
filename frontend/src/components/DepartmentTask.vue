@@ -1,13 +1,13 @@
 <template lang="html">
-  <div class="my-task--container">
-    <section class="my-task-table--body">
-      <div class="my-task--button" align="right">
+  <div class="department-task--container">
+    <section class="department-task-table--body">
+      <div class="department-task--button" align="right">
         <button class="button is-primary" @click="registerTask()">
           <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
         </button>
       </div>
       <b-table
-          class="my-task--table"
+          class="department-task--table"
           :data="tableData"
           :paginated="isPaginated"
           :per-page="7"
@@ -63,11 +63,11 @@ export default {
 </script>
 
 <style scoped>
-.my-task--container {
+.department-task--container {
   background-color: #fff;
   padding: 30px;
 }
-.my-task--table {
+.department-task--table {
   margin-top: 20px;
 }
 </style>

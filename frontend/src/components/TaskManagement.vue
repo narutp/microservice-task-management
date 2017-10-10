@@ -63,6 +63,11 @@ export default {
 </script>
 
 <style scoped>
+/* TODO move all clas-container css to main css */
+.task-management--container {
+  background-color: #fff;
+  padding: 30px;
+}
 .task-management--table {
   margin-top: 20px;
 }

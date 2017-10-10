@@ -19,7 +19,7 @@
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <div class="app--user">
-            <i class="fa fa-user-circle fa-lg" style="width: 20px; height: 20px"></i>
+            <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
               {{ getUser[0].name }}
             </div>
@@ -120,6 +120,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #EEF1F6;
   /*background-color: #f6f7f7;*/
 }
 .app--title {

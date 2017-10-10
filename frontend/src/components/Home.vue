@@ -40,7 +40,8 @@ export default {
 </script>
 
 <style scoped>
-.home--chart {
-  max-height: 600px;
+.home--container {
+  background-color: #fff;
+  padding: 30px;
 }
 </style>

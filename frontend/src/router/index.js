@@ -7,6 +7,7 @@ import AddParticipants from '@/components/AddParticipants'
 import CreateTask from '@/components/CreateTask'
 import UpdateTask from '@/components/UpdateTask'
 import MyTask from '@/components/MyTask'
+import DepartmentTask from '@/components/DepartmentTask'
 import TaskManagement from '@/components/TaskManagement'
 
 Vue.use(Router)
@@ -52,6 +53,11 @@ export default new Router({
       path: '/task-management',
       name: 'TaskManagement',
       component: TaskManagement
+    },
+    {
+      path: '/department-task',
+      name: 'DepartmentTask',
+      component: DepartmentTask
     }
   ]
 })
