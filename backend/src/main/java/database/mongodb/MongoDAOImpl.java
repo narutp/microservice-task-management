@@ -29,11 +29,11 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public MongoDAOImpl (MongoOperations mongoOps) {
 		this.mongoOps = mongoOps;
 		
-		String [] departmentArr = {"Architecture", "Business", "Engineer"};
+		String [] departmentArr = {"A", "B", "C", "D"};
 		String [] positionArr = {"Intern", "Professor", "Student"};
 		List<Department> departmentList = getAllDepartment();
 		List<Position> positionList = getAllPosition();
-		if(departmentList.size() != 3) {
+		if(departmentList.size() != 4) {
 			for(int i=0 ; i<departmentArr.length ; i++) {
 				Department department = new Department();
 				department.setName(departmentArr[i]);
