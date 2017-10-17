@@ -12,6 +12,7 @@ import MyTask from '@/components/MyTask'
 import DepartmentTask from '@/components/DepartmentTask'
 import TaskManagement from '@/components/TaskManagement'
 import DoneTask from '@/components/DoneTask'
+import RequestProject from '@/components/RequestProject'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
       path: '/done-project',
       name: 'DoneTask',
       component: DoneTask
+    },
+    {
+      path: '/request-project',
+      name: 'RequestProject',
+      component: RequestProject
     }
   ]
 })

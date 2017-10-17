@@ -3,7 +3,7 @@
 
     <div class="columns">
       <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>New Task Card +</b></h6>
+        <h6 style="margin-top: 16px"><b>New Card +</b></h6>
       </div>
       <div class="column" align="right">
         <button class="button no-border">
@@ -14,17 +14,18 @@
 
     <div class="columns">
       <div class="column">
-        <input class="input title-field" type="text" placeholder="Task card name">
+        <input class="input title-field" type="text" placeholder="Card name">
       </div>
       <div class="column" align="right">
         <b-dropdown style="margin-top: 8px" align="left">
             <button class="button" slot="trigger" style="width: 200px">
-              <span> Select project </span>
+              <span> Select Project </span>
               <b-icon icon="arrow_drop_down"></b-icon>
             </button>
             <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
+            <b-dropdown-item>Big Data</b-dropdown-item>
+            <b-dropdown-item>Net Experiment</b-dropdown-item>
+            <b-dropdown-item>Machine Learning</b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
@@ -43,8 +44,9 @@
               <b-icon icon="arrow_drop_down"></b-icon>
             </button>
             <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
+            <b-dropdown-item>Big Data</b-dropdown-item>
+            <b-dropdown-item>Net Experiment</b-dropdown-item>
+            <b-dropdown-item>Machine Learning</b-dropdown-item>
         </b-dropdown>
         <b-dropdown style="margin-top: 8px" align="left">
             <button class="button" slot="trigger" style="width: 200px">
@@ -52,14 +54,15 @@
               <b-icon icon="arrow_drop_down"></b-icon>
             </button>
             <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
+            <b-dropdown-item>Big Data</b-dropdown-item>
+            <b-dropdown-item>Net Experiment</b-dropdown-item>
+            <b-dropdown-item>Machine Learning</b-dropdown-item>
         </b-dropdown>
 
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px">
-          <span> Add participants + </span>
+        <button class="button" style="width: 200px" @click="addParticipant()">
+          <span> Add Participants + </span>
         </button>
       </div>
     </div>
@@ -106,7 +109,7 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Create task card</a>
+          <a class="button is-dark">Create Card</a>
       </div>
     </div>
   </div>
@@ -122,6 +125,11 @@ export default {
     { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
       isPaginated: true,
       isPaginationSimple: false
+    }
+  },
+  methods: {
+    addParticipant () {
+      this.$router.replace({ path: '/add-participants' })
     }
   }
 }

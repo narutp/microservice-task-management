@@ -1,10 +1,8 @@
 <template lang="html">
   <div class="department-task--container">
     <section class="department-task-table--body">
-      <div class="department-task--button" align="right">
-        <button class="button is-primary" @click="registerTask()">
-          <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
-        </button>
+      <div style="font-size: 18px;">
+        <b>Department A</b>
       </div>
       <b-table
           class="department-task--table"
@@ -18,11 +16,11 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Task Name" sortable>
+              <b-table-column field="taskName" label="Project Name" sortable>
                   {{ props.row.taskName }}
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Task Card Name" sortable>
+              <b-table-column field="taskCardName" label="Card Name" sortable>
                   {{ props.row.taskCardName }}
               </b-table-column>
 
@@ -52,9 +50,10 @@
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Test Task1', 'taskCardName': 'Test Task Card1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Test Task2', 'taskCardName': 'Test Task Card2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Task', 'taskCardName': 'Net Task Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
+      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'No Idea', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Data science part', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 3, 'taskName': 'Small Data', 'taskCardName': 'Data math part', 'registeredDate': '2017-11-1', 'writer': 'Boo', 'status': 'Request to finish' },
+    { 'no': 4, 'taskName': 'Machine Learning', 'taskCardName': 'Net Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
       isPaginated: true,
       isPaginationSimple: false
     }

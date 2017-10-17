@@ -3,7 +3,7 @@
 
     <div class="columns">
       <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>New Task +</b></h6>
+        <h6 style="margin-top: 16px"><b>New Project +</b></h6>
       </div>
       <div class="column" align="right">
         <button class="button no-border">
@@ -14,7 +14,7 @@
 
     <div class="columns">
       <div class="column">
-        <input class="input title-field" type="text" placeholder="Task name">
+        <input class="input title-field" type="text" placeholder="Project name">
       </div>
     </div>
 

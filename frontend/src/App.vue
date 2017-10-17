@@ -16,6 +16,8 @@
           <span v-if="index == 4">Done Project</span>
           <span v-if="index == 5">Project Management</span>
           <span v-if="index == 6">Request Project</span>
+          <span v-if="index == 7">Create Project</span>
+          <span v-if="index == 8">Update Project</span>
           <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined is-danger app--logout-button pull-right" @click="logout()">
             Logout
           </button>
@@ -85,9 +87,11 @@ export default {
       if (this.$route.path === '/home') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
-      if (this.$route.path === '/termination-project') { return '4' }
+      if (this.$route.path === '/done-project') { return '4' }
       if (this.$route.path === '/project-management') { return '5' }
       if (this.$route.path === '/request-project') { return '6' }
+      if (this.$route.path === '/create-project') { return '7' }
+      if (this.$route.path === '/update-project') { return '8' }
     }
   },
   methods: {

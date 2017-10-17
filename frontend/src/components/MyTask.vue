@@ -2,8 +2,8 @@
   <div class="my-task--container">
     <section class="my-task-table--body">
       <div class="my-task--button" align="right">
-        <button class="button is-primary" @click="registerTask()">
-          <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
+        <button class="button is-primary" @click="createCard()">
+          <i class="fa fa-plus" aria-hidden="true"> Create Card</i>
         </button>
       </div>
       <b-table
@@ -52,11 +52,17 @@
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Test Task1', 'taskCardName': 'Test Task Card1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Test Task2', 'taskCardName': 'Test Task Card2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Task', 'taskCardName': 'Net Task Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
+      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'Login authentication test', 'registeredDate': '2017-08-23', 'writer': 'Net', 'status': 'In progress' },
+    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Register Card', 'registeredDate': '2017-08-1', 'writer': 'Bob', 'status': 'In progress' },
+    { 'no': 3, 'taskName': 'Net Experiment', 'taskCardName': 'Net Project Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' },
+  { 'no': 3, 'taskName': 'Machine Learning', 'taskCardName': 'Decoration CSS', 'registeredDate': '2017-07-21', 'writer': 'Net', 'status': 'In progress' }],
       isPaginated: true,
       isPaginationSimple: false
+    }
+  },
+  methods: {
+    createCard () {
+      this.$router.replace({ path: '/create-card' })
     }
   }
 }

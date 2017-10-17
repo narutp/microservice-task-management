@@ -2,9 +2,6 @@
   <div class="done-task--container">
     <section class="done-task-table--body">
       <div class="done-task--button" align="right">
-        <button class="button is-primary" @click="registerTask()">
-          <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
-        </button>
       </div>
       <b-table
           class="done-task--table"
