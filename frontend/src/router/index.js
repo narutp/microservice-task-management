@@ -11,6 +11,7 @@ import UpdateTaskCard from '@/components/UpdateTaskCard'
 import MyTask from '@/components/MyTask'
 import DepartmentTask from '@/components/DepartmentTask'
 import TaskManagement from '@/components/TaskManagement'
+import DoneTask from '@/components/DoneTask'
 
 Vue.use(Router)
 
@@ -32,27 +33,27 @@ export default new Router({
       component: Home
     },
     {
-      path: '/my-task',
+      path: '/my-project',
       name: 'MyTask',
       component: MyTask
     },
     {
-      path: '/create-task',
+      path: '/create-project',
       name: 'CreateTask',
       component: CreateTask
     },
     {
-      path: '/update-task',
+      path: '/update-project',
       name: 'UpdateTask',
       component: UpdateTask
     },
     {
-      path: '/create-task-card',
+      path: '/create-card',
       name: 'CreateTaskCard',
       component: CreateTaskCard
     },
     {
-      path: '/update-task-card',
+      path: '/update-card',
       name: 'UpdateTaskCard',
       component: UpdateTaskCard
     },
@@ -62,14 +63,19 @@ export default new Router({
       component: AddParticipants
     },
     {
-      path: '/task-management',
+      path: '/project-management',
       name: 'TaskManagement',
       component: TaskManagement
     },
     {
-      path: '/department-task',
+      path: '/department-project',
       name: 'DepartmentTask',
       component: DepartmentTask
+    },
+    {
+      path: '/done-project',
+      name: 'DoneTask',
+      component: DoneTask
     }
   ]
 })
