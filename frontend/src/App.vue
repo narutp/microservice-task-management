@@ -16,6 +16,9 @@
           <span v-if="index == 4">Termination Task</span>
           <span v-if="index == 5">Task Management</span>
           <span v-if="index == 6">Request Task</span>
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-danger app--logout-button pull-right" @click="logout()">
+            Logout
+          </button>
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <div class="app--user">
@@ -91,6 +94,9 @@ export default {
     ...mapActions({
       setUser: 'SET_USER'
     }),
+    logout () {
+      this.$router.replace({ path: '/' })
+    },
     TaskStatementClicked () {
       this.$router.replace({ path: '/home' })
     },
@@ -139,6 +145,9 @@ export default {
 .app--menu-item.is-active {
   background-color: #2A323B;
   color: white;
+}
+.app--logout-button {
+  margin: 5px;
 }
 .left {
   /*background-color: #2A323B;*/
