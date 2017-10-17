@@ -1,13 +1,22 @@
 <template lang="html">
-  <div class="">
-    <button type="button" name="button" @click="get()">A</button>
-    {{ getUser }}
+  <div class="home--container">
+    <el-row class="home--chart">
+      <el-col :span="12">
+        <horizontal-bar-participant></horizontal-bar-participant>
+      </el-col>
+      <el-col :span="12">
+        <doughnut-department></doughnut-department>
+      </el-col>
+      <bar-task :height="120"></bar-task>
+    </el-row>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Axios from 'axios'
+import BarTask from '@/components/Chart/BarTask'
+import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
+import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
 export default {
   async mounted () {
     await this.setUser()
@@ -20,17 +29,19 @@ export default {
   methods: {
     ...mapActions({
       setUser: 'SET_USER'
-    }),
-    get () {
-      Axios.get(`http://localhost:8090/users/`).then(function (response) {
-        console.log(response.data)
-      }).catch(function (error) {
-        console.log(error)
-      })
-    }
+    })
+  },
+  components: {
+    BarTask,
+    DoughnutDepartment,
+    HorizontalBarParticipant
   }
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.home--container {
+  background-color: #fff;
+  padding: 30px;
+}
 </style>

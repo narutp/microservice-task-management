@@ -18,7 +18,7 @@ let vuex = {
   },
   actions: {
     SET_USER ({ commit, data }) {
-      Axios.get(`http://localhost:8090/users/`).then(function (response) {
+      Axios.get(`http://localhost:8090/get/all-user/`).then(function (response) {
         console.log('get user' + response.data)
         commit('SET_USER', response.data)
       }).catch(function (error) {

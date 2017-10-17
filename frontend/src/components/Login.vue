@@ -1,18 +1,12 @@
 <template>
   <div class="login--container">
-    <div class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          Task Management System
-        </p>
-      </div>
-    </div>
     <div class="login--body">
       <div class="columns">
         <div class="column">
           <!-- Left column -->
         </div>
         <div class="column login--login-box">
+          <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
           <div class="field">
             <p class="control has-icons-left has-icons-right">
               <input v-model="username" class="input" type="" placeholder="Username">
@@ -29,13 +23,14 @@
               </span>
             </p>
           </div>
-          <div align="center">
-            <button class="button is-success" @click="login()">
+          <div>
+            <button class="button is-danger is-outlined login--button" @click="login()">
               Login
             </button>
-            <button class="button is-info" @click="register()">
+            <span class="login--signup" @click="register()">Forget your password? <b>Sign up</b></span>
+            <!-- <button class="button is-info" @click="register()">
               Register
-            </button>
+            </button> -->
           </div>
           <div class="notification is-danger" v-if="checkLoginFailed">
             Wrong username or password
@@ -87,24 +82,32 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.login--container {
+  background-color: #2A323B;
+  height: 700px;
+}
 .login--login-box {
-  border: 1px solid #c2cbd1;
   padding: 30px;
-  margin-top: 50px;
   margin-bottom: 75px;
 }
-
-.login--body {
-  margin: 30px;
+.login--user-icon {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
 }
-
+.login--button {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.login--signup {
+  color: #8E9296;
+  font-size: 14px;
+  cursor: pointer;
+}
 .notification.is-danger {
   margin-top: 15px;
-}
-
-.login--container {
-  background-color: white;
-  border-radius: 6px;
-  /*margin-top: 30px;*/
 }
 </style>
