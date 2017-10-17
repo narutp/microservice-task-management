@@ -153,7 +153,7 @@ public class TaskManagementRest {
 	@GET
 	@Path("get/all-user-log")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserLog> getAllUserLog() {
+	public List<UserLog> getAllUserLogAPI() {
 		return userLogDAO.getAllUserLog();
 	}
 	
@@ -237,7 +237,7 @@ public class TaskManagementRest {
 	@GET
 	@Path("delete-department/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteAPI(@PathParam("name") String name) {
+	public boolean deleteDepartmentAPI(@PathParam("name") String name) {
 		departmentDAO.deleteDepartment(name);;
 		return true;
 	}
@@ -245,7 +245,7 @@ public class TaskManagementRest {
 	@GET
 	@Path("delete-position/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deletepAPI(@PathParam("name") String name) {
+	public boolean deletePositionAPI(@PathParam("name") String name) {
 		positionDAO.deletePosition(name);;
 		return true;
 	}
