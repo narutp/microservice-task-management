@@ -196,7 +196,7 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@GET
+	@POST
 	@Path("create/department/{name}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean createDepartmentAPI(@PathParam("name") String name){
@@ -207,7 +207,7 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@GET
+	@POST
 	@Path("create/position/{name}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean createPositionAPI(@PathParam("name") String name){
@@ -235,7 +235,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("delete-department/{name}")
+	@Path("delete/department/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteAPI(@PathParam("name") String name) {
 		departmentDAO.deleteDepartment(name);;
@@ -243,7 +243,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("delete-position/{name}")
+	@Path("delete/position/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deletepAPI(@PathParam("name") String name) {
 		positionDAO.deletePosition(name);;
