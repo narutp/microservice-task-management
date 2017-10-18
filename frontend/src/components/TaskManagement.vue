@@ -19,7 +19,7 @@
               </b-table-column>
 
               <b-table-column field="taskName" label="Project Name" sortable>
-                  {{ props.row.taskName }}
+                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.taskName }} </span></u>
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Card Name" sortable>
@@ -62,6 +62,9 @@ export default {
   methods: {
     createProject () {
       this.$router.replace({ path: '/create-project' })
+    },
+    updateProject () {
+      this.$router.replace({ path: '/update-project' })
     }
   }
 }
@@ -75,5 +78,10 @@ export default {
 }
 .task-management--table {
   margin-top: 20px;
+}
+.project-management--span-task-name {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
 }
 </style>

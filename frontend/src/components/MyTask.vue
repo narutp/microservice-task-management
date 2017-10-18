@@ -23,7 +23,7 @@
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Task Card Name" sortable>
-                  {{ props.row.taskCardName }}
+                  <u><span @click="updateCard()" class="my-task--span-task-name">{{ props.row.taskCardName }}</span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -63,6 +63,9 @@ export default {
   methods: {
     createCard () {
       this.$router.replace({ path: '/create-card' })
+    },
+    updateCard () {
+      this.$router.replace({ path: '/update-card' })
     }
   }
 }
@@ -75,5 +78,10 @@ export default {
 }
 .my-task--table {
   margin-top: 20px;
+}
+.my-task--span-task-name {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
 }
 </style>

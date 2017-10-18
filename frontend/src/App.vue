@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined is-danger app--logout-button pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined app--logout-button pull-right" @click="logout()">
             Logout
           </button>
         </div>
