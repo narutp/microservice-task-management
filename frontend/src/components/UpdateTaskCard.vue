@@ -26,27 +26,16 @@
               <b-icon icon="arrow_drop_down"></b-icon>
             </button>
             <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
+            <b-dropdown-item>Big Data</b-dropdown-item>
+            <b-dropdown-item>Net Experiment</b-dropdown-item>
+            <b-dropdown-item>Machine Learning</b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <textarea class="textarea" placeholder="1st page is okay.
-2nd page * add popup on this page to let interns know it's POPUP!!
-
-3rd page No idea as well T ^ T
-
-4nd page
-- Add confirmation popup requirement when you want to delete something
-- Page selection should be like this << < 1 2 3 4 5 ... > >>
-• <<, >> mean Go to first page/last page
-• <,> mean Go to next 5 pages
-• ... mean go to xxx page (Popup and input the number)
-- Should we add scroll bar in panel on the left?
-4.1~4.2 is Okay"></textarea>
+        <textarea class="textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></textarea>
       </div>
     </div>
 
@@ -121,7 +110,7 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Create task card</a>
+          <a class="button is-dark">Update Card</a>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 
     <div class="columns">
       <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>Update Task</b></h6>
+        <h6 style="margin-top: 16px"><b>Update Project</b></h6>
       </div>
       <div class="column" align="right">
         <button class="button no-border">

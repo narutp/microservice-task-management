@@ -2,8 +2,8 @@
   <div class="task-management--container">
     <section class="task-management-table--body">
       <div class="task-management--button" align="right">
-        <button class="button is-primary" @click="registerTask()">
-          <i class="fa fa-plus" aria-hidden="true"> Create Task</i>
+        <button class="button is-primary" @click="createProject()">
+          <i class="fa fa-plus" aria-hidden="true"> Create Project</i>
         </button>
       </div>
       <b-table
@@ -18,11 +18,11 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Task Name" sortable>
+              <b-table-column field="taskName" label="Project Name" sortable>
                   {{ props.row.taskName }}
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Task Card Name" sortable>
+              <b-table-column field="taskCardName" label="Card Name" sortable>
                   {{ props.row.taskCardName }}
               </b-table-column>
 
@@ -52,11 +52,16 @@
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Test Task1', 'taskCardName': 'Test Task Card1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Test Task2', 'taskCardName': 'Test Task Card2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Task', 'taskCardName': 'Net Task Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
+      tableData: [{ 'no': 1, 'taskName': 'Test Project 1', 'taskCardName': 'Test Card 1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 2, 'taskName': 'Test Project 2', 'taskCardName': 'Test Card 2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
+    { 'no': 3, 'taskName': 'Net Project', 'taskCardName': 'Net Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
       isPaginated: true,
       isPaginationSimple: false
+    }
+  },
+  methods: {
+    createProject () {
+      this.$router.replace({ path: '/create-project' })
     }
   }
 }

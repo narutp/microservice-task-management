@@ -7,15 +7,20 @@
     <div class="app--body">
       <el-row>
         <div class="app--title">
-          <b>Task Management | </b>
+          <b>Microservice Task Management | </b>
           <span v-if="$route.path === '/'">Sign in</span>
           <span v-if="$route.path === '/register'">Sign up</span>
           <span v-if="index == 1">Dashboard</span>
-          <span v-if="index == 2">My Task</span>
-          <span v-if="index == 3">Department Task</span>
-          <span v-if="index == 4">Termination Task</span>
-          <span v-if="index == 5">Task Management</span>
-          <span v-if="index == 6">Request Task</span>
+          <span v-if="index == 2">My Project</span>
+          <span v-if="index == 3">Department Project</span>
+          <span v-if="index == 4">Done Project</span>
+          <span v-if="index == 5">Project Management</span>
+          <span v-if="index == 6">Request Project</span>
+          <span v-if="index == 7">Create Project</span>
+          <span v-if="index == 8">Update Project</span>
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined is-danger app--logout-button pull-right" @click="logout()">
+            Logout
+          </button>
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
           <div class="app--user">
@@ -25,26 +30,26 @@
             </div>
           </div>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
-            <hr><el-menu-item-group title="Task">
-              <el-menu-item index="1" class="app--menu-item" @click="TaskStatementClicked()">
-                <template slot="title">Task Statement</template>
+            <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
+              <template slot="title">Dashboard</template>
+            </el-menu-item>
+            <hr><el-menu-item-group title="Project">
+              <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
+                <template slot="title">My Project</template>
               </el-menu-item>
-              <el-menu-item index="2" class="app--menu-item" @click="MyTaskClicked()">
-                <template slot="title">My Task</template>
+              <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
+                <template slot="title">Department Project</template>
               </el-menu-item>
-              <el-menu-item index="3" class="app--menu-item" @click="DepartmentTaskClicked()">
-                <template slot="title">Department Task</template>
-              </el-menu-item>
-              <el-menu-item index="4" class="app--menu-item" @click="TerminationTaskClicked()">
-                <template slot="title">Termination Task</template>
+              <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
+                <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
             <hr><el-menu-item-group title="Management">
-              <el-menu-item index="5" class="app--menu-item" @click="TaskManagementClicked()">
-                <template slot="title">Task Management</template>
+              <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
+                <template slot="title">Project Management</template>
               </el-menu-item>
-              <el-menu-item index="6" class="app--menu-item" @click="RequestTaskClicked()">
-                <template slot="title">Request Task</template>
+              <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
+                <template slot="title">Request Project</template>
               </el-menu-item>
             </el-menu-item-group>
           </el-menu>
@@ -80,34 +85,39 @@ export default {
     }),
     index () {
       if (this.$route.path === '/home') { return '1' }
-      if (this.$route.path === '/my-task') { return '2' }
-      if (this.$route.path === '/department-task') { return '3' }
-      if (this.$route.path === '/termination-task') { return '4' }
-      if (this.$route.path === '/task-management') { return '5' }
-      if (this.$route.path === '/request-task') { return '6' }
+      if (this.$route.path === '/my-project') { return '2' }
+      if (this.$route.path === '/department-project') { return '3' }
+      if (this.$route.path === '/done-project') { return '4' }
+      if (this.$route.path === '/project-management') { return '5' }
+      if (this.$route.path === '/request-project') { return '6' }
+      if (this.$route.path === '/create-project') { return '7' }
+      if (this.$route.path === '/update-project') { return '8' }
     }
   },
   methods: {
     ...mapActions({
       setUser: 'SET_USER'
     }),
-    TaskStatementClicked () {
+    logout () {
+      this.$router.replace({ path: '/' })
+    },
+    DashboardClicked () {
       this.$router.replace({ path: '/home' })
     },
-    MyTaskClicked () {
-      this.$router.replace({ path: '/my-task' })
+    MyProjectClicked () {
+      this.$router.replace({ path: '/my-project' })
     },
-    TaskManagementClicked () {
-      this.$router.replace({ path: '/task-management' })
+    ProjectManagementClicked () {
+      this.$router.replace({ path: '/project-management' })
     },
-    TerminationTaskClicked () {
-      this.$router.replace({ path: '/termination-task' })
+    DoneProjectClicked () {
+      this.$router.replace({ path: '/done-project' })
     },
-    RequestTaskClicked () {
-      this.$router.replace({ path: '/request-task' })
+    RequestProjectClicked () {
+      this.$router.replace({ path: '/request-project' })
     },
-    DepartmentTaskClicked () {
-      this.$router.replace({ path: '/department-task' })
+    DepartmentProjectClicked () {
+      this.$router.replace({ path: '/department-project' })
     }
   }
 }
@@ -139,6 +149,9 @@ export default {
 .app--menu-item.is-active {
   background-color: #2A323B;
   color: white;
+}
+.app--logout-button {
+  margin: 5px;
 }
 .left {
   /*background-color: #2A323B;*/
