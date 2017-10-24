@@ -26,8 +26,7 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ getUser }}
-              {{ getUser[0] }}
+              {{ getUser.name }}
             </div>
           </div>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -101,7 +100,6 @@ export default {
     // }),
     logout () {
       this.$router.replace({ path: '/' })
-      console.log(localStorage)
     },
     DashboardClicked () {
       this.$router.replace({ path: '/home' })

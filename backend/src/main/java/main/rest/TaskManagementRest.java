@@ -115,6 +115,7 @@ public class TaskManagementRest {
 	@Path("check/username/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean checkUsernameAPI(@PathParam("username") String username) {
+		System.out.println("aefhkeahfahfaeilefhail");
 		return userDAO.isUsernameExist(username);
 	}
 	
@@ -122,8 +123,7 @@ public class TaskManagementRest {
 	@Path("get/user/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserByIdAPI(@PathParam("id") String id) {
-		User user = userDAO.getUserById(id);
-		return user;
+		return userDAO.getUserById(id);
 	}
 	
 	@GET
@@ -254,8 +254,7 @@ public class TaskManagementRest {
 	@Path("get/user/username/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserByUsernameAPI(@PathParam("username") String username) {
-		User user = userDAO.getUserByUsername(username);
-		return user;
+		return userDAO.getUserByUsername(username);
 	}
 	
 }
