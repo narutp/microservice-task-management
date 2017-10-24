@@ -219,4 +219,12 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		return this.mongoOps.find(query, UserLog.class, collection);
 	}
 
+	@Override
+	public User getUserByUsername(String username) {
+		collection = MongoDBMain.getUserCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("usernanme").is(username));
+		return this.mongoOps.findOne(query, User.class, collection);
+	}
+
 }
