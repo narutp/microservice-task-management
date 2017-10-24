@@ -119,7 +119,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/user/{id}")
+	@Path("get/user/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserByIdAPI(@PathParam("id") String id) {
 		User user = userDAO.getUserById(id);
@@ -248,6 +248,14 @@ public class TaskManagementRest {
 	public boolean deletePositionAPI(@PathParam("name") String name) {
 		positionDAO.deletePosition(name);;
 		return true;
+	}
+	
+	@GET
+	@Path("get/user/username/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserByUsernameAPI(@PathParam("username") String username) {
+		User user = userDAO.getUserByUsername(username);
+		return user;
 	}
 	
 }

@@ -23,4 +23,6 @@ public interface UserDAO {
 	public boolean isEmailExist (String email);
 	
 	public boolean checkPasswordById (String id, String password);
+	
+	public User getUserByUsername (String username);
 }

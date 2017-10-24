@@ -26,7 +26,7 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ getUser[0].name }}
+              {{ getUser }}
               {{ getUser[0] }}
             </div>
           </div>
@@ -70,16 +70,16 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   components: {
     Navbar,
     Footerbar
   },
-  async mounted () {
-    await this.setUser()
-  },
+  // async mounted () {
+  //   await this.setUser()
+  // },
   computed: {
     ...mapGetters({
       getUser: 'GET_USER'
@@ -96,12 +96,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      setUser: 'SET_USER'
-    }),
+    // ...mapActions({
+    //   setUser: 'SET_USER'
+    // }),
     logout () {
       this.$router.replace({ path: '/' })
-      localStorage.clear()
       console.log(localStorage)
     },
     DashboardClicked () {

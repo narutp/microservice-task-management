@@ -17,9 +17,15 @@ let vuex = {
     }
   },
   actions: {
-    SET_USER ({ commit, data }) {
-      Axios.get(`http://localhost:8090/get/all-user/`).then(function (response) {
-        console.log('get user' + response)
+    SET_USER ({ commit, data }, username) {
+      // Axios.get(`http://localhost:8090/get/all-user/`).then(function (response) {
+      //   console.log('get user' + response)
+      //   commit('SET_USER', response.data)
+      // }).catch(function (error) {
+      //   console.log(error)
+      // })
+      Axios.get(`http://localhost:8090/get/user/username/${username}`).then(function (response) {
+        console.log('get user ' + username)
         commit('SET_USER', response.data)
       }).catch(function (error) {
         console.log(error)
