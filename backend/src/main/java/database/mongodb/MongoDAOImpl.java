@@ -63,6 +63,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 
 	@Override
 	public List<User> getAllUser() {
+		System.out.println("aefhkeahfahfaeilefhail");
+		System.out.println("ALL");
 		collection = MongoDBMain.getUserCollection();
 		return this.mongoOps.findAll(User.class, collection);
 	}
@@ -71,6 +73,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public User getUserById(String id) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
+		System.out.println(id);
 		query.addCriteria(Criteria.where("idUser").is(id));
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
@@ -223,7 +226,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public User getUserByUsername(String username) {
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("usernanme").is(username));
+		query.addCriteria(Criteria.where("username").is(username));
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
 
