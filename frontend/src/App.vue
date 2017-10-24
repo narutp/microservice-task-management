@@ -72,12 +72,21 @@ import Footerbar from '@/components/Footer.vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'app',
+  data () {
+    return {
+      // user: this.getUser
+    }
+  },
   components: {
     Navbar,
     Footerbar
   },
   // async mounted () {
   //   await this.setUser()
+  // },
+  // mounted () {
+  //   this.user = this.getUser
+  //   console.log('a ' + this.getUser)
   // },
   computed: {
     ...mapGetters({
