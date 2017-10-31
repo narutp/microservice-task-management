@@ -9,23 +9,25 @@
               <div class="register--form-title" align="left">
                 <b>Account</b>
               </div>
-              <el-form-item class="register--form-item">
-                <el-row>
-                  <el-col :span="12">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="name">
                     <el-input v-model="form.name" placeholder="Name"></el-input>
-                  </el-col>
-                  <el-col :span="12">
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item">
                     <el-date-picker
                       class="register--form-item"
                       v-model="form.birthdate"
                       type="date"
                       placeholder="Birthdate">
                     </el-date-picker>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+                  </el-form-item>
+                </el-col>
+              </el-row>
               <el-form-item class="register--form-item" prop="phone">
-                <el-input v-model="form.phone" placeholder="Phone"></el-input>
+                <el-input v-model.number="form.phone" placeholder="Phone"></el-input>
               </el-form-item>
               <div class="register--form-title" align="left">
                 <b>Personal Information</b>
@@ -98,6 +100,17 @@ import Axios from 'axios'
 // Axios.defaults.baseURL = 'http://192.168.1.131:8080'
 export default {
   data () {
+    let checkName = (rule, value, callback) => {
+      console.log(value)
+      let regex = /^[A-Za-z]+$/
+      if (!value) {
+        callback(new Error('Please fill in your name'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Name must only be in alphabetic'))
+      } else {
+        callback()
+      }
+    }
     return {
       form: {
         name: '',
@@ -108,6 +121,15 @@ export default {
         email: '',
         userId: '',
         userPass: ''
+      },
+      rules: {
+        name: [
+          { validator: checkName }
+        ],
+        phone: [
+          { required: true, message: 'Please fill in your phone number' },
+          { type: 'number', message: 'Phone must be in numeric' }
+        ]
       }
     }
   },
