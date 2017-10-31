@@ -21,7 +21,8 @@
                       class="register--form-item"
                       v-model="form.birthdate"
                       type="date"
-                      placeholder="Birthdate">
+                      placeholder="Birthdate"
+                      :picker-options="dateOption">
                     </el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -104,7 +105,7 @@ export default {
   data () {
     let checkName = (rule, value, callback) => {
       // alphabetic regular expression (Both Uppercase and Lowercase)
-      let regex = /^[A-Za-z]+$/
+      let regex = /^[A-Za-z ]+$/
       if (!value) {
         callback(new Error('Please input your name'))
       } else if (value.length > 20) {
@@ -156,8 +157,10 @@ export default {
       let numericRegex = /^(0|[0-9][0-9]*)$/
       if (value === '') {
         callback(new Error('Please input your phone number'))
+      } else if (value.length > 11) {
+        callback(new Error('Your phone must be at most 11 numbers'))
       } else if (!value.match(numericRegex)) {
-        callback(new Error('Phone must be in numeric'))
+        callback(new Error('Your phone must be in numeric'))
       } else {
         callback()
       }
@@ -173,6 +176,11 @@ export default {
         username: '',
         password: '',
         rePassword: ''
+      },
+      dateOption: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e7
+        }
       },
       rules: {
         name: [
@@ -205,9 +213,10 @@ export default {
   },
   methods: {
     submitForm (form) {
+      var self = this
       this.$refs[form].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          self.register()
         } else {
           console.log('error submit!!')
           return false
