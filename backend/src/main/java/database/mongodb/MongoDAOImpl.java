@@ -1,6 +1,7 @@
 
 package database.mongodb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -228,6 +229,18 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		Query query = new Query();
 		query.addCriteria(Criteria.where("username").is(username));
 		return this.mongoOps.findOne(query, User.class, collection);
+	}
+
+	@Override
+	public List<String> getIdUserListByDepartmentName(String departmentName) {
+		String idDepartment = getDepartmentByName(departmentName).getIdDepartment();
+		List<User> allUser = getAllUser();
+		List<String> idUserList = new ArrayList<String>();
+		for(User user : allUser) {
+			if(user.getIdDepartment().equals(idDepartment))
+				idUserList.add(user.getIdUser());
+		}
+		return idUserList;
 	}
 
 }

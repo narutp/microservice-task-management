@@ -25,4 +25,6 @@ public interface UserDAO {
 	public boolean checkPasswordById (String id, String password);
 	
 	public User getUserByUsername (String username);
+	
+	public List<String> getIdUserListByDepartmentName (String departmentName);
 }

@@ -257,4 +257,12 @@ public class TaskManagementRest {
 		return userDAO.getUserByUsername(username);
 	}
 	
+	@GET
+	@Path("get/user-list/department/{departmentName}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
+		return userDAO.getIdUserListByDepartmentName(departmentName);
+	}
+	
+	
 }
