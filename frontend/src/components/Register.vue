@@ -101,10 +101,10 @@ import Axios from 'axios'
 export default {
   data () {
     let checkName = (rule, value, callback) => {
-      console.log(value)
+      // alphabetic regular expression (Both Uppercase and Lowercase)
       let regex = /^[A-Za-z]+$/
       if (!value) {
-        callback(new Error('Please fill in your name'))
+        callback(new Error('Please input your name'))
       } else if (!value.match(regex)) {
         callback(new Error('Name must only be in alphabetic'))
       } else {
@@ -127,8 +127,12 @@ export default {
           { validator: checkName }
         ],
         phone: [
-          { required: true, message: 'Please fill in your phone number' },
+          { required: true, message: 'Please input your phone number' },
           { type: 'number', message: 'Phone must be in numeric' }
+        ],
+        email: [
+          { required: true, message: 'Please input your email address', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address format', trigger: 'blur,change' }
         ]
       }
     }
