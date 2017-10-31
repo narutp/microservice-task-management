@@ -5,7 +5,7 @@
         <el-col>
           <div class="register--register-box">
             <i class="fa fa-user-circle fa-5x register--user-icon" aria-hidden="true"></i>
-            <el-form label-position="top" label-width="150px" :model="form" :rules="rules">
+            <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
               <div class="register--form-title" align="left">
                 <b>Account</b>
               </div>
@@ -82,7 +82,7 @@
               </el-row>
             </el-form>
             <div>
-              <button class="button is-success is-outlined register--button" @click="register()">
+              <button class="button is-success is-outlined register--button" @click="submitForm('form')">
                 Register
               </button>
               <span class="register--backlogin" @click="backLogin()">Already have account? <b>Sign in</b></span>
@@ -195,6 +195,16 @@ export default {
     }
   },
   methods: {
+    submitForm (form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
     backLogin () {
       this.$router.replace({ path: '/' })
     },
