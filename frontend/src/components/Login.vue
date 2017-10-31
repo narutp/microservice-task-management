@@ -45,10 +45,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Axios from 'axios'
-// Axios.defaults.baseURL = 'http://192.168.1.131:8080'
-// Axios.defaults.headers.post['Accept'] = 'application/json'
-// Axios.defaults.headers.post['Content-Type'] = 'application/json'
 export default {
   data () {
     return {
@@ -67,6 +65,7 @@ export default {
       let self = this
       Axios.get(`http://localhost:8090/login/${this.username}/${this.password}`).then(function (response) {
         if (response.data === true) {
+          self.setUser(self.username)
           self.$router.replace({ path: '/home' })
           self.checkLoginFailed = false
         } else {
@@ -75,7 +74,10 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
-    }
+    },
+    ...mapActions({
+      setUser: 'SET_USER'
+    })
   }
 }
 </script>

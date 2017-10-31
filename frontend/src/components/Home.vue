@@ -13,23 +13,23 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions } from 'vuex'
 import BarTask from '@/components/Chart/BarTask'
 import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
 import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
 export default {
-  async mounted () {
-    await this.setUser()
-  },
+  // async mounted () {
+  //   await this.setUser('asd')
+  // },
   computed: {
-    ...mapGetters({
-      getUser: 'GET_USER'
-    })
+    // ...mapGetters({
+    //   getUser: 'GET_USER'
+    // })
   },
   methods: {
-    ...mapActions({
-      setUser: 'SET_USER'
-    })
+    // ...mapActions({
+    //   setUser: 'SET_USER'
+    // })
   },
   components: {
     BarTask,

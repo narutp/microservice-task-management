@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined is-danger app--logout-button pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined app--logout-button pull-right" @click="logout()">
             Logout
           </button>
         </div>
@@ -26,7 +26,7 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ getUser[0].name }}
+              {{ getUser.name }}
             </div>
           </div>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -69,16 +69,25 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
+  data () {
+    return {
+      // user: this.getUser
+    }
+  },
   components: {
     Navbar,
     Footerbar
   },
-  async mounted () {
-    await this.setUser()
-  },
+  // async mounted () {
+  //   await this.setUser()
+  // },
+  // mounted () {
+  //   this.user = this.getUser
+  //   console.log('a ' + this.getUser)
+  // },
   computed: {
     ...mapGetters({
       getUser: 'GET_USER'
@@ -95,9 +104,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      setUser: 'SET_USER'
-    }),
+    // ...mapActions({
+    //   setUser: 'SET_USER'
+    // }),
     logout () {
       this.$router.replace({ path: '/' })
     },
