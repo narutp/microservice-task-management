@@ -112,11 +112,15 @@ export default {
       }
     }
     let checkUsername = (rule, value, callback) => {
-      let regex = /^[A-Za-z]+$/
+      let regex = /^[A-Za-z0-9]+$/
+      let numericRegex = /^(0|[1-9][0-9]*)$/
+      let alphabeticRegex = /^[A-Za-z]+$/
       if (!value) {
         callback(new Error('Please input your name'))
+      } else if (value.match(numericRegex) || value.match(alphabeticRegex)) {
+        callback(new Error('Name must contain with both letters and numbers'))
       } else if (!value.match(regex)) {
-        callback(new Error('Name must only be in alphabetic'))
+        callback(new Error('Name must contain with only letters and numbers'))
       } else {
         callback()
       }
