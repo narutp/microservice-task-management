@@ -44,16 +44,18 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              <el-form-item class="register--form-item">
-                <el-row>
-                  <el-col :span="12">
-                    <el-input type="password" v-model="form.userPass" placeholder="Password"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <el-input type="password" placeholder="Re-enter Password"></el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="password">
+                    <el-input type="password" v-model="form.password" placeholder="Password"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="rePassword">
+                    <el-input type="password" v-model="form.rePassword" placeholder="Re-enter Password"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
               <div class="register--form-title" align="left">
                 <b>Information</b>
               </div>
@@ -105,6 +107,8 @@ export default {
       let regex = /^[A-Za-z]+$/
       if (!value) {
         callback(new Error('Please input your name'))
+      } else if (value.length > 20) {
+        callback(new Error('Your name must be at most 20 characters'))
       } else if (!value.match(regex)) {
         callback(new Error('Name must only be in alphabetic'))
       } else {
@@ -116,11 +120,34 @@ export default {
       let numericRegex = /^(0|[1-9][0-9]*)$/
       let alphabeticRegex = /^[A-Za-z]+$/
       if (!value) {
-        callback(new Error('Please input your name'))
+        callback(new Error('Please input your username'))
+      } else if (value.length < 6 || value.length > 16) {
+        callback(new Error('Your username length must be 6-16 characters'))
       } else if (value.match(numericRegex) || value.match(alphabeticRegex)) {
-        callback(new Error('Name must contain with both letters and numbers'))
+        callback(new Error('Username must contain with both letters and numbers'))
       } else if (!value.match(regex)) {
-        callback(new Error('Name must contain with only letters and numbers'))
+        callback(new Error('Username must contain with only letters and numbers'))
+      } else {
+        callback()
+      }
+    }
+    let checkPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the password'))
+      } else if (value.length < 8 || value.length > 20) {
+        callback(new Error('Your password length must be 8-20 characters'))
+      } else {
+        if (this.form.rePassword !== '') {
+          this.$refs.form.validateField('rePassword')
+        }
+        callback()
+      }
+    }
+    let checkRePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the re-password'))
+      } else if (value !== this.form.password) {
+        callback(new Error('Your both password is not match'))
       } else {
         callback()
       }
@@ -134,7 +161,8 @@ export default {
         position: '',
         email: '',
         username: '',
-        userPass: ''
+        password: '',
+        rePassword: ''
       },
       rules: {
         name: [
@@ -150,6 +178,18 @@ export default {
         ],
         username: [
           { validator: checkUsername }
+        ],
+        password: [
+          { validator: checkPass }
+        ],
+        rePassword: [
+          { validator: checkRePass }
+        ],
+        department: [
+          { required: true, message: 'Please pick your department' }
+        ],
+        position: [
+          { required: true, message: 'Please pick your position' }
         ]
       }
     }
@@ -164,7 +204,7 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
-      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.userPass}`).then(function (response) {
+      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.password}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
