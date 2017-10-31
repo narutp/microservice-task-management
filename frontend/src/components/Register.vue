@@ -5,7 +5,7 @@
         <el-col>
           <div class="register--register-box">
             <i class="fa fa-user-circle fa-5x register--user-icon" aria-hidden="true"></i>
-            <el-form label-position="top" label-width="150px" :model="form">
+            <el-form label-position="top" label-width="150px" :model="form" :rules="rules">
               <div class="register--form-title" align="left">
                 <b>Account</b>
               </div>
@@ -24,22 +24,24 @@
                   </el-col>
                 </el-row>
               </el-form-item>
-              <el-form-item class="register--form-item">
+              <el-form-item class="register--form-item" prop="phone">
                 <el-input v-model="form.phone" placeholder="Phone"></el-input>
               </el-form-item>
               <div class="register--form-title" align="left">
                 <b>Personal Information</b>
               </div>
-              <el-form-item class="register--form-item">
-                <el-row>
-                  <el-col :span="12">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="email">
                     <el-input v-model="form.email" placeholder="Email"></el-input>
-                  </el-col>
-                  <el-col :span="12">
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="username">
                     <el-input v-model="form.userId" placeholder="Username"></el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+                  </el-form-item>
+                </el-col>
+              </el-row>
               <el-form-item class="register--form-item">
                 <el-row>
                   <el-col :span="12">
@@ -53,25 +55,27 @@
               <div class="register--form-title" align="left">
                 <b>Information</b>
               </div>
-              <el-form-item class="register--form-item">
-                <el-row>
-                  <el-col :span="12">
-                    <el-select class="register--form-item" v-model="form.department" placeholder="Department">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="department">
+                      <el-select class="register--form-item" v-model="form.department" placeholder="Department">
                       <el-option label="A" value="A"></el-option>
                       <el-option label="B" value="B"></el-option>
                       <el-option label="C" value="C"></el-option>
                       <el-option label="D" value="D"></el-option>
                     </el-select>
-                  </el-col>
-                  <el-col :span="12">
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item class="register--form-item" prop="position">
                     <el-select class="register--form-item" v-model="form.position" placeholder="Position">
                       <el-option label="Intern" value="Intern"></el-option>
                       <el-option label="Professor" value="Professor"></el-option>
                       <el-option label="Student" value="Student"></el-option>
                     </el-select>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-form>
             <div>
               <button class="button is-success is-outlined register--button" @click="register()">
