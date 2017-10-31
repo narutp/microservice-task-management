@@ -27,7 +27,7 @@
                 </el-col>
               </el-row>
               <el-form-item class="register--form-item" prop="phone">
-                <el-input v-model.number="form.phone" placeholder="Phone"></el-input>
+                <el-input v-model="form.phone" placeholder="Phone"></el-input>
               </el-form-item>
               <div class="register--form-title" align="left">
                 <b>Personal Information</b>
@@ -152,6 +152,16 @@ export default {
         callback()
       }
     }
+    let checkPhone = (rule, value, callback) => {
+      let numericRegex = /^(0|[0-9][0-9]*)$/
+      if (value === '') {
+        callback(new Error('Please input your phone number'))
+      } else if (!value.match(numericRegex)) {
+        callback(new Error('Phone must be in numeric'))
+      } else {
+        callback()
+      }
+    }
     return {
       form: {
         name: '',
@@ -169,8 +179,7 @@ export default {
           { validator: checkName }
         ],
         phone: [
-          { required: true, message: 'Please input your phone number' },
-          { type: 'number', message: 'Phone must be in numeric' }
+          { validator: checkPhone }
         ],
         email: [
           { required: true, message: 'Please input your email address', trigger: 'blur' },
