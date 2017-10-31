@@ -40,7 +40,7 @@
                 </el-col>
                 <el-col :span="12">
                   <el-form-item class="register--form-item" prop="username">
-                    <el-input v-model="form.userId" placeholder="Username"></el-input>
+                    <el-input v-model="form.username" placeholder="Username"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -111,6 +111,16 @@ export default {
         callback()
       }
     }
+    let checkUsername = (rule, value, callback) => {
+      let regex = /^[A-Za-z]+$/
+      if (!value) {
+        callback(new Error('Please input your name'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Name must only be in alphabetic'))
+      } else {
+        callback()
+      }
+    }
     return {
       form: {
         name: '',
@@ -119,7 +129,7 @@ export default {
         department: '',
         position: '',
         email: '',
-        userId: '',
+        username: '',
         userPass: ''
       },
       rules: {
@@ -133,6 +143,9 @@ export default {
         email: [
           { required: true, message: 'Please input your email address', trigger: 'blur' },
           { type: 'email', message: 'Please input correct email address format', trigger: 'blur,change' }
+        ],
+        username: [
+          { validator: checkUsername }
         ]
       }
     }
@@ -147,7 +160,7 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
-      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.userId}/${this.form.userPass}`).then(function (response) {
+      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.userPass}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
