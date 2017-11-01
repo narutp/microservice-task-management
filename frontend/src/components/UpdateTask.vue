@@ -36,7 +36,6 @@
   <div>
     <div>
       <el-dialog title = "Update Project" :visible.sync="dialogClicked">
-        <span><b>{{projectName}}</b></span><hr>
         <div class="columns">
           <div class="column" align="right">
             <button class="button no-border">
@@ -48,23 +47,33 @@
           </div>
         </div>
 
-        <div class="columns">
-          <div class="column">
+        <el-row>
+          <div align="left">
+            Project Name
+          </div>
+        </el-row>
+
+        <el-row>
+          <div class="update-project--value">
             <input v-model="projectName" class="input title-field" type="text">
           </div>
-        </div>
+        </el-row>
 
-        <div class="columns">
-          <div class="column">
+        <el-row>
+          <div align="left">
+            Project Description
+          </div>
+        </el-row>
+
+        <el-row>
+          <div class="update-project--value">
             <textarea v-model="projectDescription" class="textarea"></textarea>
           </div>
-        </div>
+        </el-row>
 
-        <div class="columns" align="center">
-          <div class="column">
-              <a class="button is-dark">Update task</a>
-          </div>
-        </div>
+        <el-row>
+          <a class="button is-dark" @click="updateProject()">Update task</a>
+        </el-row>
       </el-dialog>
     </div>
   </div>
@@ -77,11 +86,18 @@ export default {
     return {
     }
   },
-  props: ['projectName', 'dialogClicked', 'projectDescription']
+  props: ['projectName', 'dialogClicked', 'projectDescription'],
+  methods: {
+    updateProject () {
+    }
+  }
 }
 </script>
 
 <style scoped>
+.update-project--value {
+  margin-bottom: 20px;
+}
 .create-section {
   margin: 20px;
 }
