@@ -7,6 +7,7 @@
         </button>
       </div>
       {{ tableData }}
+      {{ arrUsername }}
       <b-table
           class="task-management--table"
           :data="tableData"
@@ -20,7 +21,7 @@
               </b-table-column>
 
               <b-table-column field="projectName" label="Project Name" sortable>
-                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.projectName }} </span></u>
+                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.name }} </span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -41,15 +42,28 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'projectName': 'Test Project 1', 'registeredDate': '1', 'owner': 'Boo' },
-      { 'no': 2, 'projectName': 'Test Project 2', 'registeredDate': '2', 'owner': 'Boo' }]
+      tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'owner': 'Boo' },
+      { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'owner': 'Boo' }],
+      arrLength: 0,
+      arrUsername: []
     }
   },
-  beforeCreate () {
+  created () {
     // TODO: problem with core
-    var self = this
+    let self = this
     Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
       self.tableData = response.data
+      self.arrLength = response.data.length
+      for (var i = 0; i < self.arrLength; i++) {
+        let id = response.data[i].idUser
+        console.log('i before get' + i)
+        Axios.get(`http://localhost:8090/get/user/id/${id}`).then(function (response) {
+          self.arrUsername[i] = response.data.name
+          console.log('i while getting' + i)
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
     }).catch(function (error) {
       console.log(error)
     })
