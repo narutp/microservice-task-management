@@ -25,7 +25,9 @@
 
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Create task</a>
+        <button class="button is-success register--button" @click="createProject()">
+          Create Project
+        </button>
       </div>
     </div>
   </div>
@@ -39,8 +41,11 @@ export default {
     return {
       projectName: '',
       projectDescription: '',
-      userId: this.getUser
+      userId: ''
     }
+  },
+  created () {
+    this.userId = this.getUser.idUser
   },
   methods: {
     createProject () {
