@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="content" align="left">
+  <div class="create-task-card--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
@@ -14,10 +14,10 @@
 
     <div class="columns">
       <div class="column">
-        <input class="input title-field" type="text" placeholder="Card name">
+        <input v-model="cardName" class="input title-field" type="text" placeholder="Card name">
       </div>
       <div class="column" align="right">
-        <b-dropdown style="margin-top: 8px" align="left">
+        <b-dropdown v-model="project" style="margin-top: 8px" align="left">
             <button class="button" slot="trigger" style="width: 200px">
               <span> Select Project </span>
               <b-icon icon="arrow_drop_down"></b-icon>
@@ -32,33 +32,18 @@
 
     <div class="columns">
       <div class="column">
-        <textarea class="textarea" placeholder="Description"></textarea>
+        <textarea v-model="description" class="textarea" placeholder="Description"></textarea>
       </div>
     </div>
 
     <div class="columns">
-      <div class="column is-three-quarters" align="left">
-        <b-dropdown style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Start date </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Big Data</b-dropdown-item>
-            <b-dropdown-item>Net Experiment</b-dropdown-item>
-            <b-dropdown-item>Machine Learning</b-dropdown-item>
-        </b-dropdown>
-        <b-dropdown style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Finish date </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Big Data</b-dropdown-item>
-            <b-dropdown-item>Net Experiment</b-dropdown-item>
-            <b-dropdown-item>Machine Learning</b-dropdown-item>
-        </b-dropdown>
-
+      <div class="column is-three-quarters">
+        <el-date-picker
+          v-model="dateRange"
+          type="daterange"
+          range-separator=" to "
+          placeholder="Start date - End date">
+        </el-date-picker>
       </div>
       <div class="column" align="right">
         <button class="button" style="width: 200px" @click="addParticipant()">
@@ -120,11 +105,13 @@ export default {
   data () {
     return {
       tableData: [{ 'no': 1, 'taskName': 'Makhamwan', 'taskCardName': 'Department A', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 2, 'taskName': 'Net', 'taskCardName': 'Department A', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
-    { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
-      isPaginated: true,
-      isPaginationSimple: false
+      { 'no': 2, 'taskName': 'Net', 'taskCardName': 'Department A', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'INTERNAL' },
+      { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
+      { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
+      cardName: '',
+      project: '',
+      description: '',
+      dateRange: ''
     }
   },
   methods: {
