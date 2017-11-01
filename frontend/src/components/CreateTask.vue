@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="content" align="left">
-
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>New Project +</b></h6>
@@ -14,13 +13,13 @@
 
     <div class="columns">
       <div class="column">
-        <input class="input title-field" type="text" placeholder="Project name">
+        <input v-model="projectName" class="input title-field" type="text" placeholder="Project name">
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <textarea class="textarea" placeholder="Description"></textarea>
+        <textarea v-model="projectDescription" class="textarea" placeholder="Description"></textarea>
       </div>
     </div>
 
@@ -33,7 +32,32 @@
 </template>
 
 <script>
+import Axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
+  data () {
+    return {
+      projectName: '',
+      projectDescription: '',
+      userId: this.getUser
+    }
+  },
+  methods: {
+    createProject () {
+      // task api
+      let self = this
+      Axios.post(`http://localhost:8091/create/project/${this.projectName}/${this.projectDescription}/${this.userId}`).then(function (response) {
+        self.$router.replace({ path: '/project-management' })
+      }).catch(function (error) {
+        console.log(error)
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getUser: 'GET_USER'
+    })
+  }
 }
 </script>
 

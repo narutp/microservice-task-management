@@ -44,7 +44,7 @@
                 <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
-            <hr><el-menu-item-group title="Management" v-if="getUser.taskAuthority === true">
+            <hr><el-menu-item-group title="Management" v-if="getUser.taskAuthority === false">
               <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
                 <template slot="title">Project Management</template>
               </el-menu-item>
