@@ -72,7 +72,9 @@
         </el-row>
 
         <el-row>
-          <a class="button is-dark" @click="updateProject()">Update task</a>
+          <button class="button is-dark" @click="updateProject()">
+            Update Project
+          </button>
         </el-row>
       </el-dialog>
     </div>
@@ -80,15 +82,24 @@
 </template>
 
 <script>
-// import Axios from 'axios'
+import Axios from 'axios'
 export default {
   data () {
     return {
     }
   },
-  props: ['projectName', 'dialogClicked', 'projectDescription'],
+  props: ['projectName', 'dialogClicked', 'projectDescription', 'projectId'],
   methods: {
     updateProject () {
+      let self = this
+      Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`).then(function (response) {
+        self.$router.go({
+          path: '/document',
+          force: true
+        })
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
   }
 }
