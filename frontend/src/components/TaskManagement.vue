@@ -6,10 +6,11 @@
           <i class="fa fa-plus" aria-hidden="true"> Create Project</i>
         </button>
       </div>
+      {{ tableData }}
       <b-table
           class="task-management--table"
           :data="tableData"
-          :paginated="isPaginated"
+          :paginated="true"
           :per-page="7"
           default-sort="title">
 
@@ -18,29 +19,16 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Project Name" sortable>
-                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.taskName }} </span></u>
-              </b-table-column>
-
-              <b-table-column field="taskCardName" label="Card Name" sortable>
-                  {{ props.row.taskCardName }}
+              <b-table-column field="projectName" label="Project Name" sortable>
+                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.projectName }} </span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
                   {{ props.row.registeredDate }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Writer" sortable>
-                  {{ props.row.writer }}
-              </b-table-column>
-
-              <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'In progress'">
-                      {{ props.row.status }}
-                  </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
-                      {{ props.row.status }}
-                  </span>
+              <b-table-column field="owner" label="Owner" sortable>
+                  {{ props.row.owner }}
               </b-table-column>
           </template>
       </b-table>
@@ -49,15 +37,22 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Test Project 1', 'taskCardName': 'Test Card 1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Test Project 2', 'taskCardName': 'Test Card 2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Project', 'taskCardName': 'Net Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
-      isPaginated: true,
-      isPaginationSimple: false
+      tableData: [{ 'no': 1, 'projectName': 'Test Project 1', 'registeredDate': '1', 'owner': 'Boo' },
+      { 'no': 2, 'projectName': 'Test Project 2', 'registeredDate': '2', 'owner': 'Boo' }]
     }
+  },
+  beforeCreate () {
+    // TODO: problem with core
+    var self = this
+    Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
+      self.tableData = response.data
+    }).catch(function (error) {
+      console.log(error)
+    })
   },
   methods: {
     createProject () {
