@@ -74,7 +74,7 @@ public class TaskManagementRest {
 		project.setRegisteredDate(regisDate);
 		
 		projectDAO.createProject(project);
-		System.out.println("Create project: " + project);
+		System.out.println("Create project: " + project.getName());
 		return true;
 	}
 	

@@ -5,7 +5,7 @@
         <h6 style="margin-top: 16px"><b>New Project +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border">
+        <button class="button no-border" @click="back()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
@@ -48,14 +48,19 @@ export default {
     this.userId = this.getUser.idUser
   },
   methods: {
+    // TODO: problem with core
     createProject () {
       // task api
       let self = this
       Axios.post(`http://localhost:8091/create/project/${this.projectName}/${this.projectDescription}/${this.userId}`).then(function (response) {
-        self.$router.replace({ path: '/project-management' })
+        self.back()
       }).catch(function (error) {
+        self.back()
         console.log(error)
       })
+    },
+    back () {
+      this.$router.replace({ path: '/project-management' })
     }
   },
   computed: {
