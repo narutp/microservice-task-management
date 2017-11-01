@@ -6,7 +6,6 @@ import Home from '@/components/Home'
 import AddParticipants from '@/components/AddParticipants'
 import CreateTask from '@/components/CreateTask'
 import CreateTaskCard from '@/components/CreateTaskCard'
-import UpdateTask from '@/components/UpdateTask'
 import UpdateTaskCard from '@/components/UpdateTaskCard'
 import MyTask from '@/components/MyTask'
 import DepartmentTask from '@/components/DepartmentTask'
@@ -42,11 +41,6 @@ export default new Router({
       path: '/create-project',
       name: 'CreateTask',
       component: CreateTask
-    },
-    {
-      path: '/update-project',
-      name: 'UpdateTask',
-      component: UpdateTask
     },
     {
       path: '/create-card',

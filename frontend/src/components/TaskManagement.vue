@@ -7,7 +7,6 @@
         </button>
       </div>
       {{ tableData }}
-      {{ arrUsername }}
       <b-table
           class="task-management--table"
           :data="tableData"
@@ -21,7 +20,8 @@
               </b-table-column>
 
               <b-table-column field="projectName" label="Project Name" sortable>
-                  <u><span @click="updateProject()" class="project-management--span-task-name"> {{ props.row.name }} </span></u>
+                  <u><span @click="updateProject(props.row)" class="project-management--span-task-name"> {{ props.row.name }} </span></u>
+                  {{ props.row }}
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -34,10 +34,12 @@
           </template>
       </b-table>
     </section>
+    <update-task :project-name="projectName" :dialog-clicked="dialogClicked" :project-description="projectDescription"></update-task>
   </div>
 </template>
 
 <script>
+import UpdateTask from '@/components/UpdateTask'
 import Axios from 'axios'
 export default {
   data () {
@@ -45,7 +47,10 @@ export default {
       tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'owner': 'Boo' },
       { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'owner': 'Boo' }],
       arrLength: 0,
-      arrUsername: []
+      arrUsername: [],
+      dialogClicked: false,
+      projectName: '',
+      projectDescription: ''
     }
   },
   created () {
@@ -72,9 +77,14 @@ export default {
     createProject () {
       this.$router.replace({ path: '/create-project' })
     },
-    updateProject () {
-      this.$router.replace({ path: '/update-project' })
+    updateProject (row) {
+      this.dialogClicked = true
+      this.projectName = row.name
+      this.projectDescription = row.description
     }
+  },
+  components: {
+    UpdateTask
   }
 }
 </script>

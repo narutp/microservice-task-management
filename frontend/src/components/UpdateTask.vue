@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="content" align="left">
+  <!-- <div class="content" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
@@ -32,11 +32,52 @@
           <a class="button is-dark">Update task</a>
       </div>
     </div>
+  </div> -->
+  <div>
+    <div>
+      <el-dialog title = "Update Project" :visible.sync="dialogClicked">
+        <span><b>{{projectName}}</b></span><hr>
+        <div class="columns">
+          <div class="column" align="right">
+            <button class="button no-border">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button class="button no-border">
+              <i class="fa fa-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <input v-model="projectName" class="input title-field" type="text">
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <textarea v-model="projectDescription" class="textarea"></textarea>
+          </div>
+        </div>
+
+        <div class="columns" align="center">
+          <div class="column">
+              <a class="button is-dark">Update task</a>
+          </div>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
+// import Axios from 'axios'
 export default {
+  data () {
+    return {
+    }
+  },
+  props: ['projectName', 'dialogClicked', 'projectDescription']
 }
 </script>
 
