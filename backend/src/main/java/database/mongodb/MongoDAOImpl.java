@@ -243,4 +243,21 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		return idUserList;
 	}
 
+	@Override
+	public void setManagerByUser(User user) {
+		collection = MongoDBMain.getUserCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("username").is(user.getUsername()));
+		Update update = new Update();
+		update.set("name", user.getName());
+		update.set("birthday", user.getBirthday());
+		update.set("mobilePhone", user.getMobilePhone());
+		update.set("idDepartment", user.getIdDepartment());
+		update.set("idPosition", user.getIdPosition());
+		update.set("email", user.getEmail());
+		update.set("password", user.getPassword());
+		update.set("taskAuthority", true);
+		this.mongoOps.findAndModify(query, update, User.class, collection);
+	}
+
 }

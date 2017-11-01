@@ -264,5 +264,14 @@ public class TaskManagementRest {
 		return userDAO.getIdUserListByDepartmentName(departmentName);
 	}
 	
+	@POST
+	@Path("set/manager/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean setManagerByUsername(@PathParam("username") String username) {
+		user = userDAO.getUserByUsername(username);
+		userDAO.setManagerByUser(user);
+		return true;
+	}
+	
 	
 }
