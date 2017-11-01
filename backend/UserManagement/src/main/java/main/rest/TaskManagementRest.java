@@ -258,9 +258,9 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/user-list/department/{departmentName}")
+	@Path("get/idUser/department/{departmentName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
+	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
 		return userDAO.getIdUserListByDepartmentName(departmentName);
 	}
 	
@@ -273,5 +273,18 @@ public class TaskManagementRest {
 		return true;
 	}
 	
+	@GET
+	@Path("get/internal-user-list/department/{idDepartment}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getInternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+		return userDAO.getIdUserListByDepartmentName(idDepartment);
+	}
+	
+	@GET
+	@Path("get/external-user-list/department/{idDepartment}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getExternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+		return userDAO.getIdUserListByDepartmentName(idDepartment);
+	}
 	
 }

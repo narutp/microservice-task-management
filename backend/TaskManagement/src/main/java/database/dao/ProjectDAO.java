@@ -7,7 +7,7 @@ import main.model.Project;
 
 public interface ProjectDAO {
 	
-	public List<Project> getAllProjects ();
+	public List<Project> getAllProject ();
 
 	public void createProject (Project prject);
 	
@@ -22,5 +22,9 @@ public interface ProjectDAO {
 	public List<Project> getAllProjectByIdUserList (List<String> idUserList);
 	
 	public int getCountAllProjectByIdUserList(List<String> idUserList);
+	
+	public void deleteAllProject ();
+	
+	public Project getProjectByIdCard (String idCard);
 
 }

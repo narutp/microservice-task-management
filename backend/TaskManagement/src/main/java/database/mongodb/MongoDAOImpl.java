@@ -3,6 +3,7 @@ package database.mongodb;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -31,7 +32,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<Project> getAllProjects() {
+	public List<Project> getAllProject() {
 		collection = MongoDBMain.getProjectCollection();
 		return this.mongoOps.findAll(Project.class, collection);
 	}
@@ -48,13 +49,6 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		System.out.println("DAO: Add new project");
 		this.mongoOps.insert(project, collection);
 	}
-	
-	public void deleteProjectById(String idProject) {
-		collection = MongoDBMain.getProjectCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idProject").is(idProject));
-		this.mongoOps.remove(query, Project.class, collection);
-	}
 
 	public void editProjectById(Project project, String idProject) {
 		collection = MongoDBMain.getProjectCollection();
@@ -64,7 +58,6 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		update.set("name", project.getName());
 		update.set("description", project.getDescription());
 		this.mongoOps.findAndModify(query, update, Project.class, collection);
-		
 	}
 
 	public int getCountProject() {
@@ -104,7 +97,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	public void editCardByIdCard(String idCard, Card card) {
 		collection = MongoDBMain.getCardCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("idTaskCard").is(idCard));
+		query.addCriteria(Criteria.where("idCard").is(idCard));
 		Update update = new Update();
 		update.set("status", card.getStatus());
 		update.set("name",card.getName());
@@ -117,13 +110,6 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		update.set("submitReason", card.getSubmitReason());
 		update.set("finishedDate", card.getFinishedDate());
 		this.mongoOps.findAndModify(query, update, Card.class, collection);
-	}
-
-	public void deleteCardByIdCard(String idCard) {
-		collection = MongoDBMain.getCardCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idCard").is(idCard));
-		this.mongoOps.remove(query, Card.class, collection);
 	}
 
 	public int getCountCard() {
@@ -205,7 +191,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	public List<Project> getAllProjectByIdUserList(List<String> idUserList) {
 		collection = MongoDBMain.getProjectCollection();
 		List<Project> projectList = new ArrayList<Project>();
-		List<Project> allProjectList = getAllProjects();
+		List<Project> allProjectList = getAllProject();
 		for(String idUser : idUserList) {
 			for(Project project : allProjectList) {
 				if(project.getIdUser().equals(idUser)) 
@@ -218,7 +204,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	public int getCountAllProjectByIdUserList(List<String> idUserList) {
 		collection = MongoDBMain.getProjectCollection();
 		int projectCounter = 0;
-		List<Project> allProjectList = getAllProjects();
+		List<Project> allProjectList = getAllProject();
 		for(String idUser : idUserList) {
 			for(Project project : allProjectList) {
 				if(project.getIdUser().equals(idUser)) 
@@ -290,6 +276,65 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	public Request getRequestInfoByIdUser(String idUser) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public void deleteProjectById(String idProject) {
+		collection = MongoDBMain.getProjectCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idProject").is(idProject));
+		this.mongoOps.remove(query, Project.class, collection);
+	}
+
+	@Override
+	public void deleteAllProject() {
+		collection = MongoDBMain.getProjectCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+	
+	@Override
+	public void deleteCardById(String idCard) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(idCard));
+		this.mongoOps.remove(query, Card.class, collection);
+	}
+
+	@Override
+	public void deleteAllCard() {
+		collection = MongoDBMain.getCardCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+	
+	@Override
+	public Project getProjectByIdCard(String idCard) {
+		Card card = getCardByIdCard(idCard);
+		return getProjectById(card.getIdProject());
+	}
+
+	@Override
+	public void addInternalParticipantByIdCard(String idCard, Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(idCard));
+		Update update = new Update();
+		update.set("internalParticipants", card.getInternalParticipants());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
+
+	@Override
+	public void addExternalParticipantByIdCard(String idCard, Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(idCard));
+		Update update = new Update();
+		update.set("externalParticipants", card.getExternalParticipants());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
+
+	@Override
+	public String getIdDepartmentByIdCard(String idCard) {
+		return "";
 	}
 
 

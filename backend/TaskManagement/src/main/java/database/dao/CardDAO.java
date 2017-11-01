@@ -14,7 +14,7 @@ public interface CardDAO {
 	
 	public void editCardByIdCard (String idCard, Card Card);
 	
-	public void deleteCardByIdCard (String idCard);
+	public void deleteCardById (String idCard);
 	
 	public int getCountCard();
 	
@@ -25,4 +25,12 @@ public interface CardDAO {
 	public List<Card> getAllCardByIdUserParticipated(String idUser);
 	
 	public int getCountAllCardByIdUserList(List<String> idUserList);
+	
+	public void deleteAllCard ();
+	
+	public void addInternalParticipantByIdCard(String idCard, Card card);
+	
+	public void addExternalParticipantByIdCard(String idCard, Card card);
+	
+	public String getIdDepartmentByIdCard (String idCard);
 }
