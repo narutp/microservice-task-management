@@ -94,7 +94,7 @@ export default {
       let self = this
       Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`).then(function (response) {
         self.$router.go({
-          path: '/document',
+          path: '/project-management',
           force: true
         })
       }).catch(function (error) {

@@ -26,7 +26,7 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ getUser }}
+              {{ user }}
             </div>
           </div>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -44,7 +44,7 @@
                 <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
-            <hr><el-menu-item-group title="Management" v-if="getUser.taskAuthority === false">
+            <hr><el-menu-item-group title="Management">
               <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
                 <template slot="title">Project Management</template>
               </el-menu-item>
@@ -69,29 +69,30 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data () {
     return {
-      // user: this.getUser
+      user: 'user'
     }
   },
   components: {
     Navbar,
     Footerbar
   },
-  // async mounted () {
-  //   await this.setUser()
-  // },
+  mounted () {
+    this.user = localStorage.getItem('user')
+    console.log(this.user)
+  },
   // mounted () {
   //   this.user = this.getUser
   //   console.log('a ' + this.getUser)
   // },
   computed: {
-    ...mapGetters({
-      getUser: 'GET_USER'
-    }),
+    // ...mapGetters({
+    //   getUser: 'GET_USER'
+    // }),
     index () {
       if (this.$route.path === '/home') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
@@ -108,6 +109,8 @@ export default {
     //   setUser: 'SET_USER'
     // }),
     logout () {
+      localStorage.clear()
+      console.log(localStorage.getItem('user'))
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {

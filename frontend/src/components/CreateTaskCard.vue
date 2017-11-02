@@ -16,17 +16,15 @@
       <div class="column">
         <input v-model="cardName" class="input title-field" type="text" placeholder="Card name">
       </div>
-      <div class="column" align="right">
-        <b-dropdown v-model="project" style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Select Project </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Big Data</b-dropdown-item>
-            <b-dropdown-item>Net Experiment</b-dropdown-item>
-            <b-dropdown-item>Machine Learning</b-dropdown-item>
-        </b-dropdown>
+      <div class="column">
+        <b-select v-model="project" align="right" placeholder="Project">
+          <option
+            v-for="option in allProject"
+            :value="option"
+            :key="option">
+            {{ option }}
+          </option>
+        </b-select>
       </div>
     </div>
 
@@ -139,13 +137,13 @@ export default {
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
-    console.log(this.allProject)
+    console.log(response.data)
   }
 }
 </script>
 
 <style scoped>
-.create-section {
+/*.create-section {
   margin: 20px;
 }
 .no-border {
@@ -167,5 +165,5 @@ textarea {
   border: 0;
   background-color: #fff;
   height: 300px;
-}
+}*/
 </style>
