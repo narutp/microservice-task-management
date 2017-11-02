@@ -31,6 +31,4 @@ public interface CardDAO {
 	public void addInternalParticipantByIdCard(String idCard, Card card);
 	
 	public void addExternalParticipantByIdCard(String idCard, Card card);
-	
-	public String getIdDepartmentByIdCard (String idCard);
 }

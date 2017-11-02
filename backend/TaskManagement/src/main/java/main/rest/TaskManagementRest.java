@@ -40,7 +40,7 @@ public class TaskManagementRest {
 	private CardDAO cardDAO = ctx.getBean("cardDAO",CardDAO.class);
 	private RequestDAO requestDAO = ctx.getBean("requestDAO",RequestDAO.class);
 	
-	private final DateFormat DATEFORMAT = new SimpleDateFormat("YYYY-MM-DD");
+	private final DateFormat DATEFORMAT = new SimpleDateFormat("YYYY-MM-dd");
 	
 	@Inject
 	private RestTemplate restemplate; 
@@ -52,12 +52,13 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("create/project/{name}/{description}/{idUser}")
+	@Path("create/project/{name}/{description}/{idUser}/{idDepartment}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean createProjectAPI(
 			@PathParam("name") String name,
 			@PathParam("description") String description,
-			@PathParam("idUser") String idUser) {
+			@PathParam("idUser") String idUser,
+			@PathParam("idDepartment") String idDepartment) {
 		if(name.equals("")) 
 			project.setName("-");
 		else
@@ -73,6 +74,7 @@ public class TaskManagementRest {
 		date = Calendar.getInstance().getTime();  
 		String regisDate = DATEFORMAT.format(date);
 		project.setRegisteredDate(regisDate);
+		project.setIdDepartment(idDepartment);
 		
 		projectDAO.createProject(project);
 		return true;
@@ -477,7 +479,7 @@ public class TaskManagementRest {
 	@Path("get/idDepartment/card/{idCard}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getIdDepartmentByIdCardAPI(@PathParam("idCard") String idCard) {
-		return cardDAO.getIdDepartmentByIdCard(idCard);
+		return projectDAO.getIdDepartmentByIdCard(idCard);
 	}
 	
 }

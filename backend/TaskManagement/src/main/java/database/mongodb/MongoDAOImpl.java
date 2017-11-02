@@ -334,7 +334,8 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 
 	@Override
 	public String getIdDepartmentByIdCard(String idCard) {
-		return "";
+		Project project = getProjectByIdCard(idCard);
+		return project.getIdDepartment();
 	}
 
 

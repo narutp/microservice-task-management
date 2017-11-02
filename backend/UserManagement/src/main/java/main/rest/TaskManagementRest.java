@@ -238,7 +238,7 @@ public class TaskManagementRest {
 	@Path("delete-department/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteDepartmentAPI(@PathParam("name") String name) {
-		departmentDAO.deleteDepartment(name);;
+		departmentDAO.deleteDepartment(name);
 		return true;
 	}
 	
@@ -246,7 +246,7 @@ public class TaskManagementRest {
 	@Path("delete-position/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deletePositionAPI(@PathParam("name") String name) {
-		positionDAO.deletePosition(name);;
+		positionDAO.deletePosition(name);
 		return true;
 	}
 	
@@ -258,10 +258,10 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/idUser/department/{departmentName}")
+	@Path("get/idUser/department/{idDepartment}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
-		return userDAO.getIdUserListByDepartmentName(departmentName);
+	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("idDepartment") String idDepartment) {
+		return userDAO.getIdUserListByIdDepartment(idDepartment);
 	}
 	
 	@POST
@@ -276,15 +276,31 @@ public class TaskManagementRest {
 	@GET
 	@Path("get/internal-user-list/department/{idDepartment}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getInternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
-		return userDAO.getIdUserListByDepartmentName(idDepartment);
+	public List<User> getInternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+		return userDAO.getInternalUserListByIdDepartment(idDepartment);
 	}
 	
 	@GET
 	@Path("get/external-user-list/department/{idDepartment}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getExternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
-		return userDAO.getIdUserListByDepartmentName(idDepartment);
+	public List<User> getExternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+		return userDAO.getExternalUserListByIdDepartment(idDepartment);
 	}
+	
+	@GET
+	@Path("get/department/id/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Department getDepartmentByIdAPI(@PathParam("id") String id) {
+		return departmentDAO.getDepartmentById(id);
+	}
+	
+	@GET
+	@Path("get/position/id/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Position getPositionById(@PathParam("id") String id) {
+		return positionDAO.getPositionById(id);
+	}
+	
+	
 	
 }

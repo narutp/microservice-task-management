@@ -64,7 +64,6 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 
 	@Override
 	public List<User> getAllUser() {
-		System.out.println("aefhkeahfahfaeilefhail");
 		System.out.println("ALL");
 		collection = MongoDBMain.getUserCollection();
 		return this.mongoOps.findAll(User.class, collection);
@@ -232,8 +231,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	}
 
 	@Override
-	public List<String> getIdUserListByDepartmentName(String departmentName) {
-		String idDepartment = getDepartmentByName(departmentName).getIdDepartment();
+	public List<String> getIdUserListByIdDepartment(String idDepartment) {
 		List<User> allUser = getAllUser();
 		List<String> idUserList = new ArrayList<String>();
 		for(User user : allUser) {
@@ -251,6 +249,44 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		Update update = new Update();
 		update.set("taskAuthority", true);
 		this.mongoOps.findAndModify(query, update, User.class, collection);
+	}
+
+	@Override
+	public List<User> getInternalUserListByIdDepartment(String idDepartment) {
+		List<User> allUser = getAllUser();
+		List<User> userList = new ArrayList<User>();
+		for(User user : allUser) {
+			if(user.getIdDepartment().equals(idDepartment))
+				userList.add(user);
+		}
+		return userList;
+	}
+
+	@Override
+	public List<User> getExternalUserListByIdDepartment(String idDepartment) {
+		List<User> allUser = getAllUser();
+		List<User> userList = new ArrayList<User>();
+		for(User user : allUser) {
+			if(!user.getIdDepartment().equals(idDepartment))
+				userList.add(user);
+		}
+		return userList;
+	}
+
+	@Override
+	public Position getPositionById(String idPosition) {
+		collection = MongoDBMain.getPositionCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idPosition").is(idPosition));
+		return this.mongoOps.findOne(query, Position.class, collection);
+	}
+
+	@Override
+	public Department getDepartmentById(String idDepartment) {
+		collection = MongoDBMain.getDepartmentCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idDepartment").is(idDepartment));
+		return this.mongoOps.findOne(query, Department.class, collection);
 	}
 
 }
