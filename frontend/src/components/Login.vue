@@ -1,11 +1,7 @@
 <template>
   <div class="login--container">
     <div class="login--body">
-      <div class="columns">
-        <div class="column">
-          <!-- Left column -->
-        </div>
-        <div class="column login--login-box">
+      <div class="column login--login-box">
           <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
           <div class="field">
             <p class="control has-icons-left has-icons-right">
@@ -24,10 +20,11 @@
             </p>
           </div>
           <div>
-            <button class="button is-danger is-outlined login--button" @click="login()">
-              Login
-            </button>
-            <span class="login--signup" @click="register()">Forget your password? <b>Sign up</b></span>
+          <hr>
+          <button class="button is-danger is-outlined login--button" @click="login()">
+            Login
+          </button>
+          <span class="login--signup" @click="register()">Forget your password? <b>Sign up</b></span>
             <!-- <button class="button is-info" @click="register()">
               Register
             </button> -->
@@ -36,10 +33,6 @@
             Wrong username or password
           </div>
         </div>
-        <div class="column">
-          <!-- Right column -->
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -78,14 +71,12 @@ export default {
     async setUser (username) {
       let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
       // Save data to the current local store
-      localStorage.setItem('user_userId', response.data.idUser)
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
       localStorage.setItem('user_email', response.data.email)
       localStorage.setItem('user_birthdate', response.data.birthdate)
       localStorage.setItem('user_phone', response.data.mobilePhone)
       localStorage.setItem('user_password', response.data.password)
-      localStorage.setItem('user_username', response.data.username)
       let idDepartment = response.data.idDepartment
       let idPosition = response.data.idPosition
       console.log(response.data)
@@ -101,13 +92,12 @@ export default {
       console.log(localStorage.getItem('user_email'))
       console.log(localStorage.getItem('user_birthdate'))
       console.log(localStorage.getItem('user_phone'))
-      console.log(localStorage.getItem('user_username'))
       console.log(localStorage.getItem('user_password'))
       console.log(localStorage.getItem('user_department'))
       console.log(localStorage.getItem('user_position'))
 
-      this.$router.go({ path: '/home', force: true })
-      this.$router.replace({ path: '/home' })
+      // this.$router.go({ path: '/home', force: true })
+      // this.$router.replace({ path: '/home' })
     }
   }
 }
@@ -117,11 +107,8 @@ export default {
 <style scoped>
 .login--container {
   background-color: #2A323B;
-  height: 700px;
-}
-.login--login-box {
-  padding: 30px;
-  margin-bottom: 75px;
+  color: white;
+  height: 900px;
 }
 .login--user-icon {
   margin-top: 40px;
@@ -132,7 +119,6 @@ export default {
 }
 .login--button {
   width: 100%;
-  margin-top: 15px;
   margin-bottom: 15px;
 }
 .login--signup {
@@ -142,5 +128,16 @@ export default {
 }
 .notification.is-danger {
   margin-top: 15px;
+}
+.login--body {
+  width: 448px;
+  margin: auto;
+  padding: 30px;
+}
+.field {
+  margin-bottom: 30px;
+}
+hr {
+  background-color: #848484;
 }
 </style>

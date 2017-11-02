@@ -1,99 +1,76 @@
 <template lang="html">
   <div class="register--container">
     <div class="register--body">
-      <el-row>
-        <el-col>
-          <div class="register--register-box">
-            <i class="fa fa-user-circle fa-5x register--user-icon" aria-hidden="true"></i>
-            <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-              <div class="register--form-title" align="left">
-                <b>Account</b>
-              </div>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="name">
-                    <el-input v-model="form.name" placeholder="Name"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item">
-                    <el-date-picker
-                      class="register--form-item"
-                      v-model="form.birthdate"
-                      type="date"
-                      placeholder="Birthdate"
-                      :picker-options="dateOption">
-                    </el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-form-item class="register--form-item" prop="phone">
-                <el-input v-model="form.phone" placeholder="Phone"></el-input>
-              </el-form-item>
-              <div class="register--form-title" align="left">
-                <b>Personal Information</b>
-              </div>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="email">
-                    <el-input v-model="form.email" placeholder="Email"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="username">
-                    <el-input v-model="form.username" placeholder="Username"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="password">
-                    <el-input type="password" v-model="form.password" placeholder="Password"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="rePassword">
-                    <el-input type="password" v-model="form.rePassword" placeholder="Re-enter Password"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <div class="register--form-title" align="left">
-                <b>Information</b>
-              </div>
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="department">
-                      <el-select class="register--form-item" v-model="form.department" placeholder="Department">
-                      <el-option label="A" value="A"></el-option>
-                      <el-option label="B" value="B"></el-option>
-                      <el-option label="C" value="C"></el-option>
-                      <el-option label="D" value="D"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item class="register--form-item" prop="position">
-                    <el-select class="register--form-item" v-model="form.position" placeholder="Position">
-                      <el-option label="Intern" value="Intern"></el-option>
-                      <el-option label="Professor" value="Professor"></el-option>
-                      <el-option label="Student" value="Student"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-            <div>
-              <button class="button is-success is-outlined register--button" @click="submitForm('form')">
-                Register
-              </button>
-              <span class="register--backlogin" @click="backLogin()">Already have account? <b>Sign in</b></span>
-              <!-- <button class="button is-danger" @click="backLogin()">
-                Cancle
-              </button> -->
-            </div>
+      <div class="register--register-box">
+        <i class="fa fa-user-circle fa-5x register--user-icon" aria-hidden="true"></i>
+        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules" align="left">
+          <div class="register--form-title">
+            <b>Account</b>
           </div>
-        </el-col>
-      </el-row>
+          <el-form-item prop="name">
+            <el-input v-model="form.name" placeholder="Name"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-date-picker
+              class="register--form-item"
+              v-model="form.birthdate"
+              type="date"
+              placeholder="Birthdate"
+              :picker-options="dateOption">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item prop="phone">
+            <el-input v-model="form.phone" placeholder="Phone"></el-input>
+          </el-form-item>
+          <hr>
+          <div class="register--form-title" align="left">
+            <b>Personal Information</b>
+          </div>
+          <el-row>
+            <el-form-item class="register--form-item" prop="email">
+              <el-input v-model="form.email" placeholder="Email"></el-input>
+            </el-form-item>
+            <el-form-item class="register--form-item" prop="username">
+              <el-input v-model="form.username" placeholder="Username"></el-input>
+            </el-form-item>
+          </el-row>
+          <el-form-item class="register--form-item" prop="password">
+            <el-input type="password" v-model="form.password" placeholder="Password"></el-input>
+          </el-form-item>
+          <el-form-item class="register--form-item" prop="rePassword">
+            <el-input type="password" v-model="form.rePassword" placeholder="Re-enter Password"></el-input>
+          </el-form-item>
+          <hr>
+          <div class="register--form-title" align="left">
+            <b>Information</b>
+          </div>
+          <el-form-item class="register--form-item" prop="department">
+              <el-select class="register--form-item" v-model="form.department" placeholder="Department">
+              <el-option label="A" value="A"></el-option>
+              <el-option label="B" value="B"></el-option>
+              <el-option label="C" value="C"></el-option>
+              <el-option label="D" value="D"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item class="register--form-item" prop="position">
+            <el-select class="register--form-item" v-model="form.position" placeholder="Position">
+              <el-option label="Intern" value="Intern"></el-option>
+              <el-option label="Professor" value="Professor"></el-option>
+              <el-option label="Student" value="Student"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <hr>
+        <div>
+          <button class="button is-success is-outlined register--button" @click="submitForm('form')">
+            Register
+          </button>
+          <span class="register--backlogin" @click="backLogin()">Already have account? <b>Sign in</b></span>
+          <!-- <button class="button is-danger" @click="backLogin()">
+            Cancle
+          </button> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -270,7 +247,6 @@ export default {
 }
 .register--button {
   width: 100%;
-  margin-top: 15px;
   margin-bottom: 15px;
 }
 .register--register-field span {
@@ -283,5 +259,16 @@ export default {
 }
 .register--form-item {
   width: 100%;
+}
+.register--body {
+  width: 448px;
+  margin: auto;
+}
+.register--section{
+  border-bottom: 1px;
+  margin-bottom: 30px;
+}
+hr {
+  background-color: #848484;
 }
 </style>
