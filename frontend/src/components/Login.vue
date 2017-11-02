@@ -87,11 +87,23 @@ export default {
       let idDepartment = response.data.idDepartment
       let idPosition = response.data.idPosition
 
-      let departmentResponse = await Axios.get('')
+      let departmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${idDepartment}`)
+      let positionResponse = await Axios.get(`http://localhost:8090/get/position/id/${idPosition}`)
 
-      // Access some stored data
-      this.$router.go({ path: '/home', force: true })
-      this.$router.replace({ path: '/home' })
+      localStorage.setItem('user_department', departmentResponse.data.name)
+      localStorage.setItem('user_position', positionResponse.data.name)
+
+      console.log(localStorage.getItem('user_name'))
+      console.log(localStorage.getItem('user_task_authority'))
+      console.log(localStorage.getItem('user_email'))
+      console.log(localStorage.getItem('user_birthdate'))
+      console.log(localStorage.getItem('user_phone'))
+      console.log(localStorage.getItem('user_password'))
+      console.log(localStorage.getItem('user_department'))
+      console.log(localStorage.getItem('user_position'))
+
+      // this.$router.go({ path: '/home', force: true })
+      // this.$router.replace({ path: '/home' })
     }
   }
 }
