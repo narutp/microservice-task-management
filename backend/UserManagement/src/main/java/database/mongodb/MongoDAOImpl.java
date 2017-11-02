@@ -85,7 +85,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		query.addCriteria(Criteria.where("idUser").is(id));
 		Update update = new Update();
 		update.set("name", user.getName());
-		update.set("birthday", user.getBirthday());
+		update.set("birthday", user.getBirthdate());
 		update.set("mobilePhone", user.getMobilePhone());
 		update.set("idDepartment", user.getIdDepartment());
 		update.set("idPosition", user.getIdPosition());

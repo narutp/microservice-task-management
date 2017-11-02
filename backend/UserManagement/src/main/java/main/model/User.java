@@ -6,7 +6,7 @@ public class User {
 	
 	@Id
 	private String idUser;
-	private String name, birthday, email, mobilePhone, idDepartment, idPosition, username, password;
+	private String name, birthdate, email, mobilePhone, idDepartment, idPosition, username, password;
 	private boolean taskAuthority;
 	
 	public String getIdUser() {
@@ -18,11 +18,11 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getBirthday() {
-		return birthday;
+	public String getBirthdate() {
+		return birthdate;
 	}
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
 	}
 	public String getEmail() {
 		return email;

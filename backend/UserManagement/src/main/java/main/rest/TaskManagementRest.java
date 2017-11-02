@@ -81,7 +81,7 @@ public class TaskManagementRest {
 			return false;
 		}
 		user.setName(name);
-		user.setBirthday(birth);
+		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		System.out.println("GJEILGAELIHGGEALEAGBLBGAELGELEGBLGEAB");
@@ -175,7 +175,7 @@ public class TaskManagementRest {
 			return false;
 		}
 		user.setName(name);
-		user.setBirthday(birth);
+		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		user.setIdDepartment(idDepartment);
