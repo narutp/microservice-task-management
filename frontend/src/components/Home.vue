@@ -1,15 +1,13 @@
 <template lang="html">
   <div class="home--container">
     <el-row class="home--chart">
-      <el-col :span="11">
       <br>
-      <div>
+      <el-col :span="11">
         <h1> Organization </h1>
         <b-table
             class="my-task--table"
             :data="tableUserData"
             default-sort="title">
-
             <template scope="props">
               <b-table-column field="Department" label="Department" width="50" sortable>
                   {{ props.row.department }}
@@ -24,7 +22,10 @@
               </b-table-column>
             </template>
         </b-table>
+        <horizontal-bar-participant> </horizontal-bar-participant>
         <br>
+      </el-col>
+      <el-col :span="11">
         <h1> Task management </h1>
         <b-table
             class="my-task--table"
@@ -44,19 +45,10 @@
               </b-table-column>
             </template>
         </b-table>
-      </div>
+        <div @click="dialogVisible = true">
+          <doughnut-department></doughnut-department>
+        </div>
       </el-col>
-        <el-col :span="11">
-          <br>
-          <horizontal-bar-participant> </horizontal-bar-participant>
-          <br>
-          <br>
-          <br>
-          <br>
-          <div @click="dialogVisible = true">
-            <doughnut-department></doughnut-department>
-          </div>
-        </el-col>
     </el-row>
     <el-dialog
       title="Task Card from Each department"
