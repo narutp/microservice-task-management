@@ -289,4 +289,22 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		return this.mongoOps.findOne(query, Department.class, collection);
 	}
 
+	@Override
+	public void deleteAllPosition() {
+		collection = MongoDBMain.getPositionCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+
+	@Override
+	public void deleteAllDepartment() {
+		collection = MongoDBMain.getDepartmentCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+
+	@Override
+	public void deleteAllUser() {
+		collection = MongoDBMain.getUserCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+
 }

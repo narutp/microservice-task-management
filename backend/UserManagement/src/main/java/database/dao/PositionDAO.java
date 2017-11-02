@@ -16,4 +16,6 @@ public interface PositionDAO {
 	public void deletePosition (String name);
 	
 	public Position getPositionById (String idPosition);
+	
+	public void deleteAllPosition ();
 }

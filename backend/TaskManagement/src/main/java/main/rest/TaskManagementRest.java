@@ -40,7 +40,7 @@ public class TaskManagementRest {
 	private CardDAO cardDAO = ctx.getBean("cardDAO",CardDAO.class);
 	private RequestDAO requestDAO = ctx.getBean("requestDAO",RequestDAO.class);
 	
-	private final DateFormat DATEFORMAT = new SimpleDateFormat("YYYY-MM-dd");
+	private final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Inject
 	private RestTemplate restemplate; 

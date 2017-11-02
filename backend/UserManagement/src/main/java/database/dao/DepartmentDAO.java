@@ -15,4 +15,6 @@ public interface DepartmentDAO {
 	public void deleteDepartment (String name);
 	
 	public Department getDepartmentById (String idDepartment);
+	
+	public void deleteAllDepartment ();
 }

@@ -17,6 +17,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import main.Application;
@@ -83,8 +84,8 @@ public class TaskManagementRest {
 		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
-		System.out.println("GJEILGAELIHGGEALEAGBLBGAELGELEGBLGEAB");
 		user.setIdDepartment(idDepartment);
+		System.out.println(position);
 		String idPosition = positionDAO.getPositionByName(position).getIdPosition();
 		user.setIdPosition(idPosition);
 		user.setEmail(email);
@@ -158,7 +159,7 @@ public class TaskManagementRest {
 	
 	@POST
 	@Path("edit/user/{username}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public boolean editUserAPI(
 			@PathParam("username") String username,
 			@PathParam("name") String name, 
@@ -176,6 +177,7 @@ public class TaskManagementRest {
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		user.setIdDepartment(idDepartment);
 		System.out.println(position);
+		position = position.replaceAll("\\s+","");
 		String idPosition = positionDAO.getPositionByName(position).getIdPosition();
 		user.setIdPosition(idPosition);
 		user.setEmail(email);
@@ -297,6 +299,38 @@ public class TaskManagementRest {
 	public Position getPositionById(@PathParam("id") String id) {
 		return positionDAO.getPositionById(id);
 	}
+	
+	@GET
+	@Path("delete/all-user")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deleteAllUserAPI() {
+		userDAO.deleteAllUser();
+		return true;
+	}
+	
+	@GET
+	@Path("delete/all-position")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deleteAllPositionAPI() {
+		positionDAO.deleteAllPosition();
+		return true;
+	}
+	
+	@GET
+	@Path("delete/all-department")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deleteAllDepartmentAPI() {
+		departmentDAO.deleteAllDepartment();
+		return true;
+	}
+	
+	@GET
+	@Path("get/position/name/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Position getPositionByNameAPI(@PathParam("name") String name) {
+		return positionDAO.getPositionByName(name);
+	}
+	
 	
 	
 	
