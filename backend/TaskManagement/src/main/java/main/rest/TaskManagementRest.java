@@ -152,10 +152,10 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@POST
+	@GET
 	@Path("create/card/{idUser}/{projectName}/{name}/{description}/{startDate}/{endDate}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean createCardWithoutParticipantAPI(
+	public String createCardWithoutParticipantAPI(
 			@PathParam("idUser") String idUser,
 			@PathParam("projectName") String projectName,
 			@PathParam("name") String name,
@@ -191,8 +191,7 @@ public class TaskManagementRest {
 		card.setSubmitReason("-");
 		card.setFinishedDate("-");
 		
-		cardDAO.createCard(card);
-		return true;
+		return cardDAO.createCard(card);
 	}
 	
 	@POST
@@ -482,5 +481,9 @@ public class TaskManagementRest {
 	public String getIdDepartmentByIdCardAPI(@PathParam("idCard") String idCard) {
 		return projectDAO.getIdDepartmentByIdCard(idCard);
 	}
+	
+	
+	
+	
 	
 }

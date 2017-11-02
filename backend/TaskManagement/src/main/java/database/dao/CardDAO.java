@@ -6,7 +6,7 @@ import main.model.Card;
 
 public interface CardDAO {
 	
-	public void createCard (Card Card);
+	public String createCard (Card Card);
 	
 	public List<Card> getAllCard ();
 	
