@@ -119,21 +119,33 @@ export default {
   },
   methods: {
     async updateUser () {
-      console.log(this.form.position)
-      console.log(this.form.username)
       let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
         ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/
         ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
 
-      console.log(response)
-      if (response === true) {
-        this.$router.go({
-          path: '/home',
-          force: true
-        })
+      console.log(response.data)
+      if (response.data === true) {
+        this.setUser()
       } else {
         alert('Update failed')
       }
+    },
+    async setUser () {
+      // localStorage.clear()
+      // let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
+      // Save data to the current local store
+      localStorage.setItem('user_name', this.form.name)
+      // localStorage.setItem('user_task_authority', response.data.taskAuthority)
+      localStorage.setItem('user_email', this.form.email)
+      localStorage.setItem('user_birthdate', this.form.birthdate)
+      localStorage.setItem('user_phone', this.form.phone)
+      localStorage.setItem('user_password', this.form.newPassword)
+      localStorage.setItem('user_username', this.form.username)
+      localStorage.setItem('user_department', this.form.department)
+      localStorage.setItem('user_position', this.form.position)
+
+      this.$router.go({ path: '/home', force: true })
+      this.$router.replace({ path: '/home' })
     }
   }
 }
