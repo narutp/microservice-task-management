@@ -70,7 +70,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean registerAPI(
 			@PathParam("name") String name, 
-			@PathParam("birth") Date birth, 
+			@PathParam("birth") String birth, 
 			@PathParam("phone") String phone, 
 			@PathParam("department") String department, 
 			@PathParam("position") String position, 
@@ -88,9 +88,7 @@ public class TaskManagementRest {
 		user.setName(name);
 			
 		System.out.println("BIRTH : " + birth);
-		String birthdate = DATEFORMAT.format(birth);
-		System.out.println("BIRTHDATE : " + birthdate);
-		user.setBirthdate(birthdate);
+		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		System.out.println("GJEILGAELIHGGEALEAGBLBGAELGELEGBLGEAB");
