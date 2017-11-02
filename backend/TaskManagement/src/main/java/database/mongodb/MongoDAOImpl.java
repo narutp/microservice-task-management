@@ -65,10 +65,11 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		return (Integer)(this.mongoOps.getCollection(collection).getStats().get("count"));
 	}
 
-	public void createCard(Card card) {
+	public String createCard(Card card) {
 		collection = MongoDBMain.getCardCollection();
 		System.out.println("DAO: Add new Card");
 		this.mongoOps.insert(card, collection);
+		return card.getIdCard();
 	}
 
 	public List<Card> getAllCard() {
