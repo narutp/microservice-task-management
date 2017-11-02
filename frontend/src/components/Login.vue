@@ -78,6 +78,7 @@ export default {
       localStorage.setItem('user_phone', response.data.mobilePhone)
       localStorage.setItem('user_password', response.data.password)
       localStorage.setItem('user_username', response.data.username)
+      localStorage.setItem('user_userId', response.data.idUser)
       localStorage.setItem('user_departmentId', response.data.idDepartment)
       let idDepartment = response.data.idDepartment
       let idPosition = response.data.idPosition

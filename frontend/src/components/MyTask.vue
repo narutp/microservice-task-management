@@ -54,7 +54,9 @@ export default {
   data () {
     return {
       tableData: [{ 'no': 1, 'idProject': 'Microservice', 'name': 'Login', 'registeredDate': '2017-08-23', 'idUser': 'Net', 'status': 'In progress' }],
-      isPaginationSimple: false
+      isPaginationSimple: false,
+      arrLength: '',
+      arrProject: []
     }
   },
   methods: {
@@ -68,15 +70,21 @@ export default {
   async mounted () {
     let cardResponse = await Axios.get(`http://localhost:8091/get/all-card/`)
     this.tableData = cardResponse.data
+    this.arrLength = cardResponse.data.length
 
-    // let response = await Axios.get(`http://localhost:8091/get/all-project/`)
-    // this.tableData = response.data
-    // this.arrLength = response.data.length
-    // for (var i = 0; i < this.arrLength; i++) {
-    //   let id = response.data[i].idUser
+    for (let i = 0; i < this.arrLength; i++) {
+      let idProject = cardResponse.data[i].idProject
+      let idUser = cardResponse.data[i].idUser
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
+      this.tableData[i].idProject = projectResponse.data.name
+      this.tableData[i].idUser = nameResponse.data.name
+    }
+    // console.log(cardResponse.data)
+    // for (let i = 0; i < this.arrLength; i++) {
+    //   let id = cardResponse.data[i].idUser
     //   let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
-    //   this.arrUsername[i] = nameResponse.data.name
-    //   this.tableData[i].idUser = this.arrUsername[i]
+    //   this.tableData[i].idUser = nameResponse.data.name
     // }
   }
 }
