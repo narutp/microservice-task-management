@@ -3,7 +3,6 @@
     <div class="body user--container" align="left">
       <el-row>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-
           <b>Account</b>
           <el-row>
             <el-form-item prop="name">
@@ -105,6 +104,9 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.name = localStorage.getItem('user_name')
   }
 }
 </script>

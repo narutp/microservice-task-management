@@ -81,6 +81,13 @@ export default {
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
       localStorage.setItem('user_email', response.data.email)
+      localStorage.setItem('user_birthdate', response.data.birthdate)
+      localStorage.setItem('user_phone', response.data.mobilePhone)
+      localStorage.setItem('user_password', response.data.password)
+      let idDepartment = response.data.idDepartment
+      let idPosition = response.data.idPosition
+
+      let departmentResponse = await Axios.get('')
 
       // Access some stored data
       this.$router.go({ path: '/home', force: true })
