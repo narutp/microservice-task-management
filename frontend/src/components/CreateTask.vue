@@ -44,20 +44,20 @@ export default {
       userId: ''
     }
   },
-  created () {
-    this.userId = this.getUser.idUser
+  mounted () {
+    this.userId = localStorage.getItem('user_userId')
   },
   methods: {
     // TODO: problem with core
-    createProject () {
+    async createProject () {
       // task api
-      let self = this
-      Axios.post(`http://localhost:8091/create/project/${this.projectName}/${this.projectDescription}/${this.userId}`).then(function (response) {
-        self.back()
-      }).catch(function (error) {
-        self.back()
-        console.log(error)
-      })
+      let idDepartment = localStorage.getItem('user_departmentId')
+      let response = await Axios.post(`http://localhost:8091/create/project/${this.projectName}/${this.projectDescription}/${this.userId}/${idDepartment}`)
+      if (response.data === true) {
+        this.back()
+      } else {
+        alert('failed')
+      }
     },
     back () {
       this.$router.replace({ path: '/project-management' })

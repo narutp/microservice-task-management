@@ -136,10 +136,10 @@ export default {
 
       let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
       let idCard = response.data
-
+      // console.log(idCard)
       let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/card/${idCard}`)
       let idDepartment = idDepartmentResponse.data
-      console.log(idDepartmentResponse)
+      // console.log(idDepartmentResponse)
       localStorage.setItem('id_department_owner_card', idDepartment)
       this.$router.replace({ path: '/add-participants' })
     },

@@ -131,7 +131,7 @@
 </template>
 
 <script>
-// import Axios from 'axios'
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -147,8 +147,8 @@ export default {
   async mounted () {
     let idDepartment = localStorage.getItem('id_department_owner_card')
     console.log(idDepartment)
-    // let response = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
-    // console.log(response)
+    let response = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
+    console.log(response)
   }
 }
 </script>

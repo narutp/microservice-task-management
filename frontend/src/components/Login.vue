@@ -86,9 +86,10 @@ export default {
       localStorage.setItem('user_phone', response.data.mobilePhone)
       localStorage.setItem('user_password', response.data.password)
       localStorage.setItem('user_username', response.data.username)
+      localStorage.setItem('user_departmentId', response.data.idDepartment)
       let idDepartment = response.data.idDepartment
       let idPosition = response.data.idPosition
-      console.log(response.data)
+      // console.log(response.data)
 
       let departmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${idDepartment}`)
       let positionResponse = await Axios.get(`http://localhost:8090/get/position/id/${idPosition}`)
