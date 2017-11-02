@@ -100,6 +100,7 @@
 
 <script>
 import Axios from 'axios'
+import moment from 'moment'
 // Axios.defaults.baseURL = 'http://192.168.1.131:8080'
 export default {
   data () {
@@ -232,7 +233,9 @@ export default {
       // }).catch(function (error) {
       //   console.log(error)
       // })
-      Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.password}`).then(function (response) {
+      // Format date YYYY-MM-DD
+      let date = moment(this.form.birthdate).format('YYYY-MM-DD')
+      Axios.post(`http://localhost:8090/register/${this.form.name}/${date}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.password}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)
