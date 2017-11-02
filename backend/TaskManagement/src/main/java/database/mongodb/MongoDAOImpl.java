@@ -338,5 +338,13 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		return project.getIdDepartment();
 	}
 
+	@Override
+	public Project getProjectByName(String name) {
+		collection = MongoDBMain.getProjectCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		return this.mongoOps.findOne(query, Project.class, collection);
+	}
+
 
 }

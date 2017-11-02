@@ -28,5 +28,7 @@ public interface ProjectDAO {
 	public Project getProjectByIdCard (String idCard);
 	
 	public String getIdDepartmentByIdCard (String idCard);
+	
+	public Project getProjectByName (String name);
 
 }

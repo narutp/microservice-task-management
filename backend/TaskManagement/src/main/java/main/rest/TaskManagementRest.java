@@ -153,11 +153,11 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("create/card/{idUser}/{idProject}/{name}/{description}/{startDate}/{endDate}")
+	@Path("create/card/{idUser}/{projectName}/{name}/{description}/{startDate}/{endDate}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean createCardWithoutParticipantAPI(
 			@PathParam("idUser") String idUser,
-			@PathParam("idProject") String idProject,
+			@PathParam("projectName") String projectName,
 			@PathParam("name") String name,
 			@PathParam("description") String description,
 			@PathParam("startDate") String startDate,
@@ -167,6 +167,7 @@ public class TaskManagementRest {
 			card.setName("-");
 		else
 			card.setName(name);
+		card.setIdProject(projectDAO.getProjectByName(projectName).getIdProject());
 		if(description.equals(""))
 			card.setDescription("-");
 		else
