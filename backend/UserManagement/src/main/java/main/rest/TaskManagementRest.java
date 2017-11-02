@@ -86,8 +86,10 @@ public class TaskManagementRest {
 			return false;
 		}
 		user.setName(name);
-		
+			
+		System.out.println("BIRTH : " + birth);
 		String birthdate = DATEFORMAT.format(birth);
+		System.out.println("BIRTHDATE : " + birthdate);
 		user.setBirthdate(birthdate);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
