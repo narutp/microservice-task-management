@@ -3,9 +3,9 @@
     <el-row class="home--chart">
       <br>
       <el-col :span="11">
-        <h1> Organization </h1>
+        <h1><b> Organization </b></h1><br>
         <b-table
-            class="my-task--table"
+            class="home--table"
             :data="tableUserData"
             default-sort="title">
             <template scope="props">
@@ -25,10 +25,13 @@
         <horizontal-bar-participant> </horizontal-bar-participant>
         <br>
       </el-col>
+      <el-col :span="2">
+        <br>
+      </el-col>
       <el-col :span="11">
-        <h1> Task management </h1>
+        <h1><b>Task management</b></h1>
         <b-table
-            class="my-task--table"
+            class="home--table"
             :data="tableProjectData"
             default-sort="title">
             <template scope="props">
@@ -107,6 +110,9 @@ export default {
 .home--container {
   background-color: #fff;
   padding: 30px;
+}
+.home--table {
+  margin-bottom: 30px;
 }
 .scroll {
   /*scroll-behavior: smooth;*/

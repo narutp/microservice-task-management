@@ -131,6 +131,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -139,8 +140,15 @@ export default {
     { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
     { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
       isPaginated: true,
-      isPaginationSimple: false
+      isPaginationSimple: false,
+      user: []
     }
+  },
+  async mounted () {
+    let idDepartment = localStorage.getItem('id_department_owner_card')
+    console.log(idDepartment)
+    let response = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
+    console.log(response)
   }
 }
 </script>

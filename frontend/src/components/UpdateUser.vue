@@ -3,7 +3,7 @@
     <div class="body user--container" align="left">
       <el-row>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-          <b>Account</b>
+          <b>Personal Information</b>
           <el-row>
             <el-form-item prop="name">
               <el-input v-model="form.name" placeholder="Name"></el-input>
@@ -26,18 +26,18 @@
             </el-form-item>
           </el-col>
 
-          <b>Personal Information</b>
+          <b>Account</b>
           <el-row>
             <el-col :span="12">
               <el-form-item  prop="email">
                 <el-input v-model="form.email" placeholder="Email"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item class="register--form-item" prop="username">
                 <el-input v-model="form.username" placeholder="Username"></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
           <el-row>
             <el-col :span="12">
@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item class="register--form-item" prop="rePassword">
-                <el-input type="password" v-model="form.rePassword" placeholder="New password"></el-input>
+                <el-input type="password" v-model="form.newPassword" placeholder="New password"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -75,7 +75,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <button class="button is-success is-outlined full--width" @click="submitForm('form')">
+        <button class="button is-success is-outlined full--width" @click="updateUser()">
           Update User
         </button>
       </el-row>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -96,7 +97,7 @@ export default {
         email: 'mkhv@gmail.com',
         username: 'makhamwan',
         password: '',
-        rePassword: ''
+        newPassword: ''
       },
       dateOption: {
         disabledDate (time) {
@@ -106,7 +107,46 @@ export default {
     }
   },
   mounted () {
-    this.name = localStorage.getItem('user_name')
+    this.form.name = localStorage.getItem('user_name')
+    this.form.birthdate = localStorage.getItem('user_birthdate')
+    this.form.phone = localStorage.getItem('user_phone')
+    this.form.department = localStorage.getItem('user_department')
+    this.form.position = localStorage.getItem('user_position')
+    this.form.email = localStorage.getItem('user_email')
+    this.form.username = localStorage.getItem('user_username')
+    this.form.password = localStorage.getItem('user_password')
+    this.form.newPassword = this.form.password
+  },
+  methods: {
+    async updateUser () {
+      let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
+        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/
+        ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
+
+      console.log(response.data)
+      if (response.data === true) {
+        this.setUser()
+      } else {
+        alert('Update failed')
+      }
+    },
+    async setUser () {
+      // localStorage.clear()
+      // let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
+      // Save data to the current local store
+      localStorage.setItem('user_name', this.form.name)
+      // localStorage.setItem('user_task_authority', response.data.taskAuthority)
+      localStorage.setItem('user_email', this.form.email)
+      localStorage.setItem('user_birthdate', this.form.birthdate)
+      localStorage.setItem('user_phone', this.form.phone)
+      localStorage.setItem('user_password', this.form.newPassword)
+      localStorage.setItem('user_username', this.form.username)
+      localStorage.setItem('user_department', this.form.department)
+      localStorage.setItem('user_position', this.form.position)
+
+      this.$router.go({ path: '/home', force: true })
+      this.$router.replace({ path: '/home' })
+    }
   }
 }
 </script>

@@ -29,7 +29,7 @@
               </b-table-column>
 
               <b-table-column field="owner" label="Owner" sortable>
-                  {{ props.row.owner }}
+                  {{ props.row.idUser }}
               </b-table-column>
           </template>
       </b-table>
@@ -44,8 +44,8 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'owner': 'Boo' },
-      { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'owner': 'Boo' }],
+      tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'idUser': 'Boo' },
+      { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'idUser': 's' }],
       arrLength: 0,
       arrUsername: [],
       dialogClicked: false,
@@ -54,25 +54,18 @@ export default {
       projectId: ''
     }
   },
-  created () {
+  async mounted () {
     // TODO: problem with core
-    let self = this
-    Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
-      self.tableData = response.data
-      // self.arrLength = response.data.length
-      // for (var i = 0; i < self.arrLength; i++) {
-      //   let id = response.data[i].idUser
-      //   console.log('i before get' + i)
-      //   Axios.get(`http://localhost:8090/get/user/id/${id}`).then(function (response) {
-      //     self.arrUsername[i] = response.data.name
-      //     console.log('i while getting' + i)
-      //   }).catch(function (error) {
-      //     console.log(error)
-      //   })
-      // }
-    }).catch(function (error) {
-      console.log(error)
-    })
+    let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    this.tableData = response.data
+    this.arrLength = response.data.length
+    for (var i = 0; i < this.arrLength; i++) {
+      let id = response.data[i].idUser
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
+      this.arrUsername[i] = nameResponse.data.name
+      this.tableData[i].idUser = this.arrUsername[i]
+    }
+    // this.tableData.owner[2] = this.arrUsername[2]
   },
   methods: {
     createProject () {

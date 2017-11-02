@@ -310,6 +310,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	@Override
 	public Project getProjectByIdCard(String idCard) {
 		Card card = getCardByIdCard(idCard);
+		System.out.println(idCard);
 		return getProjectById(card.getIdProject());
 	}
 

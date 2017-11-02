@@ -35,19 +35,29 @@
     </div>
 
     <div class="columns">
-      <div class="column is-three-quarters">
+      <div class="column is-one-quarters">
         <el-date-picker
-          v-model="dateRange"
-          type="daterange"
+          v-model="startDate"
+          type="date"
           range-separator=" to "
-          placeholder="Start date - End date">
+          placeholder="Start date">
+        </el-date-picker>
+      </div>
+      <div class="column is-one-quarters">
+        <el-date-picker
+          v-model="endDate"
+          type="date"
+          range-separator=" to "
+          placeholder="End date">
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="addParticipant()">
-          <span> Add Participants + </span>
+        <button class="button" style="width: 200px" @click="addInternal()">
+          <span> Add Internal + </span>
         </button>
-
+        <button class="button" style="width: 200px" @click="addExternal()">
+          <span> Add External + </span>
+        </button>
       </div>
     </div>
 
@@ -102,6 +112,7 @@
 
 <script>
 import Axios from 'axios'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -112,13 +123,27 @@ export default {
       cardName: '',
       project: '',
       description: '',
-      dateRange: '',
+      startDate: '',
+      endDate: '',
       allProject: []
     }
   },
   methods: {
-    addParticipant () {
+    async addInternal () {
+      let idUser = localStorage.getItem('user_userId')
+      let sDate = moment(this.startDate).format('YYYY-MM-DD')
+      let eDate = moment(this.endDate).format('YYYY-MM-DD')
+
+      let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
+      let idCard = response.data
+      // console.log(idCard)
+      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/card/${idCard}`)
+      let idDepartment = idDepartmentResponse.data
+      // console.log(idDepartmentResponse)
+      localStorage.setItem('id_department_owner_card', idDepartment)
       this.$router.replace({ path: '/add-participants' })
+    },
+    addExternal () {
     }
   },
   // beforeCreate () {
@@ -137,7 +162,6 @@ export default {
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
-    console.log(response.data)
   }
 }
 </script>

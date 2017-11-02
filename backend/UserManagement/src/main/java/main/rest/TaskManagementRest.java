@@ -78,14 +78,6 @@ public class TaskManagementRest {
 			@PathParam("email") String email, 
 			@PathParam("username") String username, 
 			@PathParam("password") String password ){
-		if(userDAO.isUsernameExist(username)) {
-			System.out.println(username + " : Username has been used");
-			return false;
-		}
-		if(userDAO.isEmailExist(email)) {
-			System.out.println(email + " : Email has been used");
-			return false;
-		}
 		user.setName(name);
 			
 		System.out.println("BIRTH : " + birth);
@@ -178,10 +170,10 @@ public class TaskManagementRest {
 			@PathParam("email") String email,
 			@PathParam("password") String password ){
 		user = userDAO.getUserByUsername(username);
-		
 		user.setName(name);
 		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
+		System.out.println(department);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		user.setIdDepartment(idDepartment);
 		System.out.println(position);
