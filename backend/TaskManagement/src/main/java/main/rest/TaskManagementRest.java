@@ -162,6 +162,8 @@ public class TaskManagementRest {
 			@PathParam("description") String description,
 			@PathParam("startDate") String startDate,
 			@PathParam("endDate") String endDate) {
+		
+		card.setIdUser(idUser);
 	
 		if(name.equals(""))
 			card.setName("-");

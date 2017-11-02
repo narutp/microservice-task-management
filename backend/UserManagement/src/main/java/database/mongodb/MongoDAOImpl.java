@@ -253,11 +253,15 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 
 	@Override
 	public List<User> getInternalUserListByIdDepartment(String idDepartment) {
+		System.out.println("ID : " + idDepartment);
 		List<User> allUser = getAllUser();
 		List<User> userList = new ArrayList<User>();
 		for(User user : allUser) {
-			if(user.getIdDepartment().equals(idDepartment))
+			System.out.println(user.getIdDepartment());
+			if(user.getIdDepartment().equals(idDepartment)) {
+				System.out.println("1");
 				userList.add(user);
+			}
 		}
 		return userList;
 	}
