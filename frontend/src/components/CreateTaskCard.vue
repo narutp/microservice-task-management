@@ -49,6 +49,7 @@
         <button class="button" style="width: 200px" @click="addParticipant()">
           <span> Add Participants + </span>
         </button>
+
       </div>
     </div>
 
@@ -86,6 +87,7 @@
                       {{ props.row.status }}
                   </span>
               </b-table-column>
+
           </template>
       </b-table>
     </section>
@@ -101,6 +103,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -111,13 +114,32 @@ export default {
       cardName: '',
       project: '',
       description: '',
-      dateRange: ''
+      dateRange: '',
+      allProject: []
     }
   },
   methods: {
     addParticipant () {
       this.$router.replace({ path: '/add-participants' })
     }
+  },
+  // beforeCreate () {
+  //   let self = this
+  //   Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
+  //     console.log(response.data.name)
+  //     self.allProject = response.data
+  //     console.log(self.allProject)
+  //   }).catch(function (error) {
+  //     self.back()
+  //     console.log(error)
+  //   })
+  // }
+  async beforeCreate () {
+    let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    for (let i = 0; i < response.data.length; i++) {
+      this.allProject[i] = response.data[i].name
+    }
+    console.log(this.allProject)
   }
 }
 </script>
