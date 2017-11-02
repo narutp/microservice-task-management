@@ -1,5 +1,8 @@
 package main.rest;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +41,8 @@ public class TaskManagementRest {
 	private PositionDAO positionDAO = ctx.getBean("positionDAO", PositionDAO.class);
 	private UserLogDAO userLogDAO = ctx.getBean("userlogDAO", UserLogDAO.class);
 	
+	private final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@Inject
 	private RestTemplate restemplate; 
 	
@@ -65,7 +70,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean registerAPI(
 			@PathParam("name") String name, 
-			@PathParam("birth") String birth, 
+			@PathParam("birth") Date birth, 
 			@PathParam("phone") String phone, 
 			@PathParam("department") String department, 
 			@PathParam("position") String position, 
@@ -81,7 +86,9 @@ public class TaskManagementRest {
 			return false;
 		}
 		user.setName(name);
-		user.setBirthdate(birth);
+		
+		String birthdate = DATEFORMAT.format(birth);
+		user.setBirthdate(birthdate);
 		user.setMobilePhone(phone);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		System.out.println("GJEILGAELIHGGEALEAGBLBGAELGELEGBLGEAB");
