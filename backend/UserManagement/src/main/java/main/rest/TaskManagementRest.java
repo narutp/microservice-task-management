@@ -158,7 +158,7 @@ public class TaskManagementRest {
 	
 	@POST
 	@Path("edit/user/{username}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public boolean editUserAPI(
 			@PathParam("username") String username,
 			@PathParam("name") String name, 
@@ -172,8 +172,10 @@ public class TaskManagementRest {
 		user.setName(name);
 		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
+		System.out.println(department);
 		String idDepartment = departmentDAO.getDepartmentByName(department).getIdDepartment();
 		user.setIdDepartment(idDepartment);
+		System.out.println(position);
 		String idPosition = positionDAO.getPositionByName(position).getIdPosition();
 		user.setIdPosition(idPosition);
 		user.setEmail(email);

@@ -119,10 +119,13 @@ export default {
   },
   methods: {
     async updateUser () {
-      console.log(this.form.department)
+      console.log(this.form.position)
+      console.log(this.form.username)
       let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
-        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.departmeent}/
+        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/
         ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
+
+      console.log(response)
       if (response === true) {
         this.$router.go({
           path: '/home',
