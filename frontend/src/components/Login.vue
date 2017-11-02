@@ -84,6 +84,7 @@ export default {
       localStorage.setItem('user_birthdate', response.data.birthdate)
       localStorage.setItem('user_phone', response.data.mobilePhone)
       localStorage.setItem('user_password', response.data.password)
+      localStorage.setItem('user_username', response.data.username)
       let idDepartment = response.data.idDepartment
       let idPosition = response.data.idPosition
       console.log(response.data)
@@ -99,12 +100,13 @@ export default {
       console.log(localStorage.getItem('user_email'))
       console.log(localStorage.getItem('user_birthdate'))
       console.log(localStorage.getItem('user_phone'))
+      console.log(localStorage.getItem('user_username'))
       console.log(localStorage.getItem('user_password'))
       console.log(localStorage.getItem('user_department'))
       console.log(localStorage.getItem('user_position'))
 
-      // this.$router.go({ path: '/home', force: true })
-      // this.$router.replace({ path: '/home' })
+      this.$router.go({ path: '/home', force: true })
+      this.$router.replace({ path: '/home' })
     }
   }
 }

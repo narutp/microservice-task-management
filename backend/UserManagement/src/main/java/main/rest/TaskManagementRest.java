@@ -77,14 +77,6 @@ public class TaskManagementRest {
 			@PathParam("email") String email, 
 			@PathParam("username") String username, 
 			@PathParam("password") String password ){
-		if(userDAO.isUsernameExist(username)) {
-			System.out.println(username + " : Username has been used");
-			return false;
-		}
-		if(userDAO.isEmailExist(email)) {
-			System.out.println(email + " : Email has been used");
-			return false;
-		}
 		user.setName(name);
 			
 		System.out.println("BIRTH : " + birth);

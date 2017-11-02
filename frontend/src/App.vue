@@ -44,7 +44,7 @@
                 <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
-            <hr><el-menu-item-group title="Management" v-if="userTaskAuthority === false">
+            <hr><el-menu-item-group title="Management">
               <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
                 <template slot="title">Project Management</template>
               </el-menu-item>
@@ -75,8 +75,8 @@ export default {
   data () {
     return {
       userName: 'user',
-      userEmail: 'email',
-      userTaskAuthority: false
+      userEmail: 'email'
+      // userTaskAuthority: false
     }
   },
   components: {
@@ -85,7 +85,7 @@ export default {
   },
   mounted () {
     this.userName = localStorage.getItem('user_name')
-    this.userTaskAuthority = localStorage.getItem('user_task_authority')
+    // this.userTaskAuthority = localStorage.getItem('user_task_authority')
     this.userEmail = localStorage.getItem('user_email')
   },
   // mounted () {

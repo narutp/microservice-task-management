@@ -3,7 +3,7 @@
     <div class="body user--container" align="left">
       <el-row>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-          <b>Account</b>
+          <b>Personal Information</b>
           <el-row>
             <el-form-item prop="name">
               <el-input v-model="form.name" placeholder="Name"></el-input>
@@ -26,7 +26,7 @@
             </el-form-item>
           </el-col>
 
-          <b>Personal Information</b>
+          <b>Account</b>
           <el-row>
             <el-col :span="12">
               <el-form-item  prop="email">
@@ -106,7 +106,14 @@ export default {
     }
   },
   mounted () {
-    this.name = localStorage.getItem('user_name')
+    this.form.name = localStorage.getItem('user_name')
+    this.form.birthdate = localStorage.getItem('user_birthdate')
+    this.form.phone = localStorage.getItem('user_phone')
+    this.form.department = localStorage.getItem('user_department')
+    this.form.position = localStorage.getItem('user_position')
+    this.form.email = localStorage.getItem('user_email')
+    this.form.username = localStorage.getItem('user_username')
+    this.form.password = localStorage.getItem('user_password')
   }
 }
 </script>
