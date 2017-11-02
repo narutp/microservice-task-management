@@ -156,7 +156,7 @@ public class TaskManagementRest {
 		return userLogDAO.getAllUserLog();
 	}
 	
-	@GET
+	@POST
 	@Path("edit/user/{id}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean editUserAPI(
@@ -169,10 +169,6 @@ public class TaskManagementRest {
 			@PathParam("email") String email,
 			@PathParam("password") String password ){
 		user = userDAO.getUserById(id);
-		if(userDAO.isEmailExist(email)) {
-			System.out.println(email + " : Email has been used");
-			return false;
-		}
 		user.setName(name);
 		user.setBirthdate(birth);
 		user.setMobilePhone(phone);

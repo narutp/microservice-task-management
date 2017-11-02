@@ -75,7 +75,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <button class="button is-success is-outlined full--width" @click="submitForm('form')">
+        <button class="button is-success is-outlined full--width" @click="updateUser()">
           Update User
         </button>
       </el-row>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -114,6 +115,11 @@ export default {
     this.form.email = localStorage.getItem('user_email')
     this.form.username = localStorage.getItem('user_username')
     this.form.password = localStorage.getItem('user_password')
+  },
+  methods: {
+    async updateUser () {
+      let response = await Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`)
+    }
   }
 }
 </script>
