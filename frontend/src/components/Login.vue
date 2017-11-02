@@ -98,8 +98,8 @@ export default {
       console.log(localStorage.getItem('user_department'))
       console.log(localStorage.getItem('user_position'))
 
-      // this.$router.go({ path: '/home', force: true })
-      // this.$router.replace({ path: '/home' })
+      this.$router.go({ path: '/home', force: true })
+      this.$router.replace({ path: '/home' })
     }
   }
 }

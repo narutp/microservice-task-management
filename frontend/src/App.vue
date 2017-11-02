@@ -170,7 +170,7 @@ export default {
 }
 .app--user-detail {
   cursor:pointer;
-  color:orange;
+  color:green;
   text-decoration:underline;
 }
 .app--logout-button {

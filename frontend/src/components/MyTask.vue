@@ -9,7 +9,7 @@
       <b-table
           class="my-task--table"
           :data="tableData"
-          :paginated="isPaginated"
+          :paginated="true"
           :per-page="7"
           default-sort="title">
 
@@ -18,12 +18,12 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Task Name" sortable>
-                  {{ props.row.taskName }}
+              <b-table-column field="project" label="Project" sortable>
+                  {{ props.row.idProject }}
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Task Card Name" sortable>
-                  <u><span @click="updateCard()" class="my-task--span-task-name">{{ props.row.taskCardName }}</span></u>
+                  <u><span @click="updateCard()" class="my-task--span-task-name">{{ props.row.name }}</span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -31,7 +31,7 @@
               </b-table-column>
 
               <b-table-column field="writer" label="Writer" sortable>
-                  {{ props.row.writer }}
+                  {{ props.row.idUser }}
               </b-table-column>
 
               <b-table-column field="status" label="Status" sortable centered>
@@ -49,14 +49,11 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'Login authentication test', 'registeredDate': '2017-08-23', 'writer': 'Net', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Register Card', 'registeredDate': '2017-08-1', 'writer': 'Bob', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Experiment', 'taskCardName': 'Net Project Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' },
-  { 'no': 3, 'taskName': 'Machine Learning', 'taskCardName': 'Decoration CSS', 'registeredDate': '2017-07-21', 'writer': 'Net', 'status': 'In progress' }],
-      isPaginated: true,
+      tableData: [{ 'no': 1, 'idProject': 'Microservice', 'name': 'Login', 'registeredDate': '2017-08-23', 'idUser': 'Net', 'status': 'In progress' }],
       isPaginationSimple: false
     }
   },
@@ -67,6 +64,20 @@ export default {
     updateCard () {
       this.$router.replace({ path: '/update-card' })
     }
+  },
+  async mounted () {
+    let cardResponse = await Axios.get(`http://localhost:8091/get/all-card/`)
+    this.tableData = cardResponse.data
+
+    // let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    // this.tableData = response.data
+    // this.arrLength = response.data.length
+    // for (var i = 0; i < this.arrLength; i++) {
+    //   let id = response.data[i].idUser
+    //   let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
+    //   this.arrUsername[i] = nameResponse.data.name
+    //   this.tableData[i].idUser = this.arrUsername[i]
+    // }
   }
 }
 </script>
