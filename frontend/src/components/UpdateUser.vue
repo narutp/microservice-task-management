@@ -33,11 +33,11 @@
                 <el-input v-model="form.email" placeholder="Email"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item class="register--form-item" prop="username">
                 <el-input v-model="form.username" placeholder="Username"></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
           <el-row>
             <el-col :span="12">
@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item class="register--form-item" prop="rePassword">
-                <el-input type="password" v-model="form.rePassword" placeholder="New password"></el-input>
+                <el-input type="password" v-model="form.newPassword" placeholder="New password"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -97,7 +97,7 @@ export default {
         email: 'mkhv@gmail.com',
         username: 'makhamwan',
         password: '',
-        rePassword: ''
+        newPassword: ''
       },
       dateOption: {
         disabledDate (time) {
@@ -115,10 +115,22 @@ export default {
     this.form.email = localStorage.getItem('user_email')
     this.form.username = localStorage.getItem('user_username')
     this.form.password = localStorage.getItem('user_password')
+    this.form.newPassword = this.form.password
   },
   methods: {
     async updateUser () {
-      let response = await Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`)
+      console.log(this.form.department)
+      let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
+        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.departmeent}/
+        ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
+      if (response === true) {
+        this.$router.go({
+          path: '/home',
+          force: true
+        })
+      } else {
+        alert('Update failed')
+      }
     }
   }
 }

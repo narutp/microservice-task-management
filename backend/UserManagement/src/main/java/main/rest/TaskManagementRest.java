@@ -157,10 +157,10 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("edit/user/{id}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
+	@Path("edit/user/{username}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean editUserAPI(
-			@PathParam("id") String id,
+			@PathParam("username") String username,
 			@PathParam("name") String name, 
 			@PathParam("birth") String birth, 
 			@PathParam("phone") String phone, 
@@ -168,7 +168,7 @@ public class TaskManagementRest {
 			@PathParam("position") String position, 
 			@PathParam("email") String email,
 			@PathParam("password") String password ){
-		user = userDAO.getUserById(id);
+		user = userDAO.getUserByUsername(username);
 		user.setName(name);
 		user.setBirthdate(birth);
 		user.setMobilePhone(phone);
@@ -178,7 +178,7 @@ public class TaskManagementRest {
 		user.setIdPosition(idPosition);
 		user.setEmail(email);
 		user.setPassword(password);
-		userDAO.editUserById(id, user);
+		userDAO.editUserById(user.getIdUser(), user);
 		System.out.println("Set Id: " + user.getIdUser());
 		System.out.println("Set Name: " + user.getName());
 		System.out.println("Set Birth: " + user.getPassword());
