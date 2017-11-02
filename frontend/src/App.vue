@@ -26,9 +26,9 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ getUser }}
+              <u><span @click="updateUser()" class="app--user-detail"> {{ userName }} <br> {{ userEmail }}</span></u>
             </div>
-          </div>
+          </div><hr>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
               <template slot="title">Dashboard</template>
@@ -44,7 +44,7 @@
                 <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
-            <hr><el-menu-item-group title="Management" v-if="getUser.taskAuthority === false">
+            <hr><el-menu-item-group title="Management" v-if="userTaskAuthority === false">
               <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
                 <template slot="title">Project Management</template>
               </el-menu-item>
@@ -69,29 +69,33 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footerbar from '@/components/Footer.vue'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data () {
     return {
-      // user: this.getUser
+      userName: 'user',
+      userEmail: 'email',
+      userTaskAuthority: false
     }
   },
   components: {
     Navbar,
     Footerbar
   },
-  // async mounted () {
-  //   await this.setUser()
-  // },
+  mounted () {
+    this.userName = localStorage.getItem('user_name')
+    this.userTaskAuthority = localStorage.getItem('user_task_authority')
+    this.userEmail = localStorage.getItem('user_email')
+  },
   // mounted () {
   //   this.user = this.getUser
   //   console.log('a ' + this.getUser)
   // },
   computed: {
-    ...mapGetters({
-      getUser: 'GET_USER'
-    }),
+    // ...mapGetters({
+    //   getUser: 'GET_USER'
+    // }),
     index () {
       if (this.$route.path === '/home') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
@@ -107,7 +111,12 @@ export default {
     // ...mapActions({
     //   setUser: 'SET_USER'
     // }),
+    updateUser () {
+      this.$router.replace({ path: '/update-user' })
+    },
     logout () {
+      localStorage.clear()
+      console.log(localStorage.getItem('user'))
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {
@@ -158,6 +167,11 @@ export default {
 .app--menu-item.is-active {
   background-color: #2A323B;
   color: white;
+}
+.app--user-detail {
+  cursor:pointer;
+  color:orange;
+  text-decoration:underline;
 }
 .app--logout-button {
   margin: 5px;

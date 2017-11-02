@@ -12,6 +12,7 @@ import DepartmentTask from '@/components/DepartmentTask'
 import TaskManagement from '@/components/TaskManagement'
 import DoneTask from '@/components/DoneTask'
 import RequestProject from '@/components/RequestProject'
+import UpdateUser from '@/components/UpdateUser'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
       path: '/request-project',
       name: 'RequestProject',
       component: RequestProject
+    },
+    {
+      path: '/update-user',
+      name: 'UpdateUser',
+      component: UpdateUser
     }
   ]
 })

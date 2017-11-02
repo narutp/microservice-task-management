@@ -34,7 +34,7 @@
           </template>
       </b-table>
     </section>
-    <update-task :project-name="projectName" :dialog-clicked="dialogClicked" :project-description="projectDescription"></update-task>
+    <update-task :project-name="projectName" :dialog-clicked="dialogClicked" :project-description="projectDescription" :project-id="projectId"></update-task>
   </div>
 </template>
 
@@ -50,7 +50,8 @@ export default {
       arrUsername: [],
       dialogClicked: false,
       projectName: '',
-      projectDescription: ''
+      projectDescription: '',
+      projectId: ''
     }
   },
   created () {
@@ -58,17 +59,17 @@ export default {
     let self = this
     Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
       self.tableData = response.data
-      self.arrLength = response.data.length
-      for (var i = 0; i < self.arrLength; i++) {
-        let id = response.data[i].idUser
-        console.log('i before get' + i)
-        Axios.get(`http://localhost:8090/get/user/id/${id}`).then(function (response) {
-          self.arrUsername[i] = response.data.name
-          console.log('i while getting' + i)
-        }).catch(function (error) {
-          console.log(error)
-        })
-      }
+      // self.arrLength = response.data.length
+      // for (var i = 0; i < self.arrLength; i++) {
+      //   let id = response.data[i].idUser
+      //   console.log('i before get' + i)
+      //   Axios.get(`http://localhost:8090/get/user/id/${id}`).then(function (response) {
+      //     self.arrUsername[i] = response.data.name
+      //     console.log('i while getting' + i)
+      //   }).catch(function (error) {
+      //     console.log(error)
+      //   })
+      // }
     }).catch(function (error) {
       console.log(error)
     })
@@ -81,6 +82,7 @@ export default {
       this.dialogClicked = true
       this.projectName = row.name
       this.projectDescription = row.description
+      this.projectId = row.idProject
     }
   },
   components: {

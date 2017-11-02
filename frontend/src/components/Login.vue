@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 import Axios from 'axios'
 export default {
   data () {
@@ -65,8 +65,8 @@ export default {
       let self = this
       Axios.get(`http://localhost:8090/login/${this.username}/${this.password}`).then(function (response) {
         if (response.data === true) {
+          // self.setUser(self.username)
           self.setUser(self.username)
-          self.$router.replace({ path: '/home' })
           self.checkLoginFailed = false
         } else {
           self.checkLoginFailed = true
@@ -75,9 +75,24 @@ export default {
         console.log(error)
       })
     },
-    ...mapActions({
-      setUser: 'SET_USER'
-    })
+    async setUser (username) {
+      let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
+      // Save data to the current local store
+      localStorage.setItem('user_name', response.data.name)
+      localStorage.setItem('user_task_authority', response.data.taskAuthority)
+      localStorage.setItem('user_email', response.data.email)
+      localStorage.setItem('user_birthdate', response.data.birthdate)
+      localStorage.setItem('user_phone', response.data.mobilePhone)
+      localStorage.setItem('user_password', response.data.password)
+      let idDepartment = response.data.idDepartment
+      let idPosition = response.data.idPosition
+
+      let departmentResponse = await Axios.get('')
+
+      // Access some stored data
+      this.$router.go({ path: '/home', force: true })
+      this.$router.replace({ path: '/home' })
+    }
   }
 }
 </script>

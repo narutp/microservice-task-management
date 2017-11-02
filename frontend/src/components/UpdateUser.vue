@@ -1,0 +1,123 @@
+<template lang="html">
+  <div class="content">
+    <div class="body user--container" align="left">
+      <el-row>
+        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
+          <b>Account</b>
+          <el-row>
+            <el-form-item prop="name">
+              <el-input v-model="form.name" placeholder="Name"></el-input>
+            </el-form-item>
+          </el-row>
+          <el-col :span="12">
+            <el-form-item>
+              <el-date-picker
+                class="full--width"
+                v-model="form.birthdate"
+                type="date"
+                placeholder=form.birthdate
+                :picker-options="dateOption">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="phone">
+              <el-input v-model="form.phone" placeholder="Phone"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <b>Personal Information</b>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item  prop="email">
+                <el-input v-model="form.email" placeholder="Email"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item class="register--form-item" prop="username">
+                <el-input v-model="form.username" placeholder="Username"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item class="register--form-item" prop="password">
+                <el-input type="password" v-model="form.password" placeholder="Old password"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item class="register--form-item" prop="rePassword">
+                <el-input type="password" v-model="form.rePassword" placeholder="New password"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <b>Information</b>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item prop="department">
+                  <el-select class="full--width" v-model="form.department" placeholder="Department">
+                  <el-option label="A" value="A"></el-option>
+                  <el-option label="B" value="B"></el-option>
+                  <el-option label="C" value="C"></el-option>
+                  <el-option label="D" value="D"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="position">
+                <el-select class="full--width" v-model="form.position" placeholder="Position">
+                  <el-option label="Intern" value="Intern"></el-option>
+                  <el-option label="Professor" value="Professor"></el-option>
+                  <el-option label="Student" value="Student"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <button class="button is-success is-outlined full--width" @click="submitForm('form')">
+          Update User
+        </button>
+      </el-row>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      form: {
+        name: 'Makhamwan',
+        birthdate: '2017-11-01',
+        phone: '01073094860',
+        department: 'A',
+        position: 'Intern',
+        email: 'mkhv@gmail.com',
+        username: 'makhamwan',
+        password: '',
+        rePassword: ''
+      },
+      dateOption: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e7
+        }
+      }
+    }
+  },
+  mounted () {
+    this.name = localStorage.getItem('user_name')
+  }
+}
+</script>
+
+<style scoped>
+.user--container {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.full--width {
+  width: 100%;
+}
+
+</style>
