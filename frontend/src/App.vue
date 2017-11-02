@@ -26,9 +26,9 @@
           <div class="app--user">
             <i class="fa fa-user-circle fa-lg"></i>
             <div class="">
-              {{ user }}
+              <u><span @click="updateUser()" class="app--user-detail"> {{ userName }} <br> {{ userEmail }}</span></u>
             </div>
-          </div>
+          </div><hr>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
               <template slot="title">Dashboard</template>
@@ -44,7 +44,7 @@
                 <template slot="title">Done Project</template>
               </el-menu-item>
             </el-menu-item-group>
-            <hr><el-menu-item-group title="Management">
+            <hr><el-menu-item-group title="Management" v-if="userTaskAuthority === false">
               <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
                 <template slot="title">Project Management</template>
               </el-menu-item>
@@ -74,7 +74,9 @@ export default {
   name: 'app',
   data () {
     return {
-      user: 'user'
+      userName: 'user',
+      userEmail: 'email',
+      userTaskAuthority: false
     }
   },
   components: {
@@ -82,8 +84,9 @@ export default {
     Footerbar
   },
   mounted () {
-    this.user = localStorage.getItem('user')
-    console.log(this.user)
+    this.userName = localStorage.getItem('user_name')
+    this.userTaskAuthority = localStorage.getItem('user_task_authority')
+    this.userEmail = localStorage.getItem('user_email')
   },
   // mounted () {
   //   this.user = this.getUser
@@ -108,6 +111,9 @@ export default {
     // ...mapActions({
     //   setUser: 'SET_USER'
     // }),
+    updateUser () {
+      this.$router.replace({ path: '/update-user' })
+    },
     logout () {
       localStorage.clear()
       console.log(localStorage.getItem('user'))
@@ -161,6 +167,11 @@ export default {
 .app--menu-item.is-active {
   background-color: #2A323B;
   color: white;
+}
+.app--user-detail {
+  cursor:pointer;
+  color:orange;
+  text-decoration:underline;
 }
 .app--logout-button {
   margin: 5px;

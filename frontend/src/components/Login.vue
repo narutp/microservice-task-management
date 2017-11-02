@@ -78,7 +78,9 @@ export default {
     async setUser (username) {
       let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
       // Save data to the current local store
-      localStorage.setItem('user', response.data.name)
+      localStorage.setItem('user_name', response.data.name)
+      localStorage.setItem('user_task_authority', response.data.taskAuthority)
+      localStorage.setItem('user_email', response.data.email)
 
       // Access some stored data
       this.$router.go({ path: '/home', force: true })
