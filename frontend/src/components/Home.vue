@@ -2,7 +2,9 @@
   <div class="home--container">
     <el-row class="home--chart">
       <el-col :span="11">
-        <br>
+      <br>
+      <div>
+        <h1> Organization </h1>
         <b-table
             class="my-task--table"
             :data="tableUserData"
@@ -22,16 +24,12 @@
               </b-table-column>
             </template>
         </b-table>
-      </el-col>
-      <el-col :span="2">
-        <br></br>
-      </el-col>
-      <el-col :span="11">
+        <br>
+        <h1> Task management </h1>
         <b-table
             class="my-task--table"
             :data="tableProjectData"
             default-sort="title">
-
             <template scope="props">
               <b-table-column field="Department" label="Department" width="50" sortable>
                   {{ props.row.department }}
@@ -46,33 +44,44 @@
               </b-table-column>
             </template>
         </b-table>
+      </div>
       </el-col>
-      <!-- <bar-task :height="120"></bar-task> -->
+        <el-col :span="11">
+          <br>
+          <horizontal-bar-participant> </horizontal-bar-participant>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div @click="dialogVisible = true">
+            <doughnut-department></doughnut-department>
+          </div>
+        </el-col>
     </el-row>
-    <el-row>
-      <hr>
-      <el-col :span="11">
-        <horizontal-bar-participant></horizontal-bar-participant>
-      </el-col>
-
-      <el-col :span="2">
-        <br>
-      </el-col>
-      <el-col :span="11">
-        <doughnut-department></doughnut-department>
-      </el-col>
-    </el-row>
+    <el-dialog
+      title="Task Card from Each department"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <div class="modal-mask">
+        <modal-task> </modal-task>
+      </div>
+      <span slot="footer" class="dialog-footer">
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 // import { mapActions } from 'vuex'
-import BarTask from '@/components/Chart/BarTask'
+import ModalTask from '@/components/ModalTask'
+import PieProject from '@/components/Chart/PieProject'
 import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
 import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
 export default {
   data () {
     return {
+      dialogVisible: false,
       tableProjectData: [{ 'department': 'A', 'project': 3, 'taskCard': 5 },
       { 'department': 'B', 'project': 13, 'taskCard': 15 },
       { 'department': 'C', 'project': 23, 'taskCard': 25 },
@@ -94,9 +103,10 @@ export default {
     // })
   },
   components: {
-    BarTask,
+    PieProject,
     DoughnutDepartment,
-    HorizontalBarParticipant
+    HorizontalBarParticipant,
+    ModalTask
   }
 }
 </script>
@@ -105,5 +115,8 @@ export default {
 .home--container {
   background-color: #fff;
   padding: 30px;
+}
+.scroll {
+  /*scroll-behavior: smooth;*/
 }
 </style>
