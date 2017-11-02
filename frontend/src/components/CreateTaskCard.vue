@@ -133,12 +133,15 @@ export default {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      let response = await Axios.post(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
-      if (response.data === true) {
-        this.$router.replace({ path: '/add-participants' })
-      } else {
-        alert('failed access')
-      }
+
+      let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
+      let idCard = response.data
+
+      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/card/${idCard}`)
+      let idDepartment = idDepartmentResponse.data
+      console.log(idDepartmentResponse)
+      localStorage.setItem('id_department_owner_card', idDepartment)
+      this.$router.replace({ path: '/add-participants' })
     },
     addExternal () {
     }
@@ -159,7 +162,6 @@ export default {
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
-    console.log(response.data)
   }
 }
 </script>

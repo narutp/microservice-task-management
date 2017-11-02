@@ -191,7 +191,10 @@ public class TaskManagementRest {
 		card.setSubmitReason("-");
 		card.setFinishedDate("-");
 		
-		return cardDAO.createCard(card);
+		String idCard = cardDAO.createCard(card);
+		System.out.println(idCard);
+		return idCard;
+	
 	}
 	
 	@POST
@@ -479,7 +482,11 @@ public class TaskManagementRest {
 	@Path("get/idDepartment/card/{idCard}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getIdDepartmentByIdCardAPI(@PathParam("idCard") String idCard) {
-		return projectDAO.getIdDepartmentByIdCard(idCard);
+		System.out.println(idCard);
+		String idDepartment = projectDAO.getIdDepartmentByIdCard(idCard);
+		System.out.println("In get idDepartment");
+		System.out.println(idDepartment);
+		return idDepartment;
 	}
 	
 	
