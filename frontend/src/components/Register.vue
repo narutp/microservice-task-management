@@ -228,10 +228,10 @@ export default {
     },
     register () {
       let self = this
-      Axios.get(`http://localhost:8090/create/department/${this.form.department}`).then(function (response) {
-      }).catch(function (error) {
-        console.log(error)
-      })
+      // Axios.get(`http://localhost:8090/create/department/${this.form.department}`).then(function (response) {
+      // }).catch(function (error) {
+      //   console.log(error)
+      // })
       Axios.post(`http://localhost:8090/register/${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/${this.form.position}/${this.form.email}/${this.form.username}/${this.form.password}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
