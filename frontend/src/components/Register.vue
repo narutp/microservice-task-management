@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="register--container">
     <div class="register--body">
-      <div class="register--register-box">
+      <div class="register--box">
         <i class="fa fa-user-circle fa-5x register--user-icon" aria-hidden="true"></i>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules" align="left">
           <div class="register--form-title">
@@ -62,13 +62,13 @@
         </el-form>
         <hr>
         <div>
-          <button class="button is-success is-outlined register--button" @click="submitForm('form')">
+          <button class="button is-success is-outlined margin-right" @click="login()">
+            Log in
+          </button>
+          <button class="button is-success" @click="submitForm('form')">
             Register
           </button>
-          <span class="register--backlogin" @click="backLogin()">Already have account? <b>Sign in</b></span>
-          <!-- <button class="button is-danger" @click="backLogin()">
-            Cancle
-          </button> -->
+          <span class="register--backlogin" @click="backLogin()">Already have account?</span>
         </div>
       </div>
     </div>
@@ -190,6 +190,9 @@ export default {
     }
   },
   methods: {
+    login () {
+      this.$router.replace({ path: '/' })
+    },
     submitForm (form) {
       var self = this
       this.$refs[form].validate((valid) => {
@@ -200,9 +203,6 @@ export default {
           return false
         }
       })
-    },
-    backLogin () {
-      this.$router.replace({ path: '/' })
     },
     register () {
       let self = this
@@ -226,8 +226,6 @@ export default {
 .register--container {
   background-color: #2A323B;
   color: white;
-  padding-left: 300px;
-  padding-right: 300px;
 }
 .register--user-icon {
   margin-top: 40px;
@@ -236,8 +234,11 @@ export default {
   color: white;
   border-radius: 50%;
 }
-.register--register-box {
-  padding: 50px;
+.register--box {
+  padding: 30px;
+  padding-top: 60px;
+  border-width: thin;
+  border-color: white;
 }
 .register--form-title {
   margin-bottom: 20px;
@@ -245,9 +246,18 @@ export default {
 .register--register-field {
   margin-bottom: 15px;
 }
-.register--button {
-  width: 100%;
+.button {
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
+  padding: 0;
+  margin: 0;
   margin-bottom: 15px;
+  left: 0;
+  display: inline-block;
+}
+.margin-right {
+  margin-right: 20px;
 }
 .register--register-field span {
   float: left;
@@ -267,6 +277,11 @@ export default {
 .register--section{
   border-bottom: 1px;
   margin-bottom: 30px;
+}
+.el-input {
+  height: 50px;
+  border-radius: 30px;
+  box-shadow: 0;
 }
 hr {
   background-color: #848484;
