@@ -84,8 +84,7 @@ export default {
       console.log(idUserListResponse.data)
       let idCard = localStorage.getItem('id_create_card')
       let response = await Axios.post(`http://localhost:8091/add/internal-participants/${idCard}/${idUserListResponse.data}`)
-
-      if (response === true) {
+      if (response.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {
         alert('failed')

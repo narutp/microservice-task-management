@@ -259,10 +259,10 @@ public class TaskManagementRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean addInternalParticipantsAPI(
 			@PathParam("idCard") String idCard,
-			@PathParam("idUserList") List<String> idList) {
+			@PathParam("idUserList") String idList) {
 		
 		System.out.println("ININ");
-		List<String> userList = Arrays.asList(idList.get(0).split("\\s*,\\s*"));
+		List<String> userList = Arrays.asList(idList.split("\\s*,\\s*"));
 		List<String> idUserList = new ArrayList<String>();
 		String temp = "";
 		for(String user : userList) {
@@ -272,10 +272,12 @@ public class TaskManagementRest {
 		card = cardDAO.getCardByIdCard(idCard);
 		List<String> inList = card.getInternalParticipants();
 		for(String idUser : idUserList) {
+			System.out.println(idUser);
 			inList.add(idUser);
 		}
 		card.setInternalParticipants(inList);
 		cardDAO.addInternalParticipantByIdCard(idCard,card);
+		System.out.println("ds");
 		return true;
 	}
 	
