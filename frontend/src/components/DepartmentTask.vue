@@ -2,7 +2,7 @@
   <div class="department-task--container">
     <section class="department-task-table--body">
       <div style="font-size: 18px;">
-        <b>Department A</b>
+        <b>Department </b>
       </div>
       <b-table
           class="department-task--table"

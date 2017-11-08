@@ -62,13 +62,12 @@
         </el-form>
         <hr>
         <div>
-          <button class="button is-success is-outlined margin-right" @click="login()">
-            Log in
-          </button>
-          <button class="button is-success" @click="submitForm('form')">
+          <button class="button is-success margin-right" @click="submitForm('form')">
             Register
           </button>
-          <span class="register--backlogin" @click="backLogin()">Already have account?</span>
+          <button class="button is-success is-outlined" @click="login()">
+            Log in
+          </button>
         </div>
       </div>
     </div>

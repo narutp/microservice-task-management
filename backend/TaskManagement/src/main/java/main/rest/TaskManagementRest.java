@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -386,8 +387,14 @@ public class TaskManagementRest {
 	@Path("get/department-project/{idUserList}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Project> getDepartmentProjectByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
-		System.out.println(idUserList);
-		return projectDAO.getAllProjectByIdUserList(idUserList);
+		List<String> userList = Arrays.asList(idUserList.get(0).split("\\s*,\\s*"));
+		List<String> returnedList = new ArrayList<String>();
+		String temp = "";
+		for(String user : userList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			returnedList.add(temp);
+		}
+		return projectDAO.getAllProjectByIdUserList(returnedList);
 	}
 	
 	@GET

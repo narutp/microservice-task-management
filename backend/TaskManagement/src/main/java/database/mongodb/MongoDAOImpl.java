@@ -194,7 +194,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		List<Project> projectList = new ArrayList<Project>();
 		List<Project> allProjectList = getAllProject();
 		for(String idUser : idUserList) {
-			System.out.println(idUser);
+			System.out.println("ID USER : " + idUser);
 			for(Project project : allProjectList) {
 				if(project.getIdUser().equals(idUser)) 
 					projectList.add(project);
