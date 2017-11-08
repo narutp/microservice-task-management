@@ -386,6 +386,7 @@ public class TaskManagementRest {
 	@Path("get/department-project/{idUserList}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Project> getDepartmentProjectByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
+		System.out.println(idUserList);
 		return projectDAO.getAllProjectByIdUserList(idUserList);
 	}
 	

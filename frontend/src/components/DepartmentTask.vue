@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
@@ -55,8 +56,17 @@ export default {
     { 'no': 3, 'taskName': 'Small Data', 'taskCardName': 'Data math part', 'registeredDate': '2017-11-1', 'writer': 'Boo', 'status': 'Request to finish' },
     { 'no': 4, 'taskName': 'Machine Learning', 'taskCardName': 'Net Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
       isPaginated: true,
-      isPaginationSimple: false
+      department: ''
     }
+  },
+  async mounted () {
+    let department = localStorage.getItem('user_department')
+    // get user list by sending department name of that user
+    let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${department}`)
+    console.log(userListResponse.data)
+
+    let departmentProjectResponse = await Axios.get(`http://localhost:8091/get/department-project/${userListResponse.data}`)
+    console.log(departmentProjectResponse.data)
   }
 }
 </script>
