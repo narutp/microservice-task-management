@@ -79,7 +79,17 @@ export default {
     },
     cancle () {
     },
-    save () {
+    async save () {
+      let idUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.addList}`)
+      console.log(idUserListResponse.data)
+      let idCard = localStorage.getItem('id_create_card')
+      let response = await Axios.post(`http://localhost:8091/add/internal-participants/${idCard}/${idUserListResponse.data}`)
+
+      if (response === true) {
+        this.$router.replace({ path: '/create-card' })
+      } else {
+        alert('failed')
+      }
     }
   }
 }
