@@ -133,7 +133,6 @@ export default {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      console.log(idUser)
       let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
       let idCard = response.data
       // console.log(idCard)
@@ -157,7 +156,8 @@ export default {
   //     console.log(error)
   //   })
   // }
-  async beforeCreate () {
+  // TODO can't get all project at once
+  async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
