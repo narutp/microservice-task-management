@@ -216,6 +216,30 @@ public class TaskManagementRest {
 	}
 	
 	@POST
+	@Path("add/external-participants/{idCard}/{idUserList}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean addExternalParticipantsAPI(
+			@PathParam("idCard") String idCard,
+			@PathParam("idUserList") List<String> idList) {
+		
+		List<String> userList = Arrays.asList(idList.get(0).split("\\s*,\\s*"));
+		List<String> idUserList = new ArrayList<String>();
+		String temp = "";
+		for(String user : userList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			idUserList.add(temp);
+		}
+		card = cardDAO.getCardByIdCard(idCard);
+		List<String> exList = card.getExternalParticipants();
+		for(String idUser : idUserList) {
+			exList.add(idUser);
+		}
+		card.setExternalParticipants(exList);
+		cardDAO.addExternalParticipantByIdCard(idCard,card);
+		return true;
+	}
+	
+	@POST
 	@Path("add/internal-participant/{idCard}/{idUser}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean addInternalParticipantAPI(
@@ -225,6 +249,31 @@ public class TaskManagementRest {
 		card = cardDAO.getCardByIdCard(idCard);
 		List<String> inList = card.getInternalParticipants();
 		inList.add(idUser);
+		card.setInternalParticipants(inList);
+		cardDAO.addInternalParticipantByIdCard(idCard,card);
+		return true;
+	}
+	
+	@POST
+	@Path("add/internal-participants/{idCard}/{idUserList}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean addInternalParticipantsAPI(
+			@PathParam("idCard") String idCard,
+			@PathParam("idUserList") List<String> idList) {
+		
+		System.out.println("ININ");
+		List<String> userList = Arrays.asList(idList.get(0).split("\\s*,\\s*"));
+		List<String> idUserList = new ArrayList<String>();
+		String temp = "";
+		for(String user : userList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			idUserList.add(temp);
+		}
+		card = cardDAO.getCardByIdCard(idCard);
+		List<String> inList = card.getInternalParticipants();
+		for(String idUser : idUserList) {
+			inList.add(idUser);
+		}
 		card.setInternalParticipants(inList);
 		cardDAO.addInternalParticipantByIdCard(idCard,card);
 		return true;

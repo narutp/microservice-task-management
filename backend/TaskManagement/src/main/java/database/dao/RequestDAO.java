@@ -10,8 +10,6 @@ public interface RequestDAO {
 	
 	public List<Request> getAllRequestByIdUser(String idUser);
 	
-	public Request getRequestInfoByIdUser(String idUser);
-	
 	public void approveRequestById(String idRequest, String approveDate);
 	
 	public void rejectRequestById(String idRequest);

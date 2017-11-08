@@ -35,4 +35,8 @@ public interface UserDAO {
 	public List<User> getExternalUserListByIdDepartment (String idDepartment);
 	
 	public void deleteAllUser ();
+	
+	public List<String> getIdUserListByNameList (List<String> nameList);
+
+	public User getUserByName(String name);
 }

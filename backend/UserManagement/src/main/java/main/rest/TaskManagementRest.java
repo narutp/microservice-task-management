@@ -2,6 +2,8 @@ package main.rest;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -329,6 +331,20 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Position getPositionByNameAPI(@PathParam("name") String name) {
 		return positionDAO.getPositionByName(name);
+	}
+	
+	@GET
+	@Path("get/idUserList/nameList/{nameList}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
+		List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
+		List<String> returnedList = new ArrayList<String>();
+		String temp = "";
+		for(String user : userList) {
+			temp = user.replaceAll("[^.a-zA-Z0-9]+","");
+			returnedList.add(temp);
+		}
+		return userDAO.getIdUserListByNameList(returnedList);
 	}
 	
 	

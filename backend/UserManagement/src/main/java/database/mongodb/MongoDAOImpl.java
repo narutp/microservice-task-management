@@ -77,6 +77,14 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 		query.addCriteria(Criteria.where("idUser").is(id));
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
+	
+	@Override
+	public User getUserByName(String name) {
+		collection = MongoDBMain.getUserCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		return this.mongoOps.findOne(query, User.class, collection);
+	}
 
 	@Override
 	public void editUserById(String id, User user) {
@@ -310,6 +318,17 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public void deleteAllUser() {
 		collection = MongoDBMain.getUserCollection();
 		this.mongoOps.remove(new Query(), collection);
+	}
+
+	@Override
+	public List<String> getIdUserListByNameList(List<String> nameList) {
+		collection = MongoDBMain.getUserCollection();
+		List<String> idList = new ArrayList<String>();
+		for(String name : nameList) {
+			System.out.println(name);
+			idList.add(getUserByName(name).getIdUser());
+		}
+		return idList;
 	}
 
 }
