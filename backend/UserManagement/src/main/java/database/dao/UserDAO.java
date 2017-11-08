@@ -26,7 +26,7 @@ public interface UserDAO {
 	
 	public User getUserByUsername (String username);
 	
-	public List<String> getIdUserListByIdDepartment (String idDepartment);
+	public List<String> getIdUserListByDepartmentName (String idDepartment);
 	
 	public void setManagerByUser (User user);
 	

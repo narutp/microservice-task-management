@@ -231,7 +231,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	}
 
 	@Override
-	public List<String> getIdUserListByIdDepartment(String idDepartment) {
+	public List<String> getIdUserListByDepartmentName(String departmentName) {
+		String idDepartment = getDepartmentByName(departmentName).getIdDepartment();
 		List<User> allUser = getAllUser();
 		List<String> idUserList = new ArrayList<String>();
 		for(User user : allUser) {

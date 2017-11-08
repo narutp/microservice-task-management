@@ -257,10 +257,10 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/idUser/department/{idDepartment}")
+	@Path("get/idUser/department/{departmentName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("idDepartment") String idDepartment) {
-		return userDAO.getIdUserListByIdDepartment(idDepartment);
+	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
+		return userDAO.getIdUserListByDepartmentName(departmentName);
 	}
 	
 	@POST
