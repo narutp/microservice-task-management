@@ -380,6 +380,13 @@ public class TaskManagementRest {
 	@Path("get/department-card/{idUserList}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Card> getDepartmentCardByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
+		List<String> userList = Arrays.asList(idUserList.get(0).split("\\s*,\\s*"));
+		List<String> returnedList = new ArrayList<String>();
+		String temp = "";
+		for(String user : userList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			returnedList.add(temp);
+		}
 		return cardDAO.getAllCardByIdUserList(idUserList);
 	}
 	
