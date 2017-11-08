@@ -387,7 +387,7 @@ public class TaskManagementRest {
 			temp = user.replaceAll("[^a-zA-Z0-9]+","");
 			returnedList.add(temp);
 		}
-		return cardDAO.getAllCardByIdUserList(idUserList);
+		return cardDAO.getAllCardByIdUserList(returnedList);
 	}
 	
 	@GET

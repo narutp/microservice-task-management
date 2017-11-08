@@ -243,6 +243,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	}
 	
 	public List<Card> getAllCardByIdUserList(List<String> userList) {
+		System.out.println(userList);
 		List<Project> projectList = getAllProjectByIdUserList(userList);
 		List<String> idProjectList = new ArrayList<String>();
 		for(Project project : projectList)
