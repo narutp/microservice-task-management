@@ -1,59 +1,96 @@
 <template lang="html">
-  <div class="content">
-    <div class="body user--container" align="left">
+  <div class="user--container">
+    <div class="content" align="left">
       <el-row>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-          <b>Personal Information</b>
+          <div class="margin-bottom"> <b>Personal Information</b> </div>
           <el-row>
-            <el-form-item prop="name">
-              <el-input v-model="form.name" placeholder="Name"></el-input>
-            </el-form-item>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Name</b>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="name">
+                <el-input v-model="form.name"></el-input>
+              </el-form-item>
+            </el-col>
           </el-row>
-          <el-col :span="12">
-            <el-form-item>
-              <el-date-picker
-                class="full--width"
-                v-model="form.birthdate"
-                type="date"
-                placeholder=form.birthdate
-                :picker-options="dateOption">
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item prop="phone">
-              <el-input v-model="form.phone" placeholder="Phone"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <b>Account</b>
           <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Birth date</b>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item>
+                <el-date-picker
+                  class="full--width"
+                  v-model="form.birthdate"
+                  type="date"
+                  :picker-options="dateOption">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Phone number</b>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="phone">
+                <el-input v-model="form.phone"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <br>
+          <div class="margin-bottom"> <b>Account</b> </div>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Email</b>
+              </el-form-item>
+            </el-col>
             <el-col :span="12">
               <el-form-item  prop="email">
-                <el-input v-model="form.email" placeholder="Email"></el-input>
-              </el-form-item>
-            </el-col>
-            <!-- <el-col :span="12">
-              <el-form-item class="register--form-item" prop="username">
-                <el-input v-model="form.username" placeholder="Username"></el-input>
-              </el-form-item>
-            </el-col> -->
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item class="register--form-item" prop="password">
-                <el-input type="password" v-model="form.password" placeholder="Old password"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item class="register--form-item" prop="rePassword">
-                <el-input type="password" v-model="form.newPassword" placeholder="New password"></el-input>
+                <el-input v-model="form.email"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
-
-          <b>Information</b>
           <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Old password</b>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="password">
+                <el-input type="password" v-model="form.password"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>New password</b>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="rePassword">
+                <el-input type="password" v-model="form.newPassword"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <br>
+          <div class="margin-bottom"> <b>Information</b> </div>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Department</b>
+              </el-form-item>
+            </el-col>
             <el-col :span="12">
               <el-form-item prop="department">
                   <el-select class="full--width" v-model="form.department" placeholder="Department">
@@ -62,6 +99,13 @@
                   <el-option label="C" value="C"></el-option>
                   <el-option label="D" value="D"></el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item>
+                <b>Position</b>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -75,9 +119,17 @@
             </el-col>
           </el-row>
         </el-form>
-        <button class="button is-success is-outlined full--width" @click="updateUser()">
-          Update User
-        </button>
+        <br>
+        <el-row>
+          <el-col :span="12">
+              <p>Update your account with these data</p>
+          </el-col>
+          <el-col :span="12">
+            <button class="button is-success full--width" @click="updateUser()">
+              Update User
+            </button>
+          </el-col>
+        </el-row>
       </el-row>
     </div>
   </div>
@@ -153,11 +205,29 @@ export default {
 
 <style scoped>
 .user--container {
+  background-color: #fff;
+  padding: 30px;
   padding-left: 100px;
   padding-right: 100px;
+  width: 75%;
 }
 .full--width {
   width: 100%;
 }
-
+.margin-bottom {
+  margin-bottom: 20px;
+}
+button {
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 15px;
+  left: 0;
+  display: inline-block;
+}
+p {
+  padding-top: 10px;
+}
 </style>
