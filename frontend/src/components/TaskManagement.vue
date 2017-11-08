@@ -6,7 +6,7 @@
           <i class="fa fa-plus" aria-hidden="true"> Create Project</i>
         </button>
       </div>
-      {{ tableData }}
+      <!-- {{ tableData }} -->
       <b-table
           class="task-management--table"
           :data="tableData"
@@ -21,7 +21,7 @@
 
               <b-table-column field="projectName" label="Project Name" sortable>
                   <u><span @click="updateProject(props.row)" class="project-management--span-task-name"> {{ props.row.name }} </span></u>
-                  {{ props.row }}
+                  <!-- {{ props.row }} -->
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>

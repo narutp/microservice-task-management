@@ -22,7 +22,7 @@
                   {{ props.row.idProject }}
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Task Card Name" sortable>
+              <b-table-column field="taskCardName" label="Task Card" sortable>
                   <u><span @click="updateCard()" class="my-task--span-task-name">{{ props.row.name }}</span></u>
               </b-table-column>
 
@@ -30,7 +30,7 @@
                   {{ props.row.registeredDate }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Writer" sortable>
+              <b-table-column field="writer" label="Owner" sortable>
                   {{ props.row.idUser }}
               </b-table-column>
 
