@@ -1,7 +1,8 @@
 <template>
-  <div class="login--container">
-    <div class="login--body">
-      <div class="column login--login-box">
+  <div class="login--container inline-template">
+    <div class="col">
+      <div class="login--panel">
+        <div class="column login--box">
           <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
           <div class="field">
             <p class="control has-icons-left has-icons-right">
@@ -21,20 +22,22 @@
           </div>
           <div>
           <hr>
-          <button class="button is-danger is-outlined login--button" @click="login()">
+          <button class="button is-danger is-outlined button margin-right" @click="register()">
+            Register
+          </button>
+          <button class="button is-danger button" @click="login()">
             Login
           </button>
-          <span class="login--signup" @click="register()">Forget your password? <b>Sign up</b></span>
-            <!-- <button class="button is-info" @click="register()">
-              Register
-            </button> -->
+          <span class="login--signup">Forget your password? <b>Sign up</b></span>
           </div>
           <div class="notification is-danger" v-if="checkLoginFailed">
             Wrong username or password
           </div>
         </div>
+      </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -110,8 +113,13 @@ export default {
 <style scoped>
 .login--container {
   background-color: #2A323B;
+  width: 100%;
   color: white;
   height: 900px;
+  display: inline-block;
+}
+.login--box {
+  padding: 0;
 }
 .login--user-icon {
   margin-top: 40px;
@@ -120,9 +128,15 @@ export default {
   color: white;
   border-radius: 50%;
 }
-.login--button {
-  width: 100%;
+.button {
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
   margin-bottom: 15px;
+  display: inline-block;
+}
+.margin-right {
+  margin-right: 20px;
 }
 .login--signup {
   color: #8E9296;
@@ -133,12 +147,28 @@ export default {
   margin-top: 15px;
 }
 .login--body {
+  width: 50%;
+  margin: 0;
+  display: inline;
+}
+.login--panel {
   width: 448px;
   margin: auto;
   padding: 30px;
 }
+input {
+    height: 50px;
+    border-radius: 30px;
+}
 .field {
   margin-bottom: 30px;
+}
+.icon--field {
+  vertical-align: middle;
+  padding-left: 10px;
+}
+.control.has-icons-left .icon, .control.has-icons-right .icon {
+  height: 3.1rem;
 }
 hr {
   background-color: #848484;
