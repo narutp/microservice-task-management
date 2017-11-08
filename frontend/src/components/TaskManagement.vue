@@ -47,7 +47,6 @@ export default {
       tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'idUser': 'Boo' },
       { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'idUser': 's' }],
       arrLength: 0,
-      arrUsername: [],
       dialogClicked: false,
       projectName: '',
       projectDescription: '',
@@ -55,17 +54,14 @@ export default {
     }
   },
   async mounted () {
-    // TODO: problem with core
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
     this.tableData = response.data
     this.arrLength = response.data.length
-    for (var i = 0; i < this.arrLength; i++) {
+    for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idUser
       let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
-      this.arrUsername[i] = nameResponse.data.name
-      this.tableData[i].idUser = this.arrUsername[i]
+      this.tableData[i].idUser = nameResponse.data.name
     }
-    // this.tableData.owner[2] = this.arrUsername[2]
   },
   methods: {
     createProject () {
