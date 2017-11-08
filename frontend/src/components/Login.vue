@@ -28,7 +28,7 @@
           <button class="button is-danger button" @click="login()">
             Login
           </button>
-          <span class="login--signup">Forget your password? <b>Sign up</b></span>
+          <span class="login--signup">Forget your password?</span>
           </div>
           <div class="notification is-danger" v-if="checkLoginFailed">
             Wrong username or password
@@ -156,19 +156,12 @@ export default {
   margin: auto;
   padding: 30px;
 }
-input {
-    height: 50px;
-    border-radius: 30px;
-}
 .field {
   margin-bottom: 30px;
 }
 .icon--field {
   vertical-align: middle;
   padding-left: 10px;
-}
-.control.has-icons-left .icon, .control.has-icons-right .icon {
-  height: 3.1rem;
 }
 hr {
   background-color: #848484;
