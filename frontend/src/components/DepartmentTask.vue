@@ -17,16 +17,39 @@
               </b-table-column>
 
               <b-table-column field="projectName" label="Project Name" sortable>
-                  <u><span @click="showDescription(props.row)" class="department-project--span-task-name"> {{ props.row.name }} </span></u>
+                  {{ props.row.idProject }}
                   <!-- {{ props.row }} -->
               </b-table-column>
 
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
+              <b-table-column field="card Name" label="Card Name" sortable>
+                  {{ props.row.name }}
+              </b-table-column>
+
+              <b-table-column field="Start date" label="Start date" sortable>
+                  {{ props.row.startDate }}
+              </b-table-column>
+
+              <b-table-column field="End date" label="End date" sortable>
+                  {{ props.row.endDate }}
               </b-table-column>
 
               <b-table-column field="owner" label="Owner" sortable>
                   {{ props.row.idUser }}
+              </b-table-column>
+
+              <b-table-column field="status" label="Status" sortable>
+                <span class="tag is-info" v-if="props.row.status === 'In progress'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-danger" v-if="props.row.status === 'Request to delete'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-success" v-if="props.row.status === 'Done'">
+                    {{ props.row.status }}
+                </span>
               </b-table-column>
           </template>
       </b-table>
@@ -39,9 +62,7 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'idUser': 'Boo' },
-      { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'idUser': 's' }],
-      isPaginated: true,
+      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2', 'idUser': 'Boo', 'status': 'hello' }],
       department: '',
       arrLength: ''
     }
@@ -51,14 +72,17 @@ export default {
     // get user list by sending department name of that user
     let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${this.department}`)
 
-    let departmentProjectResponse = await Axios.get(`http://localhost:8091/get/department-project/${userListResponse.data}`)
-    console.log(departmentProjectResponse.data)
-    this.tableData = departmentProjectResponse.data
-    this.arrLength = departmentProjectResponse.data.length
+    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-card/${userListResponse.data}`)
+    console.log(departmentCardResponse)
+    this.tableData = departmentCardResponse.data
+    this.arrLength = departmentCardResponse.data.length
     for (let i = 0; i < this.arrLength; i++) {
-      let id = departmentProjectResponse.data[i].idUser
-      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
+      let idUser = departmentCardResponse.data[i].idUser
+      let idProject = departmentCardResponse.data[i].idProject
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
       this.tableData[i].idUser = nameResponse.data.name
+      this.tableData[i].idProject = projectResponse.data.name
     }
   }
 }
