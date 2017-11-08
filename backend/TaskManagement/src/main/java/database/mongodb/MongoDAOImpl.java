@@ -275,11 +275,6 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		System.out.println("DAO: Add new Request");
 		this.mongoOps.insert(request, collection);
 	}
-
-	public Request getRequestInfoByIdUser(String idUser) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public void deleteProjectById(String idProject) {
