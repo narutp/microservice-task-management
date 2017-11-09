@@ -559,7 +559,7 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@GET
+	@POST
 	@Path("delete/card/{idCard}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteCardByIdAPI(@PathParam("idCard") String idCard) {
