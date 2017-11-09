@@ -596,6 +596,13 @@ public class TaskManagementRest {
 		return idDepartment;
 	}
 	
+	@GET
+	@Path("get/card/{idCard}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Card getCardByIdCardAPI(@PathParam("idCard") String idCard) {
+		return cardDAO.getCardByIdCard(idCard);
+	}
+	
 	
 	
 	
