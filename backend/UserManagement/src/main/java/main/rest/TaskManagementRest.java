@@ -341,7 +341,7 @@ public class TaskManagementRest {
 		List<String> returnedList = new ArrayList<String>();
 		String temp = "";
 		for(String user : userList) {
-			temp = user.replaceAll("[^.a-zA-Z0-9]+","");
+			temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
 			returnedList.add(temp);
 		}
 		return userDAO.getIdUserListByNameList(returnedList);
