@@ -34,7 +34,7 @@ export default {
     }
   },
   methods: {
-    // TODO Bug when close can't reopen the dialog
+    // TODO Bug when close and then can't reopen the dialog
     async requestFinish () {
       let requestResponse = await Axios.post(`http://localhost:8091/request/finish/${this.idCard}/${this.reason}/${this.idUser}`)
       if (requestResponse.data === true) {

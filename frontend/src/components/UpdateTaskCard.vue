@@ -92,7 +92,7 @@
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Registered Date" sortable>
+              <b-table-column field="email" label="Email" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
@@ -130,7 +130,7 @@
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Registered Date" sortable>
+              <b-table-column field="email" label="Email" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
@@ -176,6 +176,7 @@ export default {
       isPaginated: true,
       isPaginationSimple: false,
       idCard: '',
+      idUser: '',
       cardName: '',
       cardDescription: '',
       projectName: '',
@@ -211,11 +212,11 @@ export default {
   async mounted () {
     this.idCard = localStorage.getItem('card_update')
     let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
-    let idUser = localStorage.getItem('user_userId')
+    this.idUser = localStorage.getItem('user_userId')
     let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
-    if (idUser === idUserOfCard) {
+    if (this.idUser === idUserOfCard) {
       this.ownerAuthority = true
     }
     this.cardName = cardResponse.data.name

@@ -159,7 +159,7 @@ export default {
 
       let response = await Axios.post(`http://localhost:8091/add/participants/${this.idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
       if (response.data === true) {
-        this.$router.replace({ path: '/create-card' })
+        this.$router.replace({ path: '/update-card' })
       } else {
         alert('failed')
       }

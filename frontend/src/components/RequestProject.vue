@@ -40,15 +40,20 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'Login authentication test', 'registeredDate': '2017-08-23', 'writer': 'Boo' },
-    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Register Card', 'registeredDate': '2017-08-1', 'writer': 'Boo' },
-  { 'no': 3, 'taskName': 'Machine Learning', 'taskCardName': 'Decoration CSS', 'registeredDate': '2017-07-21', 'writer': 'Boo' }],
+      tableData: [{ 'no': 1, 'idCard': '', 'date': '', 'status': ''}],
+      idUser: '',
       isPaginated: true,
       isPaginationSimple: false
     }
+  },
+  async mounted () {
+    this.idUser = localStorage.getItem('user_userId')
+    let requestResponse = await Axios.get(`http://localhost:8091/get/all-request/${this.idUser}`)
+    console.log(requestResponse)
   },
   methods: {
     createCard () {
