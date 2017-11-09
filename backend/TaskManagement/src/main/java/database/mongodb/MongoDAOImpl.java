@@ -371,6 +371,25 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		update.set("finishDate", card.getFinishDate());
 		this.mongoOps.findAndModify(query, update, Card.class, collection);
 	}
+	
+	public void requestToFinishCard(Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(card.getIdCard()));
+		Update update = new Update();
+		update.set("status", card.getStatus());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
+
+	@Override
+	public void requestToDeleteCard(Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(card.getIdCard()));
+		Update update = new Update();
+		update.set("status", card.getStatus());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
 
 
 }

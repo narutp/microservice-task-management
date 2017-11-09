@@ -6,7 +6,7 @@ public class Request {
 
 	@Id
 	private String idRequest;
-	private String idCard, type, reason, date, idRequester;
+	private String idCard, type, reason, date, idRequester, idProject;
 	public String getIdRequest() {
 		return idRequest;
 	}
@@ -42,6 +42,12 @@ public class Request {
 	}
 	public void setIdRequester(String idRequester) {
 		this.idRequester = idRequester;
+	}
+	public String getIdProject() {
+		return idProject;
+	}
+	public void setIdProject(String idProject) {
+		this.idProject = idProject;
 	}
 	
 	
