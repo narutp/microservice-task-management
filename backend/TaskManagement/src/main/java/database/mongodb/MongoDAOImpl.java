@@ -293,9 +293,19 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 	@Override
 	public void deleteCardById(String idCard) {
 		collection = MongoDBMain.getCardCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idCard").is(idCard));
-		this.mongoOps.remove(query, Card.class, collection);
+		boolean idCardExist = false;
+		List<Card> allCard = getAllCard();
+		for(Card card : allCard) {
+			if(card.getIdCard().equals(idCard)) {
+				idCardExist = true;
+				break;
+			}
+		}
+		if(idCardExist) {
+			Query query = new Query();
+			query.addCriteria(Criteria.where("idCard").is(idCard));
+			this.mongoOps.remove(query, Card.class, collection);
+		}
 	}
 
 	@Override
