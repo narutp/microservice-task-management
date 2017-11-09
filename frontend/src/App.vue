@@ -33,25 +33,48 @@
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
               <template slot="title">Dashboard</template>
             </el-menu-item>
-            <hr><el-menu-item-group title="Project">
-              <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
-                <template slot="title">My Project</template>
-              </el-menu-item>
-              <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
-                <template slot="title">Department Project</template>
-              </el-menu-item>
-              <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
-                <template slot="title">Done Card</template>
-              </el-menu-item>
-            </el-menu-item-group>
-            <hr><el-menu-item-group title="Management">
-              <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
-                <template slot="title">Project Management</template>
-              </el-menu-item>
-              <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
-                <template slot="title">Request Project</template>
-              </el-menu-item>
-            </el-menu-item-group>
+            <b-collapse :open.sync="isOpen">
+              <div slot="trigger" class="full-width">
+                <hr><el-menu-item-group title="Project" class="inline">
+                  <template slot="title">Project</template>
+                </el-menu-item-group>
+                <a class="card-header-icon inline">
+                  <b-icon :icon="isOpen ?
+                      'arrow_drop_up' : 'arrow_drop_down'">
+                  </b-icon>
+                </a>
+              </div>
+              <div class="card-content">
+                <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
+                  <template slot="title">My Project</template>
+                </el-menu-item>
+                <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
+                  <template slot="title">Department Project</template>
+                </el-menu-item>
+                <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
+                  <template slot="title">Done Card</template>
+                </el-menu-item>
+              </div>
+            </b-collapse>
+            <b-collapse :open.sync="isOpen">
+              <div slot="trigger" class="full-width">
+                <hr><el-menu-item-group title="Management" class="inline">
+                </el-menu-item-group>
+                <a class="card-header-icon inline">
+                  <b-icon :icon="isOpen ?
+                      'arrow_drop_up' : 'arrow_drop_down'">
+                  </b-icon>
+                </a>
+              </div>
+              <div class="card-content">
+                <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
+                  <template slot="title">Project Management</template>
+                </el-menu-item>
+                <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
+                  <template slot="title">Request Project</template>
+                </el-menu-item>
+              </div>
+            </b-collapse>
           </el-menu>
         </el-col>
         <el-col class="right-app" :span="20" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -188,5 +211,24 @@ export default {
   width: 100px;
   border-radius: 30px;
   margin: 5px;
+}
+
+.notification {
+  background: 0;
+  padding: 0;
+  margin: 0;
+}
+.inline {
+  display: inline-block;
+}
+.card-content {
+  padding: 0px;
+  padding-top: 5px;
+}
+.full-width {
+  width: 100%;
+}
+.hr {
+  margin-top: 0.25rem;
 }
 </style>
