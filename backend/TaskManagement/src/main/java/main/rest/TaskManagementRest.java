@@ -308,11 +308,30 @@ public class TaskManagementRest {
 		card = cardDAO.getCardByIdCard(idCard);
 		List<String> inList = card.getInternalParticipants();
 		List<String> exList = card.getExternalParticipants();
+		boolean exist = false;
 		for(String idUser : idInternalUserList) {
-			inList.add(idUser);
+			exist = false;
+			for(String eachInList : inList) {
+				if(eachInList.equals(idUser)) {
+					exist = true;
+					break;
+				}
+			}
+			if(!exist) {
+				inList.add(idUser);
+			}
 		}
 		for(String idUser : idExternalUserList) {
-			exList.add(idUser);
+			exist = false;
+			for(String eachExList : exList) {
+				if(eachExList.equals(idUser)) {
+					exist = true;
+					break;
+				}
+			}
+			if(!exist) {
+				exList.add(idUser);
+			}
 		}
 		card.setInternalParticipants(inList);
 		card.setExternalParticipants(exList);
@@ -363,6 +382,13 @@ public class TaskManagementRest {
 	 public List<Request> getAllRequestByIdUserAPI(@PathParam("idUser") String idUser) {
 		List<Request> requestList = requestDAO.getAllRequestByIdUser(idUser);
 	 	return requestList;
+	 }
+	 
+	 @GET
+	 @Path("get/all-request")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public List<Request> getAllRequestAPI() {
+	 	return requestDAO.getAllRequest();
 	 }
 
 //	 @GET

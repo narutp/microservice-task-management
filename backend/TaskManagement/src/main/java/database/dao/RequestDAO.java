@@ -14,4 +14,6 @@ public interface RequestDAO {
 	
 	public void rejectRequestById(String idRequest);
 	
+	public List<Request> getAllRequest();
+	
 }
