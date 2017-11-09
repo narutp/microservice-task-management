@@ -95,21 +95,17 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		return this.mongoOps.findOne(query, Card.class, collection);
 	}
 
-	public void editCardByIdCard(String idCard, Card card) {
+	public void updateCardByIdCard(String idCard, Card card) {
 		collection = MongoDBMain.getCardCollection();
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idCard").is(idCard));
 		Update update = new Update();
-		update.set("status", card.getStatus());
 		update.set("name",card.getName());
 		update.set("description",card.getDescription());
 		update.set("startDate",card.getStartDate());
 		update.set("endDate",card.getEndDate());
-		update.set("registeredDate", card.getRegisteredDate());
 		update.set("internalParticipants", card.getInternalParticipants());
 		update.set("externalParticipants", card.getExternalParticipants());
-		update.set("submitReason", card.getSubmitReason());
-		update.set("finishedDate", card.getFinishDate());
 		this.mongoOps.findAndModify(query, update, Card.class, collection);
 	}
 
