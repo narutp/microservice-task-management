@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="my-task--container">
     <section class="my-task-table--body">
+      <div style="font-size: 18px;">
+        <b>My Project</b>
+      </div>
       <div class="my-task--button" align="right">
         <button class="button is-primary" @click="createCard()">
           <i class="fa fa-plus" aria-hidden="true"> Create Card</i>
