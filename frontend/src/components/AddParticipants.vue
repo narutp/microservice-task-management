@@ -126,6 +126,12 @@ export default {
     },
     async cancleAddParticipants () {
       let idCard = localStorage.getItem('id_create_card')
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      if (cancleResponse.data === true) {
+        this.$router.replace({ path: '/create-card' })
+      } else {
+        alert('failed')
+      }
     },
     async save () {
       let idCard = localStorage.getItem('id_create_card')

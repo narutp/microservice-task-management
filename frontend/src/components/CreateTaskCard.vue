@@ -6,7 +6,7 @@
         <h6 style="margin-top: 16px"><b>New Card +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border">
+        <button class="button no-border" @click="cancle()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
@@ -190,6 +190,15 @@ export default {
 
       localStorage.setItem('id_department_owner_card', idDepartment)
       this.$router.replace({ path: '/add-participants' })
+    },
+    async cancle () {
+      let idCard = localStorage.getItem('id_create_card')
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      if (cancleResponse.data === true) {
+        this.$router.replace({ path: '/my-project' })
+      } else {
+        alert('failed')
+      }
     }
   },
   // TODO can't get all project at once
