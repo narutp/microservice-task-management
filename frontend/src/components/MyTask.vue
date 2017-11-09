@@ -26,7 +26,7 @@
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Task Card" sortable>
-                  <u><span @click="updateCard()" class="my-task--span-task-name">{{ props.row.name }}</span></u>
+                  <u><span @click="updateCard(props.row)" class="my-task--span-task-name">{{ props.row.name }}</span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -72,7 +72,9 @@ export default {
     createCard () {
       this.$router.replace({ path: '/create-card' })
     },
-    updateCard () {
+    updateCard (card) {
+      localStorage.setItem('card_update', card.idCard)
+
       this.$router.replace({ path: '/update-card' })
     }
   },

@@ -17,54 +17,51 @@
 
     <div class="columns">
       <div class="column">
-        <input class="input title-field" type="text" placeholder="Create mood board">
+        <b>Card</b>
+        <input :disabled="!ownerAuthority" v-model="cardName" class="input title-field" type="text" placeholder="Create mood board">
       </div>
       <div class="column" align="right">
-        <b-dropdown style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Microservice </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Big Data</b-dropdown-item>
-            <b-dropdown-item>Net Experiment</b-dropdown-item>
-            <b-dropdown-item>Machine Learning</b-dropdown-item>
-        </b-dropdown>
+        <div align="left">
+          <b>Project</b>
+        </div>
+        <el-input
+          v-model="projectName"
+          :disabled="true">
+        </el-input>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <textarea class="textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></textarea>
+        <textarea :disabled="!ownerAuthority" v-model="cardDescription" class="textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
+        </textarea>
       </div>
     </div>
 
     <div class="columns">
-      <div class="column is-three-quarters" align="left">
-        <b-dropdown style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Start date </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
-        </b-dropdown>
-        <b-dropdown style="margin-top: 8px" align="left">
-            <button class="button" slot="trigger" style="width: 200px">
-              <span> Finish date </span>
-              <b-icon icon="arrow_drop_down"></b-icon>
-            </button>
-            <b-dropdown-item>Microservice</b-dropdown-item>
-            <b-dropdown-item>Embedded System</b-dropdown-item>
-            <b-dropdown-item>Digital UK</b-dropdown-item>
-        </b-dropdown>
-
+      <div class="column is-one-quarters">
+        <el-date-picker
+          v-model="startDate"
+          type="date"
+          :disabled="!ownerAuthority"
+          placeholder="Start date">
+        </el-date-picker>
+      </div>
+      <div class="column is-one-quarters">
+        <el-date-picker
+          v-model="endDate"
+          type="date"
+          :disabled="!ownerAuthority"
+          placeholder="End date">
+        </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px">
-          <span> Add participants + </span>
+        <button class="button" style="width: 200px" @click="addParticipant()" :disabled="!ownerAuthority">
+          <span> Add Participants + </span>
         </button>
+        <!-- <button class="button" style="width: 200px" @click="addExternal()">
+          <span> Add External + </span>
+        </button> -->
       </div>
     </div>
 
@@ -72,33 +69,70 @@
       <b-table
           class="my-task--table"
           :data="tableData"
+          :paginated="true"
+          :per-page="5"
           default-sort="title">
           <template scope="props">
               <b-table-column field="no" label="No" width="50" sortable numeric centered>
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Name" sortable>
-                  {{ props.row.taskName }}
+              <b-table-column field="department" label="Department" width="150" sortable centered>
+                  {{ props.row.department }}
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Department" sortable>
-                  {{ props.row.taskCardName }}
+              <b-table-column field="name" label="Name" width="250" sortable>
+                  {{ props.row.user }}
               </b-table-column>
 
               <b-table-column field="writer" label="Position" sortable>
-                  {{ props.row.taskCardName }}
+                  {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
+              <b-table-column field="email" label="Registered Date" sortable>
+                  {{ props.row.email }}
               </b-table-column>
 
-              <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'INTERNAL'">
+              <b-table-column field="status" label="Status"centered>
+                  <span class="tag is-success" v-if="props.row.status === 'INTERNAL'">
                       {{ props.row.status }}
                   </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'EXTERNAL'">
+              </b-table-column>
+          </template>
+      </b-table>
+    </section>
+
+    <hr>
+    <section class="my-task-table--body">
+      <b-table
+          class="my-task--table"
+          :data="tableData2"
+          :paginated="true"
+          :per-page="5"
+          default-sort="title">
+          <template scope="props">
+              <b-table-column field="no" label="No" width="50" sortable numeric centered>
+                  {{ props.row.no }}
+              </b-table-column>
+
+              <b-table-column field="department" label="Department" width="150" sortable centered>
+                  {{ props.row.department }}
+              </b-table-column>
+
+              <b-table-column field="name" label="Name" width="250" sortable>
+                  {{ props.row.user }}
+              </b-table-column>
+
+              <b-table-column field="writer" label="Position" sortable>
+                  {{ props.row.position }}
+              </b-table-column>
+
+              <b-table-column field="email" label="Registered Date" sortable>
+                  {{ props.row.email }}
+              </b-table-column>
+
+              <b-table-column field="status" label="Status"centered>
+                  <span class="tag is-info" v-if="props.row.status === 'EXTERNAL'">
                       {{ props.row.status }}
                   </span>
               </b-table-column>
@@ -110,29 +144,92 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Update Card</a>
+          <a :disabled="!ownerAuthority" class="button is-dark" @click="updateCard()">Update Card</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Makhamwan', 'taskCardName': 'Department A', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 2, 'taskName': 'Net', 'taskCardName': 'Department A', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
-    { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
+      tableData: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
+      tableData2: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
       isPaginated: true,
-      isPaginationSimple: false
+      isPaginationSimple: false,
+      cardName: '',
+      cardDescription: '',
+      projectName: '',
+      startDate: '',
+      endDate: '',
+      internalList: '',
+      externalList: '',
+      ownerAuthority: false
+    }
+  },
+  async mounted () {
+    let idCard = localStorage.getItem('card_update')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${idCard}`)
+    let idUser = localStorage.getItem('user_userId')
+    let idUserOfCard = cardResponse.data.idUser
+
+    // Check owner authority (can be update or not)
+    if (idUser === idUserOfCard) {
+      this.ownerAuthority = true
+    }
+    this.cardName = cardResponse.data.name
+    this.cardDescription = cardResponse.data.description
+    this.startDate = cardResponse.data.startDate
+    this.endDate = cardResponse.data.endDate
+
+    let projectResponse = await Axios.get(`http://localhost:8091/get/project/${cardResponse.data.idProject}`)
+    this.projectName = projectResponse.data.name
+
+    // get arr length of both internal and external user in a card to find their names
+    let internalArrLength = cardResponse.data.internalParticipants.length
+    let externalArrLength = cardResponse.data.externalParticipants.length
+    // set value of internal participant table
+    for (let i = 0; i < internalArrLength; i++) {
+      let idInternalUser = cardResponse.data.internalParticipants[i]
+      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idInternalUser}`)
+      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${internalNameResponse.data.idPosition}`)
+      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${internalNameResponse.data.idDepartment}`)
+      this.tableData[i].user = internalNameResponse.data.name
+      this.tableData[i].email = internalNameResponse.data.email
+      this.tableData[i].status = 'INTERNAL'
+      this.tableData[i].position = internalPositionResponse.data.name
+      this.tableData[i].department = internalDepartmentResponse.data.name
+    }
+    // set value of external participant table
+    for (let i = 0; i < externalArrLength; i++) {
+      let idExternalUser = cardResponse.data.externalParticipants[i]
+      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idExternalUser}`)
+      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${externalNameResponse.data.idPosition}`)
+      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${externalNameResponse.data.idDepartment}`)
+      this.tableData2[i].user = externalNameResponse.data.name
+      this.tableData2[i].email = externalNameResponse.data.email
+      this.tableData2[i].status = 'EXTERNAL'
+      this.tableData2[i].position = externalPositionResponse.data.name
+      this.tableData2[i].department = externalDepartmentResponse.data.name
     }
   }
 }
 </script>
 
 <style scoped>
-.create-section {
+/*.create-section {
   margin: 20px;
 }
 .no-border {
@@ -154,5 +251,5 @@ textarea {
   border: 0;
   background-color: #fff;
   height: 300px;
-}
+}*/
 </style>
