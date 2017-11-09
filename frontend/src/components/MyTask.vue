@@ -44,6 +44,12 @@
                   <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
                       {{ props.row.status }}
                   </span>
+                  <span class="tag is-danger" v-if="props.row.status === 'Request to delete'">
+                      {{ props.row.status }}
+                  </span>
+                  <span class="tag is-success" v-if="props.row.status === 'Finish'">
+                      {{ props.row.status }}
+                  </span>
               </b-table-column>
           </template>
       </b-table>
