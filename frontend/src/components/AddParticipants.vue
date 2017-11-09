@@ -127,10 +127,12 @@ export default {
     cancle () {
     },
     async save () {
-      let idUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
-      console.log(idUserListResponse.data)
       let idCard = localStorage.getItem('id_create_card')
-      let response = await Axios.post(`http://localhost:8091/add/internal-participants/${idCard}/${idUserListResponse.data}`)
+
+      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
+      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
+
+      let response = await Axios.post(`http://localhost:8091/add/participants/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
       if (response.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {

@@ -143,8 +143,6 @@ export default {
 
       localStorage.setItem('id_department_owner_card', idDepartment)
       this.$router.replace({ path: '/add-participants' })
-    },
-    addExternal () {
     }
   },
   // TODO can't get all project at once
@@ -153,6 +151,9 @@ export default {
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
+
+    // get card to show participants inside the card
+    let idCard = localStorage.getItem('id_create_card')
   }
 }
 </script>
