@@ -147,7 +147,7 @@ public class TaskManagementRest {
 		card.setRegisteredDate(regisDate);
 		card.setStatus("In progress");
 		card.setSubmitReason("-");
-		card.setFinishedDate("-");
+		card.setFinishDate("-");
 		
 		cardDAO.createCard(card);
 		return true;
@@ -192,7 +192,7 @@ public class TaskManagementRest {
 		card.setRegisteredDate(regisDate);
 		card.setStatus("In progress");
 		card.setSubmitReason("-");
-		card.setFinishedDate("-");
+		card.setFinishDate("-");
 		
 		String idCard = cardDAO.createCard(card);
 		System.out.println(idCard);
@@ -609,6 +609,11 @@ public class TaskManagementRest {
 	public boolean finishCardByIdCardAPI(@PathParam("idCard") String idCard) {
 		card = cardDAO.getCardByIdCard(idCard);
 		card.setStatus("Finish");
+		Date date = new Date();
+		date = Calendar.getInstance().getTime();  
+		String finishDate = DATEFORMAT.format(date);
+		System.out.println(finishDate);
+		card.setFinishDate(finishDate);
 		cardDAO.setFinish(idCard,card);
 		return true;
 	}
