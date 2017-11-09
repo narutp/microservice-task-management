@@ -281,6 +281,45 @@ public class TaskManagementRest {
 		return true;
 	}
 	
+	@POST
+	@Path("add/participants/{idCard}/{idInternalUserList}/{idExternalUserList}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean addParticipantsAPI(
+			@PathParam("idCard") String idCard,
+			@PathParam("idInternalUserList") List<String> idInList,
+			@PathParam("idExternalUserList") List<String> idExList) {
+		
+		System.out.println("ININ");
+		List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
+		List<String> idInternalUserList = new ArrayList<String>();
+		String temp = "";
+		for(String user : tempInUserList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			idInternalUserList.add(temp);
+		}
+		
+		List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
+		List<String> idExternalUserList = new ArrayList<String>();
+		for(String user : tempExUserList) {
+			temp = user.replaceAll("[^a-zA-Z0-9]+","");
+			idExternalUserList.add(temp);
+		}
+		
+		card = cardDAO.getCardByIdCard(idCard);
+		List<String> inList = card.getInternalParticipants();
+		List<String> exList = card.getExternalParticipants();
+		for(String idUser : idInternalUserList) {
+			inList.add(idUser);
+		}
+		for(String idUser : idExternalUserList) {
+			exList.add(idUser);
+		}
+		card.setInternalParticipants(inList);
+		card.setExternalParticipants(exList);
+		cardDAO.addParticipantsByIdCard(idCard,card);
+		return true;
+	}
+	
 	@GET
 	@Path("edit/card/{idCard}/{idUser}/{idProject}/{name}/{description}/{startDate}/{endDate}/{internalParticipants}/{externalParticipants}")
 	@Produces(MediaType.TEXT_PLAIN)

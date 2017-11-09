@@ -65,10 +65,8 @@
           <button class="button is-success margin-right" @click="submitForm('form')">
             Register
           </button>
-          <button class="button is-success is-outlined" @click="login()">
-            Log in
-          </button>
         </div>
+        <span class="login--signup" @click="login()">Already have an account? <b>Back to login</b></span>
       </div>
     </div>
   </div>
@@ -281,6 +279,11 @@ export default {
   height: 50px;
   border-radius: 30px;
   box-shadow: 0;
+}
+.login--signup {
+  color: #8E9296;
+  font-size: 14px;
+  cursor: pointer;
 }
 hr {
   background-color: #848484;

@@ -345,5 +345,16 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		return this.mongoOps.findOne(query, Project.class, collection);
 	}
 
+	@Override
+	public void addParticipantsByIdCard(String idCard, Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(idCard));
+		Update update = new Update();
+		update.set("internalParticipants", card.getInternalParticipants());
+		update.set("externalParticipants", card.getExternalParticipants());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
+
 
 }
