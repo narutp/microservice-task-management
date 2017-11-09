@@ -43,7 +43,7 @@
         <el-date-picker
           v-model="startDate"
           type="date"
-          :disabled="!ownerAuthority"
+          disabled=true
           placeholder="Start date">
         </el-date-picker>
       </div>
@@ -193,7 +193,7 @@ export default {
         alert('fail to update card')
       }
     }
-  }
+  },
   async mounted () {
     this.idCard = localStorage.getItem('card_update')
     let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)

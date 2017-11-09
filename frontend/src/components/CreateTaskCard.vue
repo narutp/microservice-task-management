@@ -140,7 +140,7 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Create Card</a>
+          <a class="button is-dark" @click="createCard()">Create Card</a>
       </div>
     </div>
   </div>
@@ -199,6 +199,9 @@ export default {
       } else {
         alert('failed')
       }
+    },
+    createCard () {
+      this.$router.replace({ path: 'my-project' })
     }
   },
   // TODO can't get all project at once
