@@ -62,12 +62,13 @@
       </div>
     </div>
 
+    <!--  Can't remove tag ?? -->
     <section class="add-participants-tag--body">
       <el-tag
         v-for="tag in internalAddList"
         :key="tag"
         closable
-        :type="tag">
+        type="success">
         {{tag}}
       </el-tag>
     </section>
@@ -76,7 +77,8 @@
         v-for="tags in externalAddList"
         :key="tags"
         closable
-        :type="tags">
+        @close="handleClose(tag)"
+        type="primary">
         {{tags}}
       </el-tag>
     </section>
