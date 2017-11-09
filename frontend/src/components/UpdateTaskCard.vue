@@ -56,7 +56,7 @@
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="addParticipant()" :disabled="!ownerAuthority">
+        <button class="button" style="width: 200px" @click="updateParticipant()" :disabled="!ownerAuthority">
           <span> Add Participants + </span>
         </button>
         <!-- <button class="button" style="width: 200px" @click="addExternal()">
@@ -192,6 +192,9 @@ export default {
       } else {
         alert('fail to update card')
       }
+    },
+    updateParticipant () {
+      this.$router.replace({ path: '/update-participants'})
     }
   },
   async mounted () {

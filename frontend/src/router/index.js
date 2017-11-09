@@ -13,6 +13,7 @@ import TaskManagement from '@/components/TaskManagement'
 import DoneTask from '@/components/DoneTask'
 import RequestProject from '@/components/RequestProject'
 import UpdateUser from '@/components/UpdateUser'
+import UpdateParticipants from '@/components/UpdateParticipants'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/update-card',
       name: 'UpdateTaskCard',
       component: UpdateTaskCard
+    },
+    {
+      path: 'update-participants',
+      name: 'UpdateParticipants',
+      component: UpdateParticipants
     },
     {
       path: '/add-participants',
