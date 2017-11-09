@@ -8,7 +8,7 @@ public class Card {
 	
 	@Id
 	private String idCard;
-	private String name, status, description, startDate, endDate, registeredDate, idUser, idProject, submitReason, finishedDate;
+	private String name, status, description, startDate, endDate, registeredDate, idUser, idProject, submitReason, finishDate;
 	private List<String> internalParticipants, externalParticipants;
 	
 	public String getStatus() {
@@ -29,11 +29,11 @@ public class Card {
 	public void setSubmitReason(String submitReason) {
 		this.submitReason = submitReason;
 	}
-	public String getFinishedDate() {
-		return finishedDate;
+	public String getFinishDate() {
+		return finishDate;
 	}
-	public void setFinishedDate(String finishedDate) {
-		this.finishedDate = finishedDate;
+	public void setFinishDate(String finishDate) {
+		this.finishDate = finishDate;
 	}
 	public String getIdCard() {
 		return idCard;
