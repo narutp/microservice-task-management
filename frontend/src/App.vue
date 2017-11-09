@@ -10,7 +10,7 @@
           <b>Microservice Task Management | </b>
           <span v-if="$route.path === '/'">Sign in</span>
           <span v-if="$route.path === '/register'">Sign up</span>
-          <span v-if="index == 1">Dashboard</span>
+          <span v-if="$route.path === '/home'">Dashboard</span>
           <span v-if="index == 2">My Project</span>
           <span v-if="index == 3">Department Project</span>
           <span v-if="index == 4">Done Project</span>
@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined app--logout-button pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-dark pull-right logout-button" @click="logout()">
             Logout
           </button>
         </div>
@@ -173,9 +173,6 @@ export default {
   color:green;
   text-decoration:underline;
 }
-.app--logout-button {
-  margin: 5px;
-}
 .left {
   /*background-color: #2A323B;*/
   background-color: #EEF1F6;
@@ -185,5 +182,11 @@ export default {
 
 .right-app {
   padding: 50px;
+}
+
+.logout-button {
+  width: 100px;
+  border-radius: 30px;
+  margin: 5px;
 }
 </style>
