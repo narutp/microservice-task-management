@@ -161,7 +161,7 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 			Query query = new Query();
 			query.addCriteria(Criteria.where("idCard").is(card.getIdCard()));
 			Update update = new Update();
-			update.set("status", "Done");
+			update.set("status", "Finish");
 			update.set("name",card.getName());
 			update.set("description",card.getDescription());
 			update.set("startDate",card.getStartDate());
@@ -363,6 +363,16 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		Update update = new Update();
 		update.set("internalParticipants", card.getInternalParticipants());
 		update.set("externalParticipants", card.getExternalParticipants());
+		this.mongoOps.findAndModify(query, update, Card.class, collection);
+	}
+
+	@Override
+	public void setFinish(String idCard, Card card) {
+		collection = MongoDBMain.getCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idCard").is(idCard));
+		Update update = new Update();
+		update.set("status", card.getStatus());
 		this.mongoOps.findAndModify(query, update, Card.class, collection);
 	}
 
