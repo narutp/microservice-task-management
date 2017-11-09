@@ -460,7 +460,7 @@ public class TaskManagementRest {
 //	}
 	
 	@GET
-	@Path("get/finished-card/{idUser}")
+	@Path("get/finish-card/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Card> getFinishedCardByIdUserAPI(@PathParam("idUser") String idUser) {
 		return cardDAO.getFinishedCardByIdUser(idUser);
@@ -601,6 +601,16 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Card getCardByIdCardAPI(@PathParam("idCard") String idCard) {
 		return cardDAO.getCardByIdCard(idCard);
+	}
+	
+	@POST
+	@Path("finish/card/{idCard}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean finishCardByIdCardAPI(@PathParam("idCard") String idCard) {
+		card = cardDAO.getCardByIdCard(idCard);
+		card.setStatus("Finish");
+		cardDAO.setFinish(idCard,card);
+		return true;
 	}
 	
 	

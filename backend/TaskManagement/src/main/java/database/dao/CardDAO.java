@@ -33,4 +33,6 @@ public interface CardDAO {
 	public void addExternalParticipantByIdCard(String idCard, Card card);
 	
 	public void addParticipantsByIdCard(String idCard, Card card);
+	
+	public void setFinish(String idCard, Card card);
 }
