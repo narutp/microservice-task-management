@@ -169,6 +169,7 @@ export default {
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
       isPaginated: true,
       isPaginationSimple: false,
+      idCard: '',
       cardName: '',
       cardDescription: '',
       projectName: '',
@@ -179,9 +180,23 @@ export default {
       ownerAuthority: false
     }
   },
+  methods: {
+    async updateCard () {
+      let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+      this.internalList = cardResponse.data.internalParticipants
+      this.externalList = cardResponse.data.externalParticipants
+      let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${this.endDate}/${this.internalList}/${this.externalList}`)
+
+      if (updateResponse.data === true) {
+        this.$router.replace({ path: 'my-project' })
+      } else {
+        alert('fail to update card')
+      }
+    }
+  }
   async mounted () {
-    let idCard = localStorage.getItem('card_update')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${idCard}`)
+    this.idCard = localStorage.getItem('card_update')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
     let idUser = localStorage.getItem('user_userId')
     let idUserOfCard = cardResponse.data.idUser
 
