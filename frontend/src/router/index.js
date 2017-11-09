@@ -55,7 +55,7 @@ export default new Router({
       component: UpdateTaskCard
     },
     {
-      path: 'update-participants',
+      path: '/update-participants',
       name: 'UpdateParticipants',
       component: UpdateParticipants
     },

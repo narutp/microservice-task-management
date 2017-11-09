@@ -1,12 +1,11 @@
 <template lang="html">
   <div class="update-participants--container" align="left">
-
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>Update participants +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border" @click="cancleAddParticipants()">
+        <button class="button no-border" @click="cancleUpdateParticipants()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
@@ -98,6 +97,7 @@ export default {
       isPaginationSimple: false,
       temp: '',
       temp2: '',
+      idCard: '',
       internalUser: '',
       internalUserList: [],
       internalAddList: [],
@@ -108,6 +108,25 @@ export default {
   },
   // TODO can't get data in select at first
   async mounted () {
+    this.idCard = localStorage.getItem('id_create_card')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+    console.log(cardResponse.data)
+    let internalArr = cardResponse.data.internalParticipants.length
+    let externalArr = cardResponse.data.externalParticipants.length
+
+    // TODO duplicate participant to add and can add same participant
+    for (let i = 0; i < internalArr; i++) {
+      let idInternalUser = cardResponse.data.internalParticipants[i]
+      let userResponse = await Axios.get(`http://localhost:8090/get/user/id/${idInternalUser}`)
+      this.internalAddList.push(userResponse.data.name)
+    }
+
+    for (let i = 0; i < externalArr; i++) {
+      let idExternalUser = cardResponse.data.externalParticipants[i]
+      let userResponse = await Axios.get(`http://localhost:8090/get/user/id/${idExternalUser}`)
+      this.externalAddList.push(userResponse.data.name)
+    }
+
     let idDepartment = localStorage.getItem('id_department_owner_card')
     let internalResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
     for (let i = 0; i < internalResponse.data.length; i++) {
@@ -126,9 +145,8 @@ export default {
     addExternalParticipant () {
       this.externalAddList.push(this.externalUser)
     },
-    async cancleAddParticipants () {
-      let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+    async cancleUpdateParticipants () {
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${this.idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {
@@ -136,12 +154,10 @@ export default {
       }
     },
     async save () {
-      let idCard = localStorage.getItem('id_create_card')
-
       let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
       let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
 
-      let response = await Axios.post(`http://localhost:8091/add/participants/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
+      let response = await Axios.post(`http://localhost:8091/add/participants/${this.idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
       if (response.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {

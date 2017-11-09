@@ -188,13 +188,13 @@ export default {
       let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${this.endDate}/${this.internalList}/${this.externalList}`)
 
       if (updateResponse.data === true) {
-        this.$router.replace({ path: 'my-project' })
+        this.$router.replace({ path: '/my-project' })
       } else {
         alert('fail to update card')
       }
     },
     updateParticipant () {
-      this.$router.replace({ path: '/update-participants'})
+      this.$router.replace({ path: '/update-participants' })
     }
   },
   async mounted () {
