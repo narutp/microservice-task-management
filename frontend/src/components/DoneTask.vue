@@ -16,26 +16,23 @@
               </b-table-column>
 
               <b-table-column field="taskName" label="Task Name" sortable>
-                  {{ props.row.taskName }}
+                  {{ props.row.idProject }}
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Task Card Name" sortable>
-                  {{ props.row.taskCardName }}
+                  {{ props.row.name }}
               </b-table-column>
 
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
+              <b-table-column field="registeredDate" label="Finish Date" sortable>
+                  {{ props.row.finishDate }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Writer" sortable>
-                  {{ props.row.writer }}
+              <b-table-column field="writer" label="Owner" sortable>
+                  {{ props.row.idUser }}
               </b-table-column>
 
               <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'In progress'">
-                      {{ props.row.status }}
-                  </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
+                  <span class="tag is-success">
                       {{ props.row.status }}
                   </span>
               </b-table-column>
@@ -50,16 +47,28 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': '', 'project': '', 'card': '', 'finishDate': '', 'owner': '', 'status': '' }],
+      tableData: [{ 'no': '', 'idProject': '', 'name': '', 'finishDate': '', 'idUser': '', 'status': '' }],
       isPaginated: true,
-      isPaginationSimple: false
+      isPaginationSimple: false,
+      arrLength: ''
     }
   },
   async mounted () {
     let idUser = localStorage.getItem('user_userId')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/finished-card/${idUser}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/finish-card/${idUser}`)
     console.log(cardResponse)
     this.tableData = cardResponse.data
+    this.arrLength = cardResponse.data.length
+
+    for (let i = 0; i < this.arrLength; i++) {
+      let idProject = cardResponse.data[i].idProject
+      let idUser = cardResponse.data[i].idUser
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
+      this.tableData[i].idProject = projectResponse.data.name
+      this.tableData[i].idUser = nameResponse.data.name
+      this.tableData[i].finishDate = cardResponse.data[i].finishDate
+    }
   }
 }
 </script>
