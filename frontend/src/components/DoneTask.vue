@@ -46,15 +46,20 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Test Task1', 'taskCardName': 'Test Task Card1', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Test Task2', 'taskCardName': 'Test Task Card2', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Net Task', 'taskCardName': 'Net Task Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
+      tableData: [{ 'no': '', 'project': '', 'card': '', 'finishDate': '', 'owner': '', 'status': '' }],
       isPaginated: true,
       isPaginationSimple: false
     }
+  },
+  async mounted () {
+    let idUser = localStorage.getItem('user_userId')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/finished-card/${idUser}`)
+    console.log(cardResponse)
+    this.tableData = cardResponse.data
   }
 }
 </script>

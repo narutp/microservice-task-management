@@ -41,7 +41,7 @@
                 <template slot="title">Department Project</template>
               </el-menu-item>
               <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
-                <template slot="title">Done Project</template>
+                <template slot="title">Done Card</template>
               </el-menu-item>
             </el-menu-item-group>
             <hr><el-menu-item-group title="Management">
