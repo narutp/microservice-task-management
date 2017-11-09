@@ -1,132 +1,89 @@
 <template lang="html">
-  <div class="content" align="left">
+  <div class="add-participants--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>Add participants +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border">
+        <button class="button no-border" @click="cancleAddParticipants()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
     </div>
 
+    <!--  Internal Participants -->
     <div class="columns">
-      <div class="column limit-height">
-        <table class="table">
-          <thead>
-            <tr>
-              <th><abbr title="Position">No</abbr></th>
-              <th>Department</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="is-selected">
-              <th>1</th>
-              <th>Department A</th>
-            </tr>
-            <tr class="is-selected">
-              <th>2</th>
-              <th>Department B</th>
-            </tr>
-            <tr>
-              <th>3</th>
-              <th>Department C</th>
-            </tr>
-            <tr>
-              <th>4</th>
-              <th>Department D</th>
-            </tr>
-            <tr>
-              <th>5</th>
-              <th>Department E</th>
-            </tr>
-            <tr>
-              <th>6</th>
-              <th>Department F</th>
-            </tr>
-            <tr>
-              <th>7</th>
-              <th>Department G</th>
-            </tr>
-            <tr>
-              <th>8</th>
-              <th>Department H</th>
-            </tr>
-            <tr>
-              <th>9</th>
-              <th>Department I</th>
-            </tr>
-            <tr>
-              <th>10</th>
-              <th>Department J</th>
-            </tr>
-
-          </tbody>
-        </table>
+      <div class="column">
+        <input v-model="temp" class="input" type="text" placeholder="Card name">
       </div>
+
       <div class="column">
         <section class="my-task-table--body">
-          <b-table
-              class="my-task--table"
-              :data="tableData"
-              default-sort="title">
-              <template scope="props">
-                  <b-table-column field="taskName" label="Name" sortable>
-                      {{ props.row.taskName }}
-                  </b-table-column>
-              </template>
-          </b-table>
+          <b-select v-model="internalUser" placeholder="Select a name">
+            <option
+              v-for="option in internalUserList"
+              :value="option"
+              :key="option">
+              {{ option }}
+            </option>
+          </b-select>
         </section>
       </div>
-    </div>
-
-    <section class="my-task-table--body">
-      <b-table
-          class="my-task--table"
-          :data="tableData"
-          default-sort="title">
-          <template scope="props">
-              <b-table-column field="no" label="No" width="50" sortable numeric centered>
-                  {{ props.row.no }}
-              </b-table-column>
-
-              <b-table-column field="taskName" label="Name" sortable>
-                  {{ props.row.taskName }}
-              </b-table-column>
-
-              <b-table-column field="taskCardName" label="Department" sortable>
-                  {{ props.row.taskCardName }}
-              </b-table-column>
-
-              <b-table-column field="writer" label="Position" sortable>
-                  {{ props.row.taskCardName }}
-              </b-table-column>
-
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
-              </b-table-column>
-
-              <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'INTERNAL'">
-                      {{ props.row.status }}
-                  </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'EXTERNAL'">
-                      {{ props.row.status }}
-                  </span>
-              </b-table-column>
-          </template>
-      </b-table>
-    </section>
-
-    <br>
-    <br>
-    <div class="columns" align="center">
       <div class="column">
-          <a class="button is-dark">Add participants+</a>
+        <button class="button is-info" @click="addInternalParticipant()">
+          <span>Add Internal Participants</span>
+        </button>
       </div>
     </div>
+
+    <!--  external participants  -->
+    <div class="columns">
+      <div class="column">
+        <input v-model="temp2" class="input" type="text" placeholder="Card name">
+      </div>
+
+      <div class="column">
+        <section class="my-task-table--body">
+          <b-select v-model="externalUser" placeholder="Select external">
+            <option
+              v-for="options in externalUserList"
+              :value="options"
+              :key="options">
+              {{ options }}
+            </option>
+          </b-select>
+        </section>
+      </div>
+      <div class="column">
+        <button class="button is-info" @click="addExternalParticipant()">
+          <span>Add External Participants</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="add-participants-tag--body">
+      <el-tag
+        v-for="tag in internalAddList"
+        :key="tag"
+        closable
+        :type="tag">
+        {{tag}}
+      </el-tag>
+    </section>
+    <section class="add-participants-tag--body">
+      <el-tag
+        v-for="tags in externalAddList"
+        :key="tags"
+        closable
+        :type="tags">
+        {{tags}}
+      </el-tag>
+    </section>
+    <hr>
+    <button class="button is-success" @click="save()">
+      <span>Save</span>
+    </button>
   </div>
 </template>
 
@@ -135,25 +92,69 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Makhamwan', 'taskCardName': 'Department A', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 2, 'taskName': 'Net', 'taskCardName': 'Department A', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'INTERNAL' },
-    { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
-    { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
       isPaginated: true,
       isPaginationSimple: false,
-      user: []
+      temp: '',
+      temp2: '',
+      internalUser: '',
+      internalUserList: [],
+      internalAddList: [],
+      externalUser: '',
+      externalUserList: [],
+      externalAddList: []
     }
   },
+  // TODO can't get data in select at first
   async mounted () {
     let idDepartment = localStorage.getItem('id_department_owner_card')
-    console.log(idDepartment)
-    let response = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
-    console.log(response)
+    let internalResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
+    for (let i = 0; i < internalResponse.data.length; i++) {
+      this.internalUserList[i] = internalResponse.data[i].name
+    }
+
+    let externalResponse = await Axios.get(`http://localhost:8090/get/external-user-list/department/${idDepartment}`)
+    for (let j = 0; j < externalResponse.data.length; j++) {
+      this.externalUserList[j] = externalResponse.data[j].name
+    }
+  },
+  methods: {
+    addInternalParticipant () {
+      this.internalAddList.push(this.internalUser)
+    },
+    addExternalParticipant () {
+      this.externalAddList.push(this.externalUser)
+    },
+    async cancleAddParticipants () {
+      let idCard = localStorage.getItem('id_create_card')
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      if (cancleResponse.data === true) {
+        this.$router.replace({ path: '/create-card' })
+      } else {
+        alert('failed')
+      }
+    },
+    async save () {
+      let idCard = localStorage.getItem('id_create_card')
+
+      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
+      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
+
+      let response = await Axios.post(`http://localhost:8091/add/participants/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
+      if (response.data === true) {
+        this.$router.replace({ path: '/create-card' })
+      } else {
+        alert('failed')
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.add-participants--container {
+  background-color: #fff;
+  padding: 30px;
+}
 .create-section {
   margin: 20px;
 }

@@ -6,7 +6,7 @@
         <h6 style="margin-top: 16px"><b>New Card +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border">
+        <button class="button no-border" @click="cancle()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
@@ -52,12 +52,12 @@
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="addInternal()">
-          <span> Add Internal + </span>
+        <button class="button" style="width: 200px" @click="addParticipant()">
+          <span> Add Participants + </span>
         </button>
-        <button class="button" style="width: 200px" @click="addExternal()">
+        <!-- <button class="button" style="width: 200px" @click="addExternal()">
           <span> Add External + </span>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -65,37 +65,73 @@
       <b-table
           class="my-task--table"
           :data="tableData"
+          :paginated="true"
+          :per-page="5"
           default-sort="title">
           <template scope="props">
               <b-table-column field="no" label="No" width="50" sortable numeric centered>
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Name" sortable>
-                  {{ props.row.taskName }}
+              <b-table-column field="department" label="Department" width="150" sortable centered>
+                  {{ props.row.department }}
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Department" sortable>
-                  {{ props.row.taskCardName }}
+              <b-table-column field="name" label="Name" width="250" sortable>
+                  {{ props.row.user }}
               </b-table-column>
 
               <b-table-column field="writer" label="Position" sortable>
-                  {{ props.row.taskCardName }}
+                  {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
+              <b-table-column field="email" label="Registered Date" sortable>
+                  {{ props.row.email }}
               </b-table-column>
 
-              <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'INTERNAL'">
-                      {{ props.row.status }}
-                  </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'EXTERNAL'">
+              <b-table-column field="status" label="Status"centered>
+                  <span class="tag is-success" v-if="props.row.status === 'INTERNAL'">
                       {{ props.row.status }}
                   </span>
               </b-table-column>
+          </template>
+      </b-table>
+    </section>
 
+    <hr>
+    <section class="my-task-table--body">
+      <b-table
+          class="my-task--table"
+          :data="tableData2"
+          :paginated="true"
+          :per-page="5"
+          default-sort="title">
+          <template scope="props">
+              <b-table-column field="no" label="No" width="50" sortable numeric centered>
+                  {{ props.row.no }}
+              </b-table-column>
+
+              <b-table-column field="department" label="Department" width="150" sortable centered>
+                  {{ props.row.department }}
+              </b-table-column>
+
+              <b-table-column field="name" label="Name" width="250" sortable>
+                  {{ props.row.user }}
+              </b-table-column>
+
+              <b-table-column field="writer" label="Position" sortable>
+                  {{ props.row.position }}
+              </b-table-column>
+
+              <b-table-column field="email" label="Registered Date" sortable>
+                  {{ props.row.email }}
+              </b-table-column>
+
+              <b-table-column field="status" label="Status"centered>
+                  <span class="tag is-info" v-if="props.row.status === 'EXTERNAL'">
+                      {{ props.row.status }}
+                  </span>
+              </b-table-column>
           </template>
       </b-table>
     </section>
@@ -115,79 +151,103 @@ import Axios from 'axios'
 import moment from 'moment'
 export default {
   data () {
+    // TODO Bug when input data into the table, the table must already have temp data
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Makhamwan', 'taskCardName': 'Department A', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'INTERNAL' },
-      { 'no': 2, 'taskName': 'Net', 'taskCardName': 'Department A', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'INTERNAL' },
-      { 'no': 3, 'taskName': 'Boss', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' },
-      { 'no': 4, 'taskName': 'Prang', 'taskCardName': 'Department B', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'EXTERNAL' }],
+      tableData: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
+      tableData2: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
+      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
       cardName: '',
       project: '',
       description: '',
       startDate: '',
       endDate: '',
-      allProject: []
+      allProject: [],
+      internalArrLength: '',
+      externalArrLength: ''
     }
   },
   methods: {
-    async addInternal () {
+    async addParticipant () {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      console.log(idUser)
       let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
       let idCard = response.data
-      // console.log(idCard)
+      localStorage.setItem('id_create_card', idCard)
+      console.log(idCard)
       let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/card/${idCard}`)
       let idDepartment = idDepartmentResponse.data
       // console.log(idDepartmentResponse)
+
       localStorage.setItem('id_department_owner_card', idDepartment)
       this.$router.replace({ path: '/add-participants' })
     },
-    addExternal () {
+    async cancle () {
+      let idCard = localStorage.getItem('id_create_card')
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      if (cancleResponse.data === true) {
+        this.$router.replace({ path: '/my-project' })
+      } else {
+        alert('failed')
+      }
     }
   },
-  // beforeCreate () {
-  //   let self = this
-  //   Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
-  //     console.log(response.data.name)
-  //     self.allProject = response.data
-  //     console.log(self.allProject)
-  //   }).catch(function (error) {
-  //     self.back()
-  //     console.log(error)
-  //   })
-  // }
-  async beforeCreate () {
+  // TODO can't get all project at once
+  async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
+    }
+
+    // get card to show participants inside the card
+    let idCard = localStorage.getItem('id_create_card')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${idCard}`)
+    console.log(cardResponse.data)
+
+    // get arr length of both internal and external user in a card to find their names
+    this.internalArrLength = cardResponse.data.internalParticipants.length
+    this.externalArrLength = cardResponse.data.externalParticipants.length
+
+    // set value of internal participant table
+    for (let i = 0; i < this.internalArrLength; i++) {
+      let idInternalUser = cardResponse.data.internalParticipants[i]
+      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idInternalUser}`)
+      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${internalNameResponse.data.idPosition}`)
+      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${internalNameResponse.data.idDepartment}`)
+      this.tableData[i].user = internalNameResponse.data.name
+      this.tableData[i].email = internalNameResponse.data.email
+      this.tableData[i].status = 'INTERNAL'
+      this.tableData[i].position = internalPositionResponse.data.name
+      this.tableData[i].department = internalDepartmentResponse.data.name
+    }
+    // set value of external participant table
+    for (let i = 0; i < this.externalArrLength; i++) {
+      let idExternalUser = cardResponse.data.externalParticipants[i]
+      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idExternalUser}`)
+      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${externalNameResponse.data.idPosition}`)
+      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${externalNameResponse.data.idDepartment}`)
+      this.tableData2[i].user = externalNameResponse.data.name
+      this.tableData2[i].email = externalNameResponse.data.email
+      this.tableData2[i].status = 'EXTERNAL'
+      this.tableData2[i].position = externalPositionResponse.data.name
+      this.tableData2[i].department = externalDepartmentResponse.data.name
     }
   }
 }
 </script>
 
 <style scoped>
-/*.create-section {
-  margin: 20px;
-}
-.no-border {
-  border: 0;
-}
-.placeholder {
-  color: #BDBDBD;
-}
-.title-field {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
+.create-task-card--container {
   background-color: #fff;
-  height: 48px;
+  padding: 30px;
 }
-textarea {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  background-color: #fff;
-  height: 300px;
-}*/
 </style>

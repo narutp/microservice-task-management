@@ -48,7 +48,6 @@ export default {
     this.userId = localStorage.getItem('user_userId')
   },
   methods: {
-    // TODO: problem with core
     async createProject () {
       // task api
       let idDepartment = localStorage.getItem('user_departmentId')

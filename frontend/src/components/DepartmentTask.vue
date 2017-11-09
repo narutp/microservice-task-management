@@ -2,12 +2,12 @@
   <div class="department-task--container">
     <section class="department-task-table--body">
       <div style="font-size: 18px;">
-        <b>Department A</b>
+        <b>Department {{department}}</b>
       </div>
       <b-table
-          class="department-task--table"
+          class="task-management--table"
           :data="tableData"
-          :paginated="isPaginated"
+          :paginated="true"
           :per-page="7"
           default-sort="title">
 
@@ -16,29 +16,40 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Project Name" sortable>
-                  {{ props.row.taskName }}
+              <b-table-column field="projectName" label="Project Name" sortable>
+                  {{ props.row.idProject }}
+                  <!-- {{ props.row }} -->
               </b-table-column>
 
-              <b-table-column field="taskCardName" label="Card Name" sortable>
-                  {{ props.row.taskCardName }}
+              <b-table-column field="card Name" label="Card Name" sortable>
+                  {{ props.row.name }}
               </b-table-column>
 
-              <b-table-column field="registeredDate" label="Registered Date" sortable>
-                  {{ props.row.registeredDate }}
+              <b-table-column field="Start date" label="Start date" sortable>
+                  {{ props.row.startDate }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Writer" sortable>
-                  {{ props.row.writer }}
+              <b-table-column field="End date" label="End date" sortable>
+                  {{ props.row.endDate }}
               </b-table-column>
 
-              <b-table-column field="status" label="Status" sortable centered>
-                  <span class="tag is-info" v-if="props.row.status === 'In progress'">
-                      {{ props.row.status }}
-                  </span>
-                  <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
-                      {{ props.row.status }}
-                  </span>
+              <b-table-column field="owner" label="Owner" sortable>
+                  {{ props.row.idUser }}
+              </b-table-column>
+
+              <b-table-column field="status" label="Status" sortable>
+                <span class="tag is-info" v-if="props.row.status === 'In progress'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-warning" v-if="props.row.status === 'Request to finish'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-danger" v-if="props.row.status === 'Request to delete'">
+                    {{ props.row.status }}
+                </span>
+                <span class="tag is-success" v-if="props.row.status === 'Done'">
+                    {{ props.row.status }}
+                </span>
               </b-table-column>
           </template>
       </b-table>
@@ -47,15 +58,31 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'No Idea', 'registeredDate': '2017-09-17', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Data science part', 'registeredDate': '2017-10-1', 'writer': 'Boo', 'status': 'In progress' },
-    { 'no': 3, 'taskName': 'Small Data', 'taskCardName': 'Data math part', 'registeredDate': '2017-11-1', 'writer': 'Boo', 'status': 'Request to finish' },
-    { 'no': 4, 'taskName': 'Machine Learning', 'taskCardName': 'Net Card', 'registeredDate': '2017-10-4', 'writer': 'Net', 'status': 'Request to finish' }],
-      isPaginated: true,
-      isPaginationSimple: false
+      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2', 'idUser': 'Boo', 'status': 'hello' }],
+      department: '',
+      arrLength: ''
+    }
+  },
+  async mounted () {
+    this.department = localStorage.getItem('user_department')
+    // get user list by sending department name of that user
+    let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${this.department}`)
+
+    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-card/${userListResponse.data}`)
+    console.log(departmentCardResponse)
+    this.tableData = departmentCardResponse.data
+    this.arrLength = departmentCardResponse.data.length
+    for (let i = 0; i < this.arrLength; i++) {
+      let idUser = departmentCardResponse.data[i].idUser
+      let idProject = departmentCardResponse.data[i].idProject
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+      this.tableData[i].idUser = nameResponse.data.name
+      this.tableData[i].idProject = projectResponse.data.name
     }
   }
 }
