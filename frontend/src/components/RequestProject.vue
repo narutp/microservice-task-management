@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="request-project--container">
     <section class="request-project-table--body">
+      <div style="font-size: 18px;">
+        <b>Request Project</b>
+      </div>
       <div class="request-project--button" align="right">
       </div>
       <b-table

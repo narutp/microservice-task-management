@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="home--container">
+    <div style="font-size: 18px;">
+      <b>Dashboard</b>
+    </div>
     <el-row class="home--chart">
       <br>
       <el-col :span="11">

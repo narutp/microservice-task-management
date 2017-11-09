@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="done-task--container">
     <section class="done-task-table--body">
+      <div style="font-size: 18px;">
+        <b>Done Card</b>
+      </div>
       <div class="done-task--button" align="right">
       </div>
       <b-table
@@ -15,7 +18,7 @@
                   {{ props.row.no }}
               </b-table-column>
 
-              <b-table-column field="taskName" label="Task Name" sortable>
+              <b-table-column field="taskName" label="Project Name" sortable>
                   {{ props.row.idProject }}
               </b-table-column>
 
@@ -67,7 +70,6 @@ export default {
       let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
       this.tableData[i].idProject = projectResponse.data.name
       this.tableData[i].idUser = nameResponse.data.name
-      this.tableData[i].finishDate = cardResponse.data[i].finishDate
     }
   }
 }

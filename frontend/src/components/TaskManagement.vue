@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="task-management--container">
     <section class="task-management-table--body">
+      <div style="font-size: 18px;">
+        <b>Project Management</b>
+      </div>
       <div class="task-management--button" align="right">
         <button class="button is-primary" @click="createProject()">
           <i class="fa fa-plus" aria-hidden="true"> Create Project</i>
