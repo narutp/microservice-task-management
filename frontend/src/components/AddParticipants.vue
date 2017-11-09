@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="content" align="left">
+  <div class="add-participants--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
@@ -80,8 +80,8 @@
         {{tags}}
       </el-tag>
     </section>
-    <br>
-    <button class="button is-success" style="width: 200px" @click="save()">
+    <hr>
+    <button class="button is-success" @click="save()">
       <span>Save</span>
     </button>
   </div>
@@ -116,7 +116,6 @@ export default {
     for (let j = 0; j < externalResponse.data.length; j++) {
       this.externalUserList[j] = externalResponse.data[j].name
     }
-    console.log(this.externalUserList)
   },
   methods: {
     addInternalParticipant () {
@@ -143,6 +142,10 @@ export default {
 </script>
 
 <style scoped>
+.add-participants--container {
+  background-color: #fff;
+  padding: 30px;
+}
 .create-section {
   margin: 20px;
 }

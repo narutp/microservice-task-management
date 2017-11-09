@@ -52,12 +52,12 @@
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="addInternal()">
-          <span> Add Internal + </span>
+        <button class="button" style="width: 200px" @click="addParticipant()">
+          <span> Add Participants + </span>
         </button>
-        <button class="button" style="width: 200px" @click="addExternal()">
+        <!-- <button class="button" style="width: 200px" @click="addExternal()">
           <span> Add External + </span>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -129,7 +129,7 @@ export default {
     }
   },
   methods: {
-    async addInternal () {
+    async addParticipant () {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
@@ -147,17 +147,6 @@ export default {
     addExternal () {
     }
   },
-  // beforeCreate () {
-  //   let self = this
-  //   Axios.get(`http://localhost:8091/get/all-project/`).then(function (response) {
-  //     console.log(response.data.name)
-  //     self.allProject = response.data
-  //     console.log(self.allProject)
-  //   }).catch(function (error) {
-  //     self.back()
-  //     console.log(error)
-  //   })
-  // }
   // TODO can't get all project at once
   async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
@@ -169,27 +158,8 @@ export default {
 </script>
 
 <style scoped>
-/*.create-section {
-  margin: 20px;
-}
-.no-border {
-  border: 0;
-}
-.placeholder {
-  color: #BDBDBD;
-}
-.title-field {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
+.create-task-card--container {
   background-color: #fff;
-  height: 48px;
+  padding: 30px;
 }
-textarea {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  background-color: #fff;
-  height: 300px;
-}*/
 </style>
