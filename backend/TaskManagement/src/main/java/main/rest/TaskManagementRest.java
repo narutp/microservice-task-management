@@ -320,16 +320,13 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@GET
-	@Path("edit/card/{idCard}/{idUser}/{idProject}/{name}/{description}/{startDate}/{endDate}/{internalParticipants}/{externalParticipants}")
+	@POST
+	@Path("update/card/{idCard}/{name}/{description}/{endDate}/{internalParticipants}/{externalParticipants}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean editCardAPI(
+	public boolean updateCardAPI(
 			@PathParam("idCard") String idCard,
-			@PathParam("idUser") String idUser,
-			@PathParam("idProject") String idProject,
 			@PathParam("name") String name,
 			@PathParam("description") String description,
-			@PathParam("startDate") String startDate,
 			@PathParam("endDate") String endDate,
 			@PathParam("internalParticipants") List<String> internalParticipants,
 			@PathParam("externalParticipants") List<String> externalParticipants) {
@@ -343,10 +340,6 @@ public class TaskManagementRest {
 			card.setDescription("-");
 		else
 			card.setDescription(description);
-		if(startDate.equals(""))
-			card.setStartDate("-");
-		else
-			card.setStartDate(startDate);
 		if(endDate.equals(""))
 			card.setEndDate("-");
 		else
@@ -360,7 +353,7 @@ public class TaskManagementRest {
 		else
 			card.setExternalParticipants(externalParticipants);
 		
-		cardDAO.editCardByIdCard(idCard, card);
+		cardDAO.updateCardByIdCard(idCard, card);
 		return true;
 	}
 	

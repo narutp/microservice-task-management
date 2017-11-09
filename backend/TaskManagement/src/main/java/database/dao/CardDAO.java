@@ -12,7 +12,7 @@ public interface CardDAO {
 	
 	public Card getCardByIdCard(String idCard);
 	
-	public void editCardByIdCard (String idCard, Card Card);
+	public void updateCardByIdCard (String idCard, Card Card);
 	
 	public void deleteCardById (String idCard);
 	
