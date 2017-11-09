@@ -383,6 +383,13 @@ public class TaskManagementRest {
 		List<Request> requestList = requestDAO.getAllRequestByIdUser(idUser);
 	 	return requestList;
 	 }
+	 
+	 @GET
+	 @Path("get/all-request")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public List<Request> getAllRequestAPI() {
+	 	return requestDAO.getAllRequest();
+	 }
 
 //	 @GET
 //	 @Path("get/request/{idUser}")
