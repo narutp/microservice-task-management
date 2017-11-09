@@ -35,4 +35,8 @@ public interface CardDAO {
 	public void addParticipantsByIdCard(String idCard, Card card);
 	
 	public void setFinish(String idCard, Card card);
+	
+	public void requestToFinishCard(Card card);
+	
+	public void requestToDeleteCard(Card card);
 }

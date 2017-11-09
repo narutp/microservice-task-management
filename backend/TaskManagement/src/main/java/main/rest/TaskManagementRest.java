@@ -534,8 +534,12 @@ public class TaskManagementRest {
 			@PathParam("idCard") String idCard,
 			@PathParam("reason") String reason,
 			@PathParam("idRequester") String idRequester){
+		card = cardDAO.getCardByIdCard(idCard);
+		card.setStatus("Request to finish");
+		cardDAO.requestToFinishCard(card);
 		request.setIdCard(idCard);
-		request.setType("Finish");
+		request.setType("Request to finish");
+		request.setIdProject(card.getIdProject());
 		request.setReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
@@ -553,8 +557,12 @@ public class TaskManagementRest {
 			@PathParam("idCard") String idCard,
 			@PathParam("reason") String reason,
 			@PathParam("idRequester") String idRequester){
+		card = cardDAO.getCardByIdCard(idCard);
+		card.setStatus("Request to delete");
+		cardDAO.requestToDeleteCard(card);
 		request.setIdCard(idCard);
-		request.setType("Delete");
+		request.setType("Request to delete");
+		request.setIdProject(card.getIdProject());
 		request.setReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
