@@ -209,6 +209,8 @@ export default {
   padding: 30px;
   padding-left: 100px;
   padding-right: 100px;
+}
+.content {
   width: 75%;
 }
 .full--width {
