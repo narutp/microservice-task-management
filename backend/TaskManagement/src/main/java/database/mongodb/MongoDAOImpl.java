@@ -102,7 +102,6 @@ public class MongoDAOImpl implements CardDAO, ProjectDAO, RequestDAO{
 		Update update = new Update();
 		update.set("name",card.getName());
 		update.set("description",card.getDescription());
-		update.set("startDate",card.getStartDate());
 		update.set("endDate",card.getEndDate());
 		update.set("internalParticipants", card.getInternalParticipants());
 		update.set("externalParticipants", card.getExternalParticipants());

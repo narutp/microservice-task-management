@@ -321,13 +321,12 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("update/card/{idCard}/{name}/{description}/{startDate}/{endDate}/{internalParticipants}/{externalParticipants}")
+	@Path("update/card/{idCard}/{name}/{description}/{endDate}/{internalParticipants}/{externalParticipants}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean updateCardAPI(
 			@PathParam("idCard") String idCard,
 			@PathParam("name") String name,
 			@PathParam("description") String description,
-			@PathParam("startDate") String startDate,
 			@PathParam("endDate") String endDate,
 			@PathParam("internalParticipants") List<String> internalParticipants,
 			@PathParam("externalParticipants") List<String> externalParticipants) {
@@ -341,10 +340,6 @@ public class TaskManagementRest {
 			card.setDescription("-");
 		else
 			card.setDescription(description);
-		if(startDate.equals(""))
-			card.setStartDate("-");
-		else
-			card.setStartDate(startDate);
 		if(endDate.equals(""))
 			card.setEndDate("-");
 		else
