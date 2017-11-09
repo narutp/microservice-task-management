@@ -6,7 +6,7 @@
         <h6 style="margin-top: 16px"><b>Add participants +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border" @click="cancle()">
+        <button class="button no-border" @click="cancleAddParticipants()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
@@ -124,7 +124,8 @@ export default {
     addExternalParticipant () {
       this.externalAddList.push(this.externalUser)
     },
-    cancle () {
+    async cancleAddParticipants () {
+      let idCard = localStorage.getItem('id_create_card')
     },
     async save () {
       let idCard = localStorage.getItem('id_create_card')
