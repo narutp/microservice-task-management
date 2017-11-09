@@ -6,6 +6,9 @@
         <h6 style="margin-top: 16px"><b>Update Task Card </b></h6>
       </div>
       <div class="column" align="right">
+        <button class="button is-info" style="width: 200px" @click="requestToFinish()">
+          <span>Request to finish</span>
+        </button>
         <button class="button no-border">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
@@ -147,11 +150,14 @@
           <a :disabled="!ownerAuthority" class="button is-dark" @click="updateCard()">Update Card</a>
       </div>
     </div>
+    <request-finish-dialog :id-card="idCard" :id-user="idUser" :dialog-request-clicked="dialogRequestClicked"></request-finish-dialog>
   </div>
 </template>
 
 <script>
+import RequestFinishDialog from '@/components/RequestFinishDialog'
 import Axios from 'axios'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -177,6 +183,7 @@ export default {
       endDate: '',
       internalList: '',
       externalList: '',
+      dialogRequestClicked: false,
       ownerAuthority: false
     }
   },
@@ -185,13 +192,17 @@ export default {
       let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
       this.internalList = cardResponse.data.internalParticipants
       this.externalList = cardResponse.data.externalParticipants
-      let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${this.endDate}/${this.internalList}/${this.externalList}`)
+      let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
+      let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
 
       if (updateResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
       } else {
         alert('fail to update card')
       }
+    },
+    requestToFinish () {
+      this.dialogRequestClicked = true
     },
     updateParticipant () {
       this.$router.replace({ path: '/update-participants' })
@@ -242,6 +253,9 @@ export default {
       this.tableData2[i].position = externalPositionResponse.data.name
       this.tableData2[i].department = externalDepartmentResponse.data.name
     }
+  },
+  components: {
+    RequestFinishDialog
   }
 }
 </script>

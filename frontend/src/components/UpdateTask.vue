@@ -1,39 +1,5 @@
 <template lang="html">
-  <!-- <div class="content" align="left">
-
-    <div class="columns">
-      <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>Update Project</b></h6>
-      </div>
-      <div class="column" align="right">
-        <button class="button no-border">
-          <i class="fa fa-trash" aria-hidden="true"></i>
-        </button>
-        <button class="button no-border">
-          <i class="fa fa-close" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="columns">
-      <div class="column">
-        <input class="input title-field" type="text" placeholder="Microservice">
-      </div>
-    </div>
-
-    <div class="columns">
-      <div class="column">
-        <textarea class="textarea" placeholder="Microservice project"></textarea>
-      </div>
-    </div>
-
-    <div class="columns" align="center">
-      <div class="column">
-          <a class="button is-dark">Update task</a>
-      </div>
-    </div>
-  </div> -->
-  <div>
+  <div class="update-task--container">
     <div>
       <el-dialog title = "Update Project" :visible.sync="dialogClicked">
         <div class="columns">
