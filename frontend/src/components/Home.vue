@@ -17,7 +17,9 @@
               </b-table-column>
             </template>
         </b-table>
-        <horizontal-bar-participant> </horizontal-bar-participant>
+        <div @click="dialogVisible = true">
+          <horizontal-bar-participant> </horizontal-bar-participant>
+        </div>
         <br>
       </el-col>
       <el-col :span="2">
@@ -65,6 +67,7 @@
 <script>
 // import { mapActions } from 'vuex'
 import ModalTask from '@/components/ModalTask'
+import ModalPerson from '@/components/ModalPerson'
 import PieProject from '@/components/Chart/PieProject'
 import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
 import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
@@ -96,7 +99,8 @@ export default {
     PieProject,
     DoughnutDepartment,
     HorizontalBarParticipant,
-    ModalTask
+    ModalTask,
+    ModalPerson
   }
 }
 </script>
