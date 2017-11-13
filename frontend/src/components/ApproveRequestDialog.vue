@@ -39,10 +39,10 @@
         </el-row>
 
         <el-row>
-          <button class="button is-dark" @click="updateProject()">
+          <button class="button is-dark" @click="approveRequest()">
             Accept
           </button>
-          <button class="button is-dark" @click="updateProject()">
+          <button class="button is-dark" @click="deniedRequest()">
             Denied
           </button>
         </el-row>
@@ -61,21 +61,16 @@ export default {
   },
   props: ['approveObj'],
   methods: {
-    updateProject () {
-      let self = this
-      Axios.post(`http://localhost:8091/edit/project/${this.approveObj.projectId}/${this.approveObj.projectName}/${this.projectDescription}`).then(function (response) {
-        self.$router.go({
-          path: '/project-management',
-          force: true
-        })
-      }).catch(function (error) {
-        console.log(error)
-      })
+    approveRequest () {
+      let response = Axios.post(`http://localhost:8091/approve/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+      if (response.data === true) {
+        this.$router.go({ path: '/request-project', force: true })
+      }
     }
   },
   async mounted () {
     let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.projectName}/${this.approveObj.cardName}`)
-    console.log(cardResponse)
+    console.log(cardResponse.data)
     this.reason = cardResponse.data.submitReason
   }
 }
