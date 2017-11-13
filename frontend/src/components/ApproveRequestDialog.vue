@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="approve-request--container">
     <div>
-      <el-dialog title = "Approve Request" :visible.sync="approveObj.dialogClicked" :close-on-click-modal="isCloseDialog" @close="close()">
+      <el-dialog title = "Approve Request" :visible.sync="approveObj.dialogClicked">
         <el-row>
           <div align="left">
             Project Name
@@ -56,9 +56,6 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
-    },
-    close () {
-      this.approveObj.dialogClicked = false
     }
   }
 }

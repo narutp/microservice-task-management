@@ -37,7 +37,7 @@
           </template>
       </b-table>
     </section>
-    <update-task :project-name="projectName" :dialog-clicked="dialogClicked" :project-description="projectDescription" :project-id="projectId"></update-task>
+    <update-task :update-project-list="updateProjectList"></update-task>
   </div>
 </template>
 
@@ -50,10 +50,12 @@ export default {
       tableData: [{ 'no': 1, 'name': 'Test Project 1', 'registeredDate': '1', 'idUser': 'Boo' },
       { 'no': 2, 'name': 'Test Project 2', 'registeredDate': '2', 'idUser': 's' }],
       arrLength: 0,
-      dialogClicked: false,
-      projectName: '',
-      projectDescription: '',
-      projectId: ''
+      updateProjectList: {
+        dialogClicked: false,
+        projectName: '',
+        projectDescription: '',
+        projectId: ''
+      }
     }
   },
   async mounted () {
@@ -71,10 +73,10 @@ export default {
       this.$router.replace({ path: '/create-project' })
     },
     updateProject (row) {
-      this.dialogClicked = true
-      this.projectName = row.name
-      this.projectDescription = row.description
-      this.projectId = row.idProject
+      this.updateProjectList.dialogClicked = true
+      this.updateProjectList.projectName = row.name
+      this.updateProjectList.projectDescription = row.description
+      this.updateProjectList.projectId = row.idProject
     }
   },
   components: {
