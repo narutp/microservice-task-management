@@ -39,4 +39,6 @@ public interface ProjectCardDAO {
 	public void requestToFinishProjectCard(ProjectCard projectCard);
 	
 	public void requestToDeleteProjectCard(ProjectCard projectCard);
+
+	public ProjectCard getProjectCardByProjectAndProjectCardName(String projectName, String projectCardName);
 }
