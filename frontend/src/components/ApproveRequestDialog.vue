@@ -27,6 +27,18 @@
         </el-row>
 
         <el-row>
+          <div align="left">
+            Request reason
+          </div>
+        </el-row>
+
+        <el-row>
+          <div class="update-project--value">
+            <input v-model="this.reason" class="input title-field" disabled>
+          </div>
+        </el-row>
+
+        <el-row>
           <button class="button is-dark" @click="updateProject()">
             Accept
           </button>
@@ -44,14 +56,14 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      isCloseDialog: false
+      reason: ''
     }
   },
   props: ['approveObj'],
   methods: {
     updateProject () {
       let self = this
-      Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`).then(function (response) {
+      Axios.post(`http://localhost:8091/edit/project/${this.approveObj.projectId}/${this.approveObj.projectName}/${this.projectDescription}`).then(function (response) {
         self.$router.go({
           path: '/project-management',
           force: true
@@ -60,9 +72,11 @@ export default {
         console.log(error)
       })
     }
-  }
+  },
   async mounted () {
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+    console.log(cardResponse)
+    this.reason = cardResponse.data.submitReason
   }
 }
 </script>
