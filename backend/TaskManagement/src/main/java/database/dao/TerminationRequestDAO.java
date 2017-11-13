@@ -21,4 +21,6 @@ public interface TerminationRequestDAO {
 	
 	public TerminationRequest getTerminationRequestById(String idTerminationRequest);
 	
+	public void deleteAllTerminationRequest();
+	
 }

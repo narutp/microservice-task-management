@@ -436,6 +436,11 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		return null;
 	}
 	
+	public void deleteAllTerminationRequest() {
+		collection = MongoDBMain.getTerminationRequestCollection();
+		this.mongoOps.remove(new Query(), collection);
+	}
+	
 	
 
 

@@ -447,6 +447,15 @@ public class TaskManagementRest {
 		return true;
 	}
 	
+	@POST
+	@Path("delete/all-request")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean deleteAllRequestAPI() {
+		terminationRequestDAO.deleteAllTerminationRequest();
+		return true;
+	}
+	
+	
 	@GET
 	@Path("get/idDepartment/project-card/{idProjectCard}")
 	@Produces(MediaType.APPLICATION_JSON)
