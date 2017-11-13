@@ -22,7 +22,7 @@
 <bean id="positionDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
-<bean id="userlogDAO" class="database.mongodb.MongoDAOImpl">
+<bean id="userHistoryDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
 </beans>

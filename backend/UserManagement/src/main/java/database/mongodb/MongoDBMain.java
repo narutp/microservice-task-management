@@ -13,7 +13,7 @@ public class MongoDBMain implements DatabaseModel {
 
 	private static final String DB_NAME = "userdb";
     private static final String USER_COLLECTION = "user";
-    private static final String USER_LOG_COLLECTION = "userlog";
+    private static final String USER_HISTORY_COLLECTION = "userHistory";
     private static final String POSITION_COLLECTION = "position";
     private static final String DEPARTMENT_COLLECTION = "department";
     private static final String MONGO_HOST = "localhost";
@@ -43,8 +43,8 @@ public class MongoDBMain implements DatabaseModel {
     public static String getUserCollection(){
     	return USER_COLLECTION;
     }
-    public static String getUserLogCollection(){
-    	return USER_LOG_COLLECTION;
+    public static String getUserHistoryCollection(){
+    	return USER_HISTORY_COLLECTION;
     }
     public static String getDepartmentCollection(){
     	return DEPARTMENT_COLLECTION;
