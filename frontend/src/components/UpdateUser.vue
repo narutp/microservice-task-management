@@ -1,7 +1,13 @@
 <template lang="html">
-  <div class="user--container">
+  <div class="update-user--container">
     <div class="content" align="left">
       <el-row>
+        <div class="update-user--header">
+          <el-breadcrumb separator="|" class="update-user--breadcrumb">
+            <el-breadcrumb-item>User information</el-breadcrumb-item>
+            <el-breadcrumb-item>User history</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
         <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
           <div class="margin-bottom"> <b>Personal Information</b> </div>
           <el-row>
@@ -191,13 +197,13 @@ export default {
     }
     return {
       form: {
-        name: 'Makhamwan',
-        birthdate: '2017-11-01',
-        phone: '01073094860',
-        department: 'A',
-        position: 'Intern',
-        email: 'mkhv@gmail.com',
-        username: 'makhamwan',
+        name: '',
+        birthdate: '',
+        phone: '',
+        department: '',
+        position: '',
+        email: '',
+        username: '',
         password: '',
         newPassword: ''
       },
@@ -278,20 +284,23 @@ export default {
 </script>
 
 <style scoped>
-.user--container {
+.update-user--container {
   background-color: #fff;
   padding: 30px;
   padding-left: 100px;
   padding-right: 100px;
+}
+.update-user--header {
+  margin-bottom: 50px;
+}
+.update-user--breadcrumb {
+  font-size: 15px;
 }
 .content {
   width: 75%;
 }
 .full--width {
   width: 100%;
-}
-.margin-bottom {
-  margin-bottom: 20px;
 }
 button {
   width: 180px;
