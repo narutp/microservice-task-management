@@ -46,7 +46,7 @@
         <el-date-picker
           v-model="startDate"
           type="date"
-          disabled=true
+          :disabled="true"
           placeholder="Start date">
         </el-date-picker>
       </div>

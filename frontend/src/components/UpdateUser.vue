@@ -78,7 +78,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="rePassword">
+              <el-form-item prop="password">
                 <el-input type="password" v-model="form.newPassword"></el-input>
               </el-form-item>
             </el-col>
@@ -139,6 +139,56 @@
 import Axios from 'axios'
 export default {
   data () {
+    let checkName = (rule, value, callback) => {
+      // alphabetic regular expression (Both Uppercase and Lowercase)
+      let regex = /^[A-Za-z ]+$/
+      if (!value) {
+        callback(new Error('Please input your name'))
+      } else if (value.length > 20) {
+        callback(new Error('Your name must be at most 20 characters'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Name must only be in alphabetic'))
+      } else {
+        callback()
+      }
+    }
+    let checkUsername = (rule, value, callback) => {
+      let regex = /^[A-Za-z0-9]+$/
+      let numericRegex = /^(0|[1-9][0-9]*)$/
+      let alphabeticRegex = /^[A-Za-z]+$/
+      if (!value) {
+        callback(new Error('Please input your username'))
+      } else if (value.length < 6 || value.length > 16) {
+        callback(new Error('Your username length must be 6-16 characters'))
+      } else if (value.match(numericRegex) || value.match(alphabeticRegex)) {
+        callback(new Error('Username must contain with both letters and numbers'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Username must contain with only letters and numbers'))
+      } else {
+        callback()
+      }
+    }
+    let checkPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the password'))
+      } else if (value.length < 8 || value.length > 20) {
+        callback(new Error('Your password length must be 8-20 characters'))
+      } else {
+        callback()
+      }
+    }
+    let checkPhone = (rule, value, callback) => {
+      let numericRegex = /^(0|[0-9][0-9]*)$/
+      if (value === '') {
+        callback(new Error('Please input your phone number'))
+      } else if (value.length > 11) {
+        callback(new Error('Your phone must be at most 11 numbers'))
+      } else if (!value.match(numericRegex)) {
+        callback(new Error('Your phone must be in numeric'))
+      } else {
+        callback()
+      }
+    }
     return {
       form: {
         name: 'Makhamwan',
@@ -155,6 +205,30 @@ export default {
         disabledDate (time) {
           return time.getTime() > Date.now() - 8.64e7
         }
+      },
+      rules: {
+        name: [
+          { validator: checkName }
+        ],
+        phone: [
+          { validator: checkPhone }
+        ],
+        email: [
+          { required: true, message: 'Please input your email address', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address format', trigger: 'blur,change' }
+        ],
+        username: [
+          { validator: checkUsername }
+        ],
+        password: [
+          { validator: checkPass }
+        ],
+        department: [
+          { required: true, message: 'Please pick your department' }
+        ],
+        position: [
+          { required: true, message: 'Please pick your position' }
+        ]
       }
     }
   },
