@@ -259,26 +259,31 @@ public class TaskManagementRest {
 	 	return terminationRequestDAO.getAllTerminationRequest();
 	 }
 
-//	 @POST
-//	 @Path("approve/request/{projectName}/{projectCardName}")
-//	 @Produces(MediaType.APPLICATION_JSON)
-//	 public boolean approveTerminationRequestByIdUserAPI (
-//			 @PathParam("projectName") String projectName,
-//			 @PathParam("projectCardName") String projectCardName) {
-//		Date date = new Date();
-//		date = Calendar.getInstance().getTime();  
-//		String approveDate = DATEFORMAT.format(date);
-//		
-//		terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
-//		terminationRequestDAO.approveTerminationRequestById(terminationRequest.getIdTerminationRequest(), approveDate);
-//	 	return true;
-//	 }
+	 @POST
+	 @Path("approve/request/{projectName}/{projectCardName}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public boolean approveTerminationRequestAPI (
+			 @PathParam("projectName") String projectName,
+			 @PathParam("projectCardName") String projectCardName) {
+		Date date = new Date();
+		date = Calendar.getInstance().getTime();  
+		String approveDate = DATEFORMAT.format(date);
+		
+		terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
+		terminationRequestDAO.approveTerminationRequestById(terminationRequest.getIdTerminationRequest(), approveDate);
+	 	return true;
+	 }
 
 	 @POST
-	 @Path("reject/request/{idTerminationRequest}")
+	 @Path("reject/request/{projectName}/{projectCardName}")
 	 @Produces(MediaType.APPLICATION_JSON) 
-	 public boolean rejectTerminationRequestByIdAPI (@PathParam("idTerminationRequest") String idTerminationRequest) {		
-		terminationRequestDAO.rejectTerminationRequestById(idTerminationRequest);
+	 public boolean rejectTerminationRequestAPI (
+			 @PathParam("projectName") String projectName,
+			 @PathParam("projectCardName") String projectCardName) {
+		 terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
+		 projectCard = projectCardDAO.getProjectCardByIdProjectCard(terminationRequest.getIdProjectCard());
+		 projectCard.setStatus("In progress");
+		 terminationRequestDAO.rejectTerminationRequestById(terminationRequest, projectCard);
 		
 		return true;
 	 }
@@ -365,6 +370,7 @@ public class TaskManagementRest {
 			@PathParam("idRequester") String idRequester){
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		projectCard.setStatus("Request to finish");
+		projectCard.setSubmitReason(reason);
 		projectCardDAO.requestToFinishProjectCard(projectCard);
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to finish");

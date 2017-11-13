@@ -150,21 +150,13 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 
 	public void approveTerminationRequestById(String idTerminationRequest, String approveDate) {
 		TerminationRequest terminationRequest = getTerminationRequestByIdTerminationRequest(idTerminationRequest);
-		if(terminationRequest.getType().equals("finish")) {
+		if(terminationRequest.getType().equals("Request to finish")) {
 			ProjectCard projectCard = getProjectCardByIdProjectCard(terminationRequest.getIdProjectCard());
 			collection = MongoDBMain.getProjectCardCollection();
 			Query query = new Query();
 			query.addCriteria(Criteria.where("idProjectCard").is(projectCard.getIdProjectCard()));
 			Update update = new Update();
 			update.set("status", "Finish");
-			update.set("name",projectCard.getName());
-			update.set("description",projectCard.getDescription());
-			update.set("startDate",projectCard.getStartDate());
-			update.set("endDate",projectCard.getEndDate());
-			update.set("registeredDate", projectCard.getRegisteredDate());
-			update.set("internalParticipants", projectCard.getInternalParticipants());
-			update.set("externalParticipants", projectCard.getExternalParticipants());
-			update.set("submitReason", projectCard.getSubmitReason());
 			update.set("finishedDate", approveDate);
 			this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 		} 
@@ -179,9 +171,22 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		deleteTerminationRequestById(idTerminationRequest);
 		
 	}
+	
+	public TerminationRequest getTerminationRequestById(String idTerminationReuqest) {
+		collection = MongoDBMain.getTerminationRequestCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idTerminationReuqest").is(idTerminationReuqest));
+		return this.mongoOps.findOne(query, TerminationRequest.class, collection);
+	}
 
-	public void rejectTerminationRequestById(String idTerminationRequest) {
-		deleteTerminationRequestById(idTerminationRequest);
+	public void rejectTerminationRequestById(TerminationRequest terminationRequest, ProjectCard projectCard) {
+		collection = MongoDBMain.getProjectCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idProjectCard").is(projectCard.getIdProjectCard()));
+		Update update = new Update();
+		update.set("status", "In progress");
+		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
+		deleteTerminationRequestById(terminationRequest.getIdTerminationRequest());
 	}
 
 	public List<Project> getAllProjectByIdUserList(List<String> idUserList) {
@@ -391,13 +396,33 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 	}
 	
-//	public TerminationRequest getTerminationRequestByProjectAndProjectCardName(String projectName, String projectCardName) {
-//		Project project = getProjectByName(projectName);
-//		String idProject = project.getIdProject();
-//		List<TerminationRequest> allTerminationRequest = getAllTerminationRequest();
-//		List<TerminationRequest> terminationRequestList = new ArrayList<TerminationRequest>();
-//		
-//	}
+	public TerminationRequest getTerminationRequestByProjectAndProjectCardName(String projectName, String projectCardName) {
+		Project project = getProjectByName(projectName);
+		String idProject = project.getIdProject();
+		List<TerminationRequest> allTerminationRequest = getAllTerminationRequest();
+		List<TerminationRequest> terminationRequestList = new ArrayList<TerminationRequest>();
+		List<ProjectCard> allProjectCard = getAllProjectCard();
+		List<ProjectCard> projectCardList = new ArrayList<ProjectCard>();
+		for(TerminationRequest terminationRequest : allTerminationRequest) {
+			if(terminationRequest.getIdProject().equals(idProject)) {
+				terminationRequestList.add(terminationRequest);
+			}
+		}
+		for(ProjectCard projectCard : allProjectCard) {
+			if(projectCard.getName().equals(projectCardName)) {
+				projectCardList.add(projectCard);
+			}
+		}
+		for(TerminationRequest terminationRequest : terminationRequestList) {
+			for(ProjectCard projectCard : projectCardList) {
+				if(projectCard.getIdProjectCard().equals(terminationRequest.getIdProjectCard())) {
+					return terminationRequest;
+				}
+			}
+		}
+		return null;
+		
+	}
 	
 	public ProjectCard getProjectCardByProjectAndProjectCardName(String projectName, String projectCardName) {
 		String idProject = getProjectByName(projectName).getIdProject();
