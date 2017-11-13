@@ -46,7 +46,7 @@
         <el-date-picker
           v-model="startDate"
           type="date"
-          disabled=true
+          :disabled="true"
           placeholder="Start date">
         </el-date-picker>
       </div>
@@ -150,7 +150,7 @@
           <a :disabled="!ownerAuthority" class="button is-dark" @click="updateCard()">Update Card</a>
       </div>
     </div>
-    <request-finish-dialog :id-card="idCard" :id-user="idUser" :dialog-request-clicked="dialogRequestClicked"></request-finish-dialog>
+    <request-finish-dialog :request-finish-list="requestFinishList"></request-finish-dialog>
   </div>
 </template>
 
@@ -175,8 +175,6 @@ export default {
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
       isPaginated: true,
       isPaginationSimple: false,
-      idCard: '',
-      idUser: '',
       cardName: '',
       cardDescription: '',
       projectName: '',
@@ -184,17 +182,21 @@ export default {
       endDate: '',
       internalList: '',
       externalList: '',
-      dialogRequestClicked: false,
-      ownerAuthority: false
+      ownerAuthority: false,
+      requestFinishList: {
+        idCard: '',
+        idUser: '',
+        dialogRequestClicked: false
+      }
     }
   },
   methods: {
     async updateCard () {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.requestFinishList.idCard}`)
       this.internalList = cardResponse.data.internalParticipants
       this.externalList = cardResponse.data.externalParticipants
       let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
-      let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
+      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card/${this.requestFinishList.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
 
       if (updateResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
@@ -203,20 +205,22 @@ export default {
       }
     },
     requestToFinish () {
-      this.dialogRequestClicked = true
+      this.requestFinishList.dialogRequestClicked = true
     },
     updateParticipant () {
       this.$router.replace({ path: '/update-participants' })
     }
   },
   async mounted () {
-    this.idCard = localStorage.getItem('card_update')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
-    this.idUser = localStorage.getItem('user_userId')
+    this.requestFinishList.idCard = localStorage.getItem('card_update')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.requestFinishList.idCard}`)
+    this.requestFinishList.idUser = localStorage.getItem('user_userId')
     let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
-    if (this.idUser === idUserOfCard) {
+    console.log(this.requestFinishList.idUser)
+    console.log(cardResponse)
+    if (this.requestFinishList.idUser === idUserOfCard) {
       this.ownerAuthority = true
     }
     this.cardName = cardResponse.data.name
