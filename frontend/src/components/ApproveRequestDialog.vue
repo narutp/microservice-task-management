@@ -34,7 +34,7 @@
 
         <el-row>
           <div class="update-project--value">
-            <input v-model="this.reason" class="input title-field" disabled>
+            <input v-model="approveObj.reason" class="input title-field" disabled>
           </div>
         </el-row>
 
@@ -56,22 +56,18 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      reason: ''
     }
   },
   props: ['approveObj'],
   methods: {
-    approveRequest () {
-      let response = Axios.post(`http://localhost:8091/approve/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+    async approveRequest () {
+      let response = await Axios.post(`http://localhost:8091/approve/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
       if (response.data === true) {
         this.$router.go({ path: '/request-project', force: true })
+      } else {
+        alert('failed')
       }
     }
-  },
-  async mounted () {
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.projectName}/${this.approveObj.cardName}`)
-    console.log(cardResponse.data)
-    this.reason = cardResponse.data.submitReason
   }
 }
 </script>

@@ -62,7 +62,8 @@ export default {
       approveObj: {
         projectName: '',
         cardName: '',
-        dialogClicked: false
+        dialogClicked: false,
+        reason: ''
       }
     }
   },
@@ -83,6 +84,7 @@ export default {
       this.tableData[i].idProjectCard = cardResponse.data.name
       this.tableData[i].idRequester = requesterResponse.data.name
     }
+
     // console.log(projectResponse)
 
     // let arrProject = projectResponse.data.length
@@ -91,10 +93,12 @@ export default {
     createCard () {
       this.$router.replace({ path: '/create-card' })
     },
-    approveRequest (row) {
+    async approveRequest (row) {
       this.approveObj.dialogClicked = true
       this.approveObj.projectName = row.idProject
       this.approveObj.cardName = row.idProjectCard
+      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+      this.approveObj.reason = cardResponse.data.submitReason
     }
   },
   components: {
