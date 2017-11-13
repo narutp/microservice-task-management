@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-public class Card {
+public class ProjectCard {
 	
 	@Id
-	private String idCard;
+	private String idProjectCard;
+	//Move submitReason and finishDate to Request
+	//Add idRequest
 	private String name, status, description, startDate, endDate, registeredDate, idUser, idProject, submitReason, finishDate;
 	private List<String> internalParticipants, externalParticipants;
 	
@@ -35,11 +37,11 @@ public class Card {
 	public void setFinishDate(String finishDate) {
 		this.finishDate = finishDate;
 	}
-	public String getIdCard() {
-		return idCard;
+	public String getIdProjectCard() {
+		return idProjectCard;
 	}
-	public void setIdCard(String idCard) {
-		this.idCard = idCard;
+	public void setIdProjectCard(String idProjectCard) {
+		this.idProjectCard = idProjectCard;
 	}
 	public String getName() {
 		return name;

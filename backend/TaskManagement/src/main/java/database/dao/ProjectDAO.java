@@ -25,9 +25,9 @@ public interface ProjectDAO {
 	
 	public void deleteAllProject ();
 	
-	public Project getProjectByIdCard (String idCard);
+	public Project getProjectByIdProjectCard (String idProjectCard);
 	
-	public String getIdDepartmentByIdCard (String idCard);
+	public String getIdDepartmentByIdProjectCard (String idProjectCard);
 	
 	public Project getProjectByName (String name);
 

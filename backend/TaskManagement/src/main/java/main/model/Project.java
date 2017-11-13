@@ -6,7 +6,6 @@ public class Project {
 	
 	@Id
 	private String idProject;
-	private String number;
 	private String name, description, registeredDate, idUser, idDepartment;
 	
 	public String getIdProject() {
@@ -14,12 +13,6 @@ public class Project {
 	}
 	public void setIdProject(String idProject) {
 		this.idProject = idProject;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
 	}
 	public String getIdUser() {
 		return idUser;
