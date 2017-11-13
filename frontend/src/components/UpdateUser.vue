@@ -3,13 +3,15 @@
     <div class="content" align="left">
       <el-row>
         <div class="update-user--header">
-          <el-breadcrumb separator="|" class="update-user--breadcrumb">
-            <el-breadcrumb-item>User information</el-breadcrumb-item>
-            <el-breadcrumb-item>User history</el-breadcrumb-item>
-          </el-breadcrumb>
+          <el-button size="small" @click="index=true">User information</el-button>
+          <span>|</span>
+          <el-button size="small" @click="index=false">User history</el-button>
         </div>
-        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-          <div class="margin-bottom"> <b>Personal Information</b> </div>
+        <!--  index is attribute that show user information or user history  -->
+        <!--  User Information part  -->
+        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules" v-if="index === true">
+          <div class=""><b>Personal Information</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -52,7 +54,8 @@
             </el-col>
           </el-row>
           <br>
-          <div class="margin-bottom"> <b>Account</b> </div>
+          <div class="margin-bottom"><b>Account</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -90,7 +93,8 @@
             </el-col>
           </el-row>
           <br>
-          <div class="margin-bottom"> <b>Information</b> </div>
+          <div class=""><b>Other Information</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -124,18 +128,22 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <br>
+          <el-row>
+            <el-col :span="12">
+                <p class="update-user--update-information"><i>Update your account with these data</i></p>
+            </el-col>
+            <el-col :span="12">
+              <el-button round type="info" class="full--width" @click="updateUser()">
+                Update User
+              </el-button>
+            </el-col>
+          </el-row>
         </el-form>
-        <br>
-        <el-row>
-          <el-col :span="12">
-              <p>Update your account with these data</p>
-          </el-col>
-          <el-col :span="12">
-            <button class="button is-success full--width" @click="updateUser()">
-              Update User
-            </button>
-          </el-col>
-        </el-row>
+      </el-row>
+      <!--  User history part  -->
+      <el-row v-if="index === false">
+        <div class=""><b>User history</b></div>
       </el-row>
     </div>
   </div>
@@ -196,6 +204,7 @@ export default {
       }
     }
     return {
+      index: true,
       form: {
         name: '',
         birthdate: '',
@@ -291,10 +300,7 @@ export default {
   padding-right: 100px;
 }
 .update-user--header {
-  margin-bottom: 50px;
-}
-.update-user--breadcrumb {
-  font-size: 15px;
+  margin-bottom: 30px;
 }
 .content {
   width: 75%;
@@ -302,15 +308,8 @@ export default {
 .full--width {
   width: 100%;
 }
-button {
-  width: 180px;
-  height: 50px;
-  border-radius: 30px;
-  padding: 0;
-  margin: 0;
-  margin-bottom: 15px;
-  left: 0;
-  display: inline-block;
+.update-user--update-information {
+  font-size: 14px;
 }
 p {
   padding-top: 10px;
