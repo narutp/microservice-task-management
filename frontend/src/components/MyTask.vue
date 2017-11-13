@@ -79,7 +79,7 @@ export default {
     }
   },
   async mounted () {
-    let cardResponse = await Axios.get(`http://localhost:8091/get/all-card/`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/`)
     this.tableData = cardResponse.data
     this.arrLength = cardResponse.data.length
 

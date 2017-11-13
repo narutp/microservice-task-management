@@ -73,7 +73,7 @@ export default {
     // get user list by sending department name of that user
     let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${this.department}`)
 
-    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-card/${userListResponse.data}`)
+    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card/${userListResponse.data}`)
     console.log(departmentCardResponse)
     this.tableData = departmentCardResponse.data
     this.arrLength = departmentCardResponse.data.length

@@ -180,11 +180,11 @@ export default {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      let response = await Axios.get(`http://localhost:8091/create/card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
+      let response = await Axios.get(`http://localhost:8091/create/project-card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
       let idCard = response.data
       localStorage.setItem('id_create_card', idCard)
       console.log(idCard)
-      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/card/${idCard}`)
+      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card/${idCard}`)
       let idDepartment = idDepartmentResponse.data
       // console.log(idDepartmentResponse)
 
@@ -193,7 +193,7 @@ export default {
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/${idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
       } else {
@@ -213,7 +213,7 @@ export default {
 
     // get card to show participants inside the card
     let idCard = localStorage.getItem('id_create_card')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${idCard}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${idCard}`)
     console.log(cardResponse.data)
 
     // get arr length of both internal and external user in a card to find their names

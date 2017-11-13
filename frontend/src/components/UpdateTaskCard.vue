@@ -190,11 +190,11 @@ export default {
   },
   methods: {
     async updateCard () {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
       this.internalList = cardResponse.data.internalParticipants
       this.externalList = cardResponse.data.externalParticipants
       let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
-      let updateResponse = await Axios.post(`http://localhost:8091/update/card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
+      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
 
       if (updateResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
@@ -211,7 +211,7 @@ export default {
   },
   async mounted () {
     this.idCard = localStorage.getItem('card_update')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
     this.idUser = localStorage.getItem('user_userId')
     let idUserOfCard = cardResponse.data.idUser
 
