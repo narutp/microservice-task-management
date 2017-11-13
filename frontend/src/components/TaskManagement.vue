@@ -65,6 +65,7 @@ export default {
     for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idUser
       let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
+      console.log(nameResponse)
       this.tableData[i].idUser = nameResponse.data.name
     }
   },

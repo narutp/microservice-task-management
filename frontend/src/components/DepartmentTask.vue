@@ -63,7 +63,7 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2', 'idUser': 'Boo', 'status': 'hello' }],
+      tableData: [{ 'no': '', 'idProject': '', 'name': '', 'startDate': '', 'endDate': '', 'idUser': '', 'status': '' }],
       department: '',
       arrLength: ''
     }
