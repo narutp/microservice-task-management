@@ -215,12 +215,12 @@ export default {
     this.requestFinishList.idCard = localStorage.getItem('card_update')
     let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.requestFinishList.idCard}`)
     this.requestFinishList.idUser = localStorage.getItem('user_userId')
-    let requestFinishList.idUserOfCard = cardResponse.data.requestFinishList.idUser
+    let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
     console.log(this.requestFinishList.idUser)
     console.log(cardResponse)
-    if (this.requestFinishList.idUser === requestFinishList.idUserOfCard) {
+    if (this.requestFinishList.idUser === idUserOfCard) {
       this.ownerAuthority = true
     }
     this.cardName = cardResponse.data.name

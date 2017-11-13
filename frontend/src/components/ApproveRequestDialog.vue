@@ -4,31 +4,34 @@
       <el-dialog title = "Approve Request" :visible.sync="approveObj.dialogClicked">
         <el-row>
           <div align="left">
-            Project Name
+            Project name
           </div>
         </el-row>
 
         <el-row>
           <div class="update-project--value">
-            <input v-model="approveObj.projectName" class="input title-field" type="text">
+            <input v-model="approveObj.projectName" class="input title-field" type="text" disabled>
           </div>
         </el-row>
 
         <el-row>
           <div align="left">
-            Project Description
+            Card name
           </div>
         </el-row>
 
         <el-row>
           <div class="update-project--value">
-            <textarea v-model="approveObj.cardName" class="textarea"></textarea>
+            <input v-model="approveObj.cardName" class="input title-field" disabled>
           </div>
         </el-row>
 
         <el-row>
           <button class="button is-dark" @click="updateProject()">
-            Update Project
+            Accept
+          </button>
+          <button class="button is-dark" @click="updateProject()">
+            Denied
           </button>
         </el-row>
       </el-dialog>
@@ -57,6 +60,9 @@ export default {
         console.log(error)
       })
     }
+  }
+  async mounted () {
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.approveObj.}`)
   }
 }
 </script>
