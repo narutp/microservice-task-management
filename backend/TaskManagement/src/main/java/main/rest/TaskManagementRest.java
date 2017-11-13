@@ -375,6 +375,7 @@ public class TaskManagementRest {
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to finish");
 		terminationRequest.setIdProject(projectCard.getIdProject());
+		terminationRequest.setIdRequester(idRequester);
 		terminationRequest.setReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
@@ -397,6 +398,7 @@ public class TaskManagementRest {
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to delete");
 		terminationRequest.setIdProject(projectCard.getIdProject());
+		terminationRequest.setIdRequester(idRequester);
 		terminationRequest.setReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
