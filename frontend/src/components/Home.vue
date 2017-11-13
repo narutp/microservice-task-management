@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="home--container">
-    <div style="font-size: 18px;">
-      <b>Dashboard</b>
-    </div>
     <el-row class="home--chart">
       <br>
       <el-col :span="11">
@@ -15,13 +12,8 @@
               <b-table-column field="Department" label="Department" width="50" sortable>
                   {{ props.row.department }}
               </b-table-column>
-
-              <b-table-column field="Project" label="Total Internal" sortable>
+              <b-table-column field="Project" label="Total Internal" width="50" sortable>
                   {{ props.row.internal }}
-              </b-table-column>
-
-              <b-table-column field="TaskCard" label="Total External" sortable>
-                  {{ props.row.external }}
               </b-table-column>
             </template>
         </b-table>
@@ -32,7 +24,7 @@
         <br>
       </el-col>
       <el-col :span="11">
-        <h1><b>Task management</b></h1>
+        <h1><b>Task management</b></h1><br>
         <b-table
             class="home--table"
             :data="tableProjectData"
