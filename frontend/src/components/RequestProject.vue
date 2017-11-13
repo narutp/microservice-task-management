@@ -23,7 +23,7 @@
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Card Name" sortable>
-                  {{ props.row.idCard }}
+                  <u><span @click="approveRequest(props.row)" class="request-project--span-card-name">{{ props.row.idCard }}</span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Requested Date" sortable>
@@ -53,14 +53,17 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'idProject': '', 'idCard': '', 'date': 'a', 'type': 'a', 'idRequester': '' }],
+      tableData: [{ 'no': 1, 'idProject': '', 'idCard': '', 'date': 'a', 'type': 'a', 'idRequester': '' , 'idRequest': ''}],
       idUser: '',
-      isPaginationSimple: false
+      isPaginationSimple: false,
+      projectName: '',
+      cardName: ''
     }
   },
   async mounted () {
     this.idUser = localStorage.getItem('user_userId')
     let requestResponse = await Axios.get(`http://localhost:8091/get/all-request/${this.idUser}`)
+    console.log(requestResponse)
     this.tableData = requestResponse.data
     let requestArr = requestResponse.data.length
 
@@ -82,6 +85,10 @@ export default {
   methods: {
     createCard () {
       this.$router.replace({ path: '/create-card' })
+    },
+    approveRequest (row) {
+      this.projectName = row.idProject
+      this.cardName = row.idCard
     }
   }
 }
@@ -91,6 +98,11 @@ export default {
 .request-project--container {
   background-color: #fff;
   padding: 30px;
+}
+.request-project--span-card-name {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
 }
 .request-project--table {
   margin-top: 20px;
