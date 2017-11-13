@@ -259,17 +259,20 @@ public class TaskManagementRest {
 	 	return terminationRequestDAO.getAllTerminationRequest();
 	 }
 
-	 @POST
-	 @Path("approve/request/{idTerminationRequest}")
-	 @Produces(MediaType.APPLICATION_JSON)
-	 public boolean approveTerminationRequestByIdUserAPI (@PathParam("idTerminationRequest") String idTerminationRequest) {
-		Date date = new Date();
-		date = Calendar.getInstance().getTime();  
-		String approveDate = DATEFORMAT.format(date);
-		
-		terminationRequestDAO.approveTerminationRequestById(idTerminationRequest, approveDate);
-	 	return true;
-	 }
+//	 @POST
+//	 @Path("approve/request/{projectName}/{projectCardName}")
+//	 @Produces(MediaType.APPLICATION_JSON)
+//	 public boolean approveTerminationRequestByIdUserAPI (
+//			 @PathParam("projectName") String projectName,
+//			 @PathParam("projectCardName") String projectCardName) {
+//		Date date = new Date();
+//		date = Calendar.getInstance().getTime();  
+//		String approveDate = DATEFORMAT.format(date);
+//		
+//		terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
+//		terminationRequestDAO.approveTerminationRequestById(terminationRequest.getIdTerminationRequest(), approveDate);
+//	 	return true;
+//	 }
 
 	 @POST
 	 @Path("reject/request/{idTerminationRequest}")
@@ -371,7 +374,6 @@ public class TaskManagementRest {
 		date = Calendar.getInstance().getTime();  
 		String requestDate = DATEFORMAT.format(date);
 		terminationRequest.setDate(requestDate);
-		terminationRequest.setIdRequester(idRequester);
 		terminationRequestDAO.createTerminationRequest(terminationRequest);
 		return true;
 	}
@@ -394,7 +396,6 @@ public class TaskManagementRest {
 		date = Calendar.getInstance().getTime();  
 		String requestDate = DATEFORMAT.format(date);
 		terminationRequest.setDate(requestDate);
-		terminationRequest.setIdRequester(idRequester);
 		terminationRequestDAO.createTerminationRequest(terminationRequest);
 		return true;
 	}
@@ -469,6 +470,15 @@ public class TaskManagementRest {
 		projectCard.setFinishDate(finishDate);
 		projectCardDAO.setFinish(idProjectCard,projectCard);
 		return true;
+	}
+	
+	@GET
+	@Path("get/project-card/{projectName}/{projectCardName}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ProjectCard getProjectCardByProjectAndProjectCardNameAPI(
+			@PathParam("projectName") String projectName,
+			@PathParam("projectCardName") String projectCardName) {
+		return projectCardDAO.getProjectCardByProjectAndProjectCardName(projectName, projectCardName);
 	}
 	
 	

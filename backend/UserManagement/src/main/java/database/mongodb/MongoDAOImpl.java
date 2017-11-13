@@ -331,4 +331,10 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		return idList;
 	}
 
+	@Override
+	public void createUserHistory(String idUser) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		
+	}
+
 }

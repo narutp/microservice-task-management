@@ -10,5 +10,7 @@ public interface UserHistoryDAO {
 	
 	public List<UserHistory> getAllUserHistoryByIdUser(String idUser);
 	
+	public void createUserHistory(String idUser);
+	
 	
 }

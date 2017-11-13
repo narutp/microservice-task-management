@@ -390,6 +390,27 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		update.set("status", projectCard.getStatus());
 		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 	}
+	
+//	public TerminationRequest getTerminationRequestByProjectAndProjectCardName(String projectName, String projectCardName) {
+//		Project project = getProjectByName(projectName);
+//		String idProject = project.getIdProject();
+//		List<TerminationRequest> allTerminationRequest = getAllTerminationRequest();
+//		List<TerminationRequest> terminationRequestList = new ArrayList<TerminationRequest>();
+//		
+//	}
+	
+	public ProjectCard getProjectCardByProjectAndProjectCardName(String projectName, String projectCardName) {
+		String idProject = getProjectByName(projectName).getIdProject();
+		List<ProjectCard> allProjectCard = getAllProjectCard();
+		for(ProjectCard projectCard : allProjectCard) {
+			if(projectCard.getName().equals(projectCardName) && projectCard.getIdProject().equals(idProject)) {
+				return projectCard;
+			}
+		}
+		return null;
+	}
+	
+	
 
 
 }
