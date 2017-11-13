@@ -1,18 +1,7 @@
 <template lang="html">
-  <div class="update-task--container">
+  <div class="approve-request--container">
     <div>
-      <el-dialog title = "Update Project" :visible.sync="dialogClicked">
-        <div class="columns">
-          <div class="column" align="right">
-            <button class="button no-border">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button class="button no-border">
-              <i class="fa fa-close" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
+      <el-dialog title = "Approve Request" :visible.sync="approveObj.dialogClicked" :close-on-click-modal="isCloseDialog" @close="close()">
         <el-row>
           <div align="left">
             Project Name
@@ -21,7 +10,7 @@
 
         <el-row>
           <div class="update-project--value">
-            <input v-model="projectName" class="input title-field" type="text">
+            <input v-model="approveObj.projectName" class="input title-field" type="text">
           </div>
         </el-row>
 
@@ -33,7 +22,7 @@
 
         <el-row>
           <div class="update-project--value">
-            <textarea v-model="projectDescription" class="textarea"></textarea>
+            <textarea v-model="approveObj.cardName" class="textarea"></textarea>
           </div>
         </el-row>
 
@@ -52,9 +41,10 @@ import Axios from 'axios'
 export default {
   data () {
     return {
+      isCloseDialog: false
     }
   },
-  props: ['projectName', 'dialogClicked', 'projectDescription', 'projectId'],
+  props: ['approveObj'],
   methods: {
     updateProject () {
       let self = this
@@ -66,6 +56,9 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    close () {
+      this.approveObj.dialogClicked = false
     }
   }
 }

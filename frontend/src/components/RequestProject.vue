@@ -9,7 +9,7 @@
       <b-table
           class="request-project--table"
           :data="tableData"
-          paginated=true
+          :paginated="isPaginated"
           :per-page="7"
           default-sort="title">
 
@@ -45,19 +45,25 @@
           </template>
       </b-table>
     </section>
+    <approve-request-dialog :approve-obj="approveObj"></approve-request-dialog>
   </div>
 </template>
 
 <script>
+import ApproveRequestDialog from '@/components/ApproveRequestDialog'
 import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'idProject': '', 'idCard': '', 'date': 'a', 'type': 'a', 'idRequester': '' , 'idRequest': ''}],
+      tableData: [{ 'no': 1, 'idProject': '', 'idCard': '', 'date': 'a', 'type': 'a', 'idRequester': '' }],
       idUser: '',
       isPaginationSimple: false,
-      projectName: '',
-      cardName: ''
+      isPaginated: true,
+      approveObj: {
+        projectName: '',
+        cardName: '',
+        dialogClicked: false
+      }
     }
   },
   async mounted () {
@@ -87,9 +93,13 @@ export default {
       this.$router.replace({ path: '/create-card' })
     },
     approveRequest (row) {
-      this.projectName = row.idProject
-      this.cardName = row.idCard
+      this.approveObj.dialogClicked = true
+      this.approveObj.projectName = row.idProject
+      this.approveObj.cardName = row.idCard
     }
+  },
+  components: {
+    ApproveRequestDialog
   }
 }
 </script>
