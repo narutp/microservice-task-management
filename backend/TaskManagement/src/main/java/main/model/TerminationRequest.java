@@ -8,8 +8,14 @@ public class TerminationRequest {
 	private String idTerminationRequest;
 	//Get the approverId from idProject
 	//Add approveDate which is the date that approver approve this request
-	private String idProjectCard, type, reason, date, idProject;
+	private String idProjectCard, type, reason, date, idRequester, idProject;
 	
+	public String getIdRequester() {
+		return idRequester;
+	}
+	public void setIdRequester(String idRequester) {
+		this.idRequester = idRequester;
+	}
 	public String getIdTerminationRequest() {
 		return idTerminationRequest;
 	}
