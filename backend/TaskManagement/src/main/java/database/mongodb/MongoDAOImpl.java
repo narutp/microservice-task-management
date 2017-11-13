@@ -384,6 +384,7 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		Update update = new Update();
 		update.set("status", projectCard.getStatus());
 		update.set("submitReason", projectCard.getSubmitReason());
+		update.set("finishDate", projectCard.getFinishDate());
 		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 	}
 
