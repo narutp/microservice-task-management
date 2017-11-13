@@ -9,7 +9,7 @@
       <b-table
           class="request-project--table"
           :data="tableData"
-          :paginated="isPaginated"
+          paginated=true
           :per-page="7"
           default-sort="title">
 
@@ -19,19 +19,28 @@
               </b-table-column>
 
               <b-table-column field="taskName" label="Project Name" sortable>
-                  {{ props.row.taskName }}
+                  {{ props.row.idProject }}
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Card Name" sortable>
-                  {{ props.row.taskCardName }}
+                  {{ props.row.idCard }}
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Requested Date" sortable>
-                  {{ props.row.registeredDate }}
+                  {{ props.row.date }}
+              </b-table-column>
+
+              <b-table-column field="status" label="Type" sortable>
+                <span class="tag is-warning" v-if="props.row.type === 'Request to finish'">
+                    {{ props.row.type }}
+                </span>
+                <span class="tag is-danger" v-if="props.row.type === 'Request to delete'">
+                    {{ props.row.type }}
+                </span>
               </b-table-column>
 
               <b-table-column field="writer" label="Requester" sortable>
-                  {{ props.row.writer }}
+                  {{ props.row.idRequester }}
               </b-table-column>
           </template>
       </b-table>
@@ -40,15 +49,35 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'taskName': 'Microservice', 'taskCardName': 'Login authentication test', 'registeredDate': '2017-08-23', 'writer': 'Boo' },
-    { 'no': 2, 'taskName': 'Big Data', 'taskCardName': 'Register Card', 'registeredDate': '2017-08-1', 'writer': 'Boo' },
-  { 'no': 3, 'taskName': 'Machine Learning', 'taskCardName': 'Decoration CSS', 'registeredDate': '2017-07-21', 'writer': 'Boo' }],
-      isPaginated: true,
+      tableData: [{ 'no': 1, 'idProject': '', 'idCard': '', 'date': 'a', 'type': 'a', 'idRequester': '' }],
+      idUser: '',
       isPaginationSimple: false
     }
+  },
+  async mounted () {
+    this.idUser = localStorage.getItem('user_userId')
+    let requestResponse = await Axios.get(`http://localhost:8091/get/all-request/${this.idUser}`)
+    this.tableData = requestResponse.data
+    let requestArr = requestResponse.data.length
+
+    for (let i = 0; i < requestArr; i++) {
+      let idProject = requestResponse.data[i].idProject
+      let idCard = requestResponse.data[i].idCard
+      let idRequester = requestResponse.data[i].idRequester
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+      let cardResponse = await Axios.get(`http://localhost:8091/get/card/${idCard}`)
+      let requesterResponse = await Axios.get(`http://localhost:8090/get/user/id/${idRequester}`)
+      this.tableData[i].idProject = projectResponse.data.name
+      this.tableData[i].idCard = cardResponse.data.name
+      this.tableData[i].idRequester = requesterResponse.data.name
+    }
+    // console.log(projectResponse)
+
+    // let arrProject = projectResponse.data.length
   },
   methods: {
     createCard () {

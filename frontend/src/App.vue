@@ -10,7 +10,7 @@
           <b>Microservice Task Management | </b>
           <span v-if="$route.path === '/'">Sign in</span>
           <span v-if="$route.path === '/register'">Sign up</span>
-          <span v-if="index == 1">Dashboard</span>
+          <span v-if="$route.path === '/home'">Dashboard</span>
           <span v-if="index == 2">My Project</span>
           <span v-if="index == 3">Department Project</span>
           <span v-if="index == 4">Done Project</span>
@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-outlined app--logout-button pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-dark pull-right logout-button" @click="logout()">
             Logout
           </button>
         </div>
@@ -33,25 +33,48 @@
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
               <template slot="title">Dashboard</template>
             </el-menu-item>
-            <hr><el-menu-item-group title="Project">
-              <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
-                <template slot="title">My Project</template>
-              </el-menu-item>
-              <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
-                <template slot="title">Department Project</template>
-              </el-menu-item>
-              <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
-                <template slot="title">Done Card</template>
-              </el-menu-item>
-            </el-menu-item-group>
-            <hr><el-menu-item-group title="Management">
-              <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
-                <template slot="title">Project Management</template>
-              </el-menu-item>
-              <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
-                <template slot="title">Request Project</template>
-              </el-menu-item>
-            </el-menu-item-group>
+            <b-collapse :open.sync="isOpen">
+              <div slot="trigger" class="full-width">
+                <hr><el-menu-item-group title="Project" class="inline">
+                  <template slot="title">Project</template>
+                </el-menu-item-group>
+                <a class="card-header-icon inline">
+                  <b-icon :icon="isOpen ?
+                      'arrow_drop_up' : 'arrow_drop_down'">
+                  </b-icon>
+                </a>
+              </div>
+              <div class="card-content">
+                <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
+                  <template slot="title">My Project</template>
+                </el-menu-item>
+                <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
+                  <template slot="title">Department Project</template>
+                </el-menu-item>
+                <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
+                  <template slot="title">Done Card</template>
+                </el-menu-item>
+              </div>
+            </b-collapse>
+            <b-collapse :open.sync="isOpen">
+              <div slot="trigger" class="full-width">
+                <hr><el-menu-item-group title="Management" class="inline">
+                </el-menu-item-group>
+                <a class="card-header-icon inline">
+                  <b-icon :icon="isOpen ?
+                      'arrow_drop_up' : 'arrow_drop_down'">
+                  </b-icon>
+                </a>
+              </div>
+              <div class="card-content">
+                <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
+                  <template slot="title">Project Management</template>
+                </el-menu-item>
+                <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
+                  <template slot="title">Request Project</template>
+                </el-menu-item>
+              </div>
+            </b-collapse>
           </el-menu>
         </el-col>
         <el-col class="right-app" :span="20" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -173,9 +196,6 @@ export default {
   color:green;
   text-decoration:underline;
 }
-.app--logout-button {
-  margin: 5px;
-}
 .left {
   /*background-color: #2A323B;*/
   background-color: #EEF1F6;
@@ -185,5 +205,30 @@ export default {
 
 .right-app {
   padding: 50px;
+}
+
+.logout-button {
+  width: 100px;
+  border-radius: 30px;
+  margin: 5px;
+}
+
+.notification {
+  background: 0;
+  padding: 0;
+  margin: 0;
+}
+.inline {
+  display: inline-block;
+}
+.card-content {
+  padding: 0px;
+  padding-top: 5px;
+}
+.full-width {
+  width: 100%;
+}
+.hr {
+  margin-top: 0.25rem;
 }
 </style>
