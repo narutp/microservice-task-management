@@ -143,7 +143,42 @@
       </el-row>
       <!--  User history part  -->
       <el-row v-if="index === false">
-        <div class=""><b>User history</b></div>
+        <section class="update-user--table--container">
+          <div style="font-size: 18px;" align="center">
+            <b>User history</b>
+          </div>
+          <br>
+          <b-table
+              class="update-user--table"
+              :data="tableData"
+              :paginated="true"
+              :per-page="7"
+              default-sort="title">
+
+              <template scope="props">
+                  <b-table-column field="no" label="No" width="50" sortable numeric centered>
+                      {{ props.row.no }}
+                  </b-table-column>
+
+                  <b-table-column field="projectName" label="Project Name" width="200" sortable>
+                      {{ props.row.idProject }}
+                      <!-- {{ props.row }} -->
+                  </b-table-column>
+
+                  <b-table-column field="card Name" label="Card Name" width="200" sortable>
+                      {{ props.row.name }}
+                  </b-table-column>
+
+                  <b-table-column field="Start date" label="Start date" width="150" sortable>
+                      {{ props.row.startDate }}
+                  </b-table-column>
+
+                  <b-table-column field="End date" label="End date" width="150" sortable>
+                      {{ props.row.endDate }}
+                  </b-table-column>
+              </template>
+          </b-table>
+        </section>
       </el-row>
     </div>
   </div>
@@ -204,6 +239,7 @@ export default {
       }
     }
     return {
+      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2' }],
       index: true,
       form: {
         name: '',
@@ -301,9 +337,6 @@ export default {
 }
 .update-user--header {
   margin-bottom: 30px;
-}
-.content {
-  width: 75%;
 }
 .full--width {
   width: 100%;

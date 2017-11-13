@@ -4,6 +4,7 @@
       <div style="font-size: 18px;">
         <b>Department {{department}}</b>
       </div>
+      <br>
       <b-table
           class="task-management--table"
           :data="tableData"
