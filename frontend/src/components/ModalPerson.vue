@@ -1,31 +1,31 @@
 <template lang="html">
   <div class="content" align="center">
     <div class="modal-mask" @click="dialogVisible = true">
-      <doughnut-department></doughnut-department>
+      <bar-participant> </bar-participant>
     </div>
     <el-dialog
-      title="Task Card from Each department"
+      title="Position from Each department"
       :visible.sync="dialogVisible"
       width="100%"
       :before-close="handleClose">
       <div class="in-modal-mask">
         <div class="small-chart">
           <span> Department A </span>
-          <pie-project></pie-project>
+          <horizontal-bar-position> </horizontal-bar-position>
         </div>
         <div class="small-chart">
           <span> Department B </span>
-          <pie-project></pie-project>
+          <horizontal-bar-position> </horizontal-bar-position>
         </div>
         <br>
         <br>
         <div class="small-chart">
           <span> Department C </span>
-          <pie-project></pie-project>
+          <horizontal-bar-position> </horizontal-bar-position>
         </div>
         <div class="small-chart">
           <span> Department D </span>
-          <pie-project></pie-project>
+          <horizontal-bar-position> </horizontal-bar-position>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import PieProject from '@/components/Chart/PieProject'
-import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
+import BarParticipant from '@/components/Chart/BarParticipant'
+import HorizontalBarPosition from '@/components/Chart/HorizontalBarPosition'
 
 export default {
   data () {
@@ -47,8 +47,8 @@ export default {
   methods: {
   },
   components: {
-    PieProject,
-    DoughnutDepartment
+    BarParticipant,
+    HorizontalBarPosition
   }
 }
 </script>
