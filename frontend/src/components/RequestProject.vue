@@ -70,6 +70,7 @@ export default {
   async mounted () {
     this.idUser = localStorage.getItem('user_userId')
     let requestResponse = await Axios.get(`http://localhost:8091/get/all-termination-request/${this.idUser}`)
+    console.log(requestResponse)
     this.tableData = requestResponse.data
     let requestArr = requestResponse.data.length
 

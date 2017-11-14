@@ -22,35 +22,35 @@ import main.model.User;
 import main.model.UserHistory;
 
 public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHistoryDAO {
-	
+
 	private MongoOperations mongoOps;
 	private static String collection = MongoDBMain.getUserCollection();
 	public static final MongoClient mongo = MongoDBMain.getMongoClient();
-	
-	public MongoDAOImpl (MongoOperations mongoOps) {
+
+	public MongoDAOImpl(MongoOperations mongoOps) {
 		this.mongoOps = mongoOps;
-		
-		String [] departmentArr = {"A", "B", "C", "D"};
-		String [] positionArr = {"Intern", "Professor", "Student"};
+
+		String[] departmentArr = { "A", "B", "C", "D" };
+		String[] positionArr = { "Intern", "Professor", "Student" };
 		List<Department> departmentList = getAllDepartment();
 		List<Position> positionList = getAllPosition();
-		if(departmentList.size() != 4) {
-			for(int i=0 ; i<departmentArr.length ; i++) {
+		if (departmentList.size() != 4) {
+			for (int i = 0; i < departmentArr.length; i++) {
 				Department department = new Department();
 				department.setName(departmentArr[i]);
 				createDepartment(department);
 			}
 		}
-		
-		if(positionList.size() != 3) {
-			for(int i=0 ; i<positionArr.length ; i++) {
+
+		if (positionList.size() != 3) {
+			for (int i = 0; i < positionArr.length; i++) {
 				Position position = new Position();
 				position.setName(positionArr[i]);
 				createPosition(position);
 			}
 		}
 	}
-	
+
 	public MongoDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -59,7 +59,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public void createUser(User user) {
 		collection = MongoDBMain.getUserCollection();
 		System.out.println("DAO: Add new user");
-		
+
 		this.mongoOps.insert(user, collection);
 	}
 
@@ -78,7 +78,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		query.addCriteria(Criteria.where("idUser").is(id));
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
-	
+
 	@Override
 	public User getUserByName(String name) {
 		collection = MongoDBMain.getUserCollection();
@@ -99,7 +99,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		update.set("idDepartment", user.getIdDepartment());
 		update.set("idPosition", user.getIdPosition());
 		update.set("email", user.getEmail());
-		if(!user.getPassword().equals(""))
+		if (!user.getPassword().equals(""))
 			update.set("password", user.getPassword());
 		this.mongoOps.findAndModify(query, update, User.class, collection);
 	}
@@ -111,11 +111,11 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		query.addCriteria(Criteria.where("idUser").is(id));
 		WriteResult result = this.mongoOps.remove(query, User.class, collection);
 	}
-	
+
 	@Override
 	public boolean checkLogin(String username, String password) {
 		List<User> userList = getAllUser();
-		for(User user : userList) {
+		for (User user : userList) {
 			System.out.println("Check login: " + user.getUsername() + ", " + user.getPassword());
 			if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
 				return true;
@@ -123,13 +123,13 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isUsernameExist(String username) {
 		List<User> userList = getAllUser();
-		if(userList == null)
+		if (userList == null)
 			return false;
-		for(User user : userList) {
+		for (User user : userList) {
 			System.out.println("Check Username: " + user.getUsername());
 			if (username.equals(user.getUsername())) {
 				return true;
@@ -137,13 +137,13 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isEmailExist(String email) {
 		List<User> userList = getAllUser();
-		if(userList == null)
+		if (userList == null)
 			return false;
-		for(User user : userList) {
+		for (User user : userList) {
 			System.out.println("Check email: " + user.getEmail());
 			if (email.equals(user.getEmail())) {
 				return true;
@@ -181,7 +181,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	}
 
 	@Override
-	public boolean checkPasswordById (String id, String password) {
+	public boolean checkPasswordById(String id, String password) {
 		collection = MongoDBMain.getUserCollection();
 		User user = getUserById(id);
 		return user.getPassword().equals(password);
@@ -200,7 +200,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		System.out.println("DAO: Add new department");
 		this.mongoOps.insert(department, collection);
 	}
-	
+
 	@Override
 	public void deleteDepartment(String name) {
 		collection = MongoDBMain.getDepartmentCollection();
@@ -208,7 +208,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		query.addCriteria(Criteria.where("name").is(name));
 		WriteResult result = this.mongoOps.remove(query, Department.class, collection);
 	}
-	
+
 	@Override
 	public void deletePosition(String name) {
 		collection = MongoDBMain.getPositionCollection();
@@ -244,8 +244,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		String idDepartment = getDepartmentByName(departmentName).getIdDepartment();
 		List<User> allUser = getAllUser();
 		List<String> idUserList = new ArrayList<String>();
-		for(User user : allUser) {
-			if(user.getIdDepartment().equals(idDepartment))
+		for (User user : allUser) {
+			if (user.getIdDepartment().equals(idDepartment))
 				idUserList.add(user.getIdUser());
 		}
 		return idUserList;
@@ -266,9 +266,9 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		System.out.println("ID : " + idDepartment);
 		List<User> allUser = getAllUser();
 		List<User> userList = new ArrayList<User>();
-		for(User user : allUser) {
+		for (User user : allUser) {
 			System.out.println(user.getIdDepartment());
-			if(user.getIdDepartment().equals(idDepartment)) {
+			if (user.getIdDepartment().equals(idDepartment)) {
 				System.out.println("1");
 				userList.add(user);
 			}
@@ -280,8 +280,8 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public List<User> getExternalUserListByIdDepartment(String idDepartment) {
 		List<User> allUser = getAllUser();
 		List<User> userList = new ArrayList<User>();
-		for(User user : allUser) {
-			if(!user.getIdDepartment().equals(idDepartment))
+		for (User user : allUser) {
+			if (!user.getIdDepartment().equals(idDepartment))
 				userList.add(user);
 		}
 		return userList;
@@ -325,7 +325,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public List<String> getIdUserListByNameList(List<String> nameList) {
 		collection = MongoDBMain.getUserCollection();
 		List<String> idList = new ArrayList<String>();
-		for(String name : nameList) {
+		for (String name : nameList) {
 			System.out.println(name);
 			idList.add(getUserByName(name).getIdUser());
 		}
@@ -344,6 +344,22 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idUser").is(idUser));
 		return this.mongoOps.findOne(query, UserHistory.class, collection);
+	}
+
+	@Override
+	public void addIdProjectCard(String idUser, String idProjectCard) {
+		System.out.println(idUser);
+		UserHistory userHistory = getUserHistoryByIdUser(idUser);
+		List<String> list = userHistory.getIdProjectCards();
+		list.add(idProjectCard);
+		userHistory.setIdProjectCards(list);
+
+		collection = MongoDBMain.getUserHistoryCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		Update update = new Update();
+		update.set("idProjectCards", userHistory.getIdProjectCards());
+		this.mongoOps.findAndModify(query, update, UserHistory.class, collection);
 	}
 
 }

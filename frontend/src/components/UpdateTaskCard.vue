@@ -1,19 +1,18 @@
 <template lang="html">
-  <div class="content" align="left">
+  <div class="update-project--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>Update Task Card </b></h6>
       </div>
-      <div class="column" align="right">
-        <button class="button is-info" style="width: 200px" @click="requestToFinish()">
+      <div class="update-project--button-request" align="right">
+        <button class="button is-info" @click="requestToFinish()">
           <span>Request to finish</span>
         </button>
-        <button class="button no-border">
+      </div>
+      <div class="update-project--button-request" align="right">
+        <button class="button is-danger" @click="requestToDelete()" :disabled="!ownerAuthority">
           <i class="fa fa-trash" aria-hidden="true"></i>
-        </button>
-        <button class="button no-border">
-          <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -151,10 +150,12 @@
       </div>
     </div>
     <request-finish-dialog :request-finish-list="requestFinishList"></request-finish-dialog>
+    <request-delete-dialog :request-delete-list="requestDeleteList"></request-delete-dialog>
   </div>
 </template>
 
 <script>
+import RequestDeleteDialog from '@/components/RequestDeleteDialog'
 import RequestFinishDialog from '@/components/RequestFinishDialog'
 import Axios from 'axios'
 import moment from 'moment'
@@ -183,20 +184,27 @@ export default {
       internalList: '',
       externalList: '',
       ownerAuthority: false,
+      idCard: '',
+      idUser: '',
       requestFinishList: {
         idCard: '',
         idUser: '',
-        dialogRequestClicked: false
+        dialogRequestFinishClicked: false
+      },
+      requestDeleteList: {
+        idCard: '',
+        idUser: '',
+        dialogRequestDeleteClicked: false
       }
     }
   },
   methods: {
     async updateCard () {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.requestFinishList.idCard}`)
+      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
       this.internalList = cardResponse.data.internalParticipants
       this.externalList = cardResponse.data.externalParticipants
       let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
-      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card/${this.requestFinishList.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
+      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
 
       if (updateResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
@@ -205,24 +213,35 @@ export default {
       }
     },
     requestToFinish () {
-      this.requestFinishList.dialogRequestClicked = true
+      this.requestFinishList.dialogRequestFinishClicked = true
+    },
+    requestToDelete () {
+      this.requestDeleteList.dialogRequestDeleteClicked = true
     },
     updateParticipant () {
       this.$router.replace({ path: '/update-participants' })
     }
   },
   async mounted () {
-    this.requestFinishList.idCard = localStorage.getItem('card_update')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.requestFinishList.idCard}`)
-    this.requestFinishList.idUser = localStorage.getItem('user_userId')
+    this.idCard = localStorage.getItem('card_update')
+    this.idUser = localStorage.getItem('user_userId')
+    // Prepare data for sending when click request button
+    // Reason that have to put into 1 obj because to mutate the props that been send.
+    this.requestFinishList.idCard = this.idCard
+    this.requestFinishList.idUser = this.idUser
+    this.requestDeleteList.idCard = this.idCard
+    this.requestDeleteList.idUser = this.idUser
+
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
     let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
-    console.log(this.requestFinishList.idUser)
-    console.log(cardResponse)
-    if (this.requestFinishList.idUser === idUserOfCard) {
+    if (this.idUser === idUserOfCard) {
       this.ownerAuthority = true
+    } else {
+      this.ownerAuthority = false
     }
+
     this.cardName = cardResponse.data.name
     this.cardDescription = cardResponse.data.description
     this.startDate = cardResponse.data.startDate
@@ -260,12 +279,16 @@ export default {
     }
   },
   components: {
-    RequestFinishDialog
+    RequestFinishDialog,
+    RequestDeleteDialog
   }
 }
 </script>
 
 <style scoped>
+.update-project--button-request-finish {
+  margin: 0;
+}
 /*.create-section {
   margin: 20px;
 }

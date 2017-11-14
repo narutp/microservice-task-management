@@ -40,10 +40,10 @@
 
         <el-row>
           <button class="button is-dark" @click="approveRequest()">
-            Accept
+            Approve
           </button>
-          <button class="button is-dark" @click="deniedRequest()">
-            Denied
+          <button class="button is-dark" @click="rejectRequest()">
+            Reject
           </button>
         </el-row>
       </el-dialog>
@@ -62,6 +62,14 @@ export default {
   methods: {
     async approveRequest () {
       let response = await Axios.post(`http://localhost:8091/approve/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+      if (response.data === true) {
+        this.$router.go({ path: '/request-project', force: true })
+      } else {
+        alert('failed')
+      }
+    },
+    async rejectRequest () {
+      let response = await Axios.post(`http://localhost:8091/reject/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
       if (response.data === true) {
         this.$router.go({ path: '/request-project', force: true })
       } else {
