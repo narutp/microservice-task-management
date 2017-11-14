@@ -341,6 +341,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
 		System.out.println(nameList);
+		System.out.println(nameList.get(0));
 		if(!nameList.get(0).equals("[\" \"]")) {
 			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
 			List<String> returnedList = new ArrayList<String>();
@@ -351,6 +352,7 @@ public class TaskManagementRest {
 			}
 			return userDAO.getIdUserListByNameList(returnedList);
 		}
+		System.out.println("Set Blank");
 		return new ArrayList<String>();
 		
 	}
