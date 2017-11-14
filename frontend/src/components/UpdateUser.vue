@@ -5,7 +5,7 @@
         <div class="update-user--header">
           <el-button size="small" @click="index=true">User information</el-button>
           <span>|</span>
-          <el-button size="small" @click="index=false">User history</el-button>
+          <el-button size="small" @click="fetchUserHistory()">User history</el-button>
         </div>
         <!--  index is attribute that show user information or user history  -->
         <!--  User Information part  -->
@@ -306,6 +306,9 @@ export default {
       } else {
         alert('Update failed')
       }
+    },
+    async fetchUserHistory () {
+      
     },
     async setUser () {
       // localStorage.clear()
