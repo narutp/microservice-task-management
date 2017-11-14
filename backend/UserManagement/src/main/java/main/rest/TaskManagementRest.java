@@ -151,8 +151,8 @@ public class TaskManagementRest {
 	@GET
 	@Path("get/user-history/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserHistory getUserHistoryByIdUserAPI(@PathParam("idUser") String idUser) {
-		return userHistoryDAO.getUserHistoryByIdUser(idUser);
+	public List<String> getUserHistoryByIdUserAPI(@PathParam("idUser") String idUser) {
+		return userHistoryDAO.getUserHistoryByIdUser(idUser).getIdProjectCards();
 	}
 	
 	@GET
