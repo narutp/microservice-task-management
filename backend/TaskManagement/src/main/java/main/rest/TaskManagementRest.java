@@ -158,51 +158,63 @@ public class TaskManagementRest {
 			@PathParam("idExternalUserList") List<String> idExList) {
 		
 		System.out.println("ININ");
-		List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
-		List<String> idInternalUserList = new ArrayList<String>();
-		String temp = "";
-		for(String user : tempInUserList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idInternalUserList.add(temp);
-		}
-		
-		List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
-		List<String> idExternalUserList = new ArrayList<String>();
-		for(String user : tempExUserList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idExternalUserList.add(temp);
-		}
-		
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
-		List<String> inList = projectCard.getInternalParticipants();
-		List<String> exList = projectCard.getExternalParticipants();
-		boolean exist = false;
-		for(String idUser : idInternalUserList) {
-			exist = false;
-			for(String eachInList : inList) {
-				if(eachInList.equals(idUser)) {
-					exist = true;
-					break;
+		if(!idInList.get(0).equals("[]")) {
+			List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
+			List<String> idInternalUserList = new ArrayList<String>();
+			String temp = "";
+			for(String user : tempInUserList) {
+				temp = user.replaceAll("[^a-zA-Z0-9]+","");
+				idInternalUserList.add(temp);
+			}
+			
+			List<String> inList = projectCard.getInternalParticipants();
+			
+			boolean exist = false;
+			for(String idUser : idInternalUserList) {
+				exist = false;
+				for(String eachInList : inList) {
+					if(eachInList.equals(idUser)) {
+						exist = true;
+						break;
+					}
+				}
+				if(!exist) {
+					inList.add(idUser);
 				}
 			}
-			if(!exist) {
-				inList.add(idUser);
-			}
+			
+			projectCard.setInternalParticipants(inList);
+			
 		}
-		for(String idUser : idExternalUserList) {
-			exist = false;
-			for(String eachExList : exList) {
-				if(eachExList.equals(idUser)) {
-					exist = true;
-					break;
+		if(!idExList.get(0).equals("[]")) {
+			String temp = "";
+			List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
+			List<String> idExternalUserList = new ArrayList<String>();
+			for(String user : tempExUserList) {
+				temp = user.replaceAll("[^a-zA-Z0-9]+","");
+				idExternalUserList.add(temp);
+			}
+			List<String> exList = projectCard.getExternalParticipants();
+			boolean exist = false;
+			for(String idUser : idExternalUserList) {
+				exist = false;
+				for(String eachExList : exList) {
+					if(eachExList.equals(idUser)) {
+						exist = true;
+						break;
+					}
+				}
+				if(!exist) {
+					exList.add(idUser);
 				}
 			}
-			if(!exist) {
-				exList.add(idUser);
-			}
+			
+			projectCard.setExternalParticipants(exList);
 		}
-		projectCard.setInternalParticipants(inList);
-		projectCard.setExternalParticipants(exList);
+		
+		
+		
 		projectCardDAO.addParticipantsByIdProjectCard(idProjectCard,projectCard);
 		return true;
 	}

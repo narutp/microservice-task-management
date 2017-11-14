@@ -59,6 +59,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public void createUser(User user) {
 		collection = MongoDBMain.getUserCollection();
 		System.out.println("DAO: Add new user");
+		
 		this.mongoOps.insert(user, collection);
 	}
 
@@ -332,9 +333,17 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	}
 
 	@Override
-	public void createUserHistory(String idUser) {
+	public void createUserHistory(UserHistory userHistory) {
 		collection = MongoDBMain.getUserHistoryCollection();
-		
+		this.mongoOps.insert(userHistory, collection);
+	}
+
+	@Override
+	public UserHistory getUserHistoryByIdUser(String idUser) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		return this.mongoOps.findOne(query, UserHistory.class, collection);
 	}
 
 }
