@@ -384,6 +384,7 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		Update update = new Update();
 		update.set("status", projectCard.getStatus());
 		update.set("submitReason", projectCard.getSubmitReason());
+		update.set("finishDate", projectCard.getFinishDate());
 		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 	}
 
@@ -394,6 +395,7 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		query.addCriteria(Criteria.where("idProjectCard").is(projectCard.getIdProjectCard()));
 		Update update = new Update();
 		update.set("status", projectCard.getStatus());
+		update.set("submitReason", projectCard.getSubmitReason());
 		this.mongoOps.findAndModify(query, update, ProjectCard.class, collection);
 	}
 	

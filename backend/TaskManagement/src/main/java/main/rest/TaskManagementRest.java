@@ -371,15 +371,16 @@ public class TaskManagementRest {
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		projectCard.setStatus("Request to finish");
 		projectCard.setSubmitReason(reason);
+		Date date = new Date();
+		date = Calendar.getInstance().getTime();  
+		String requestDate = DATEFORMAT.format(date);
+		projectCard.setFinishDate(requestDate);
 		projectCardDAO.requestToFinishProjectCard(projectCard);
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to finish");
 		terminationRequest.setIdProject(projectCard.getIdProject());
 		terminationRequest.setIdRequester(idRequester);
 		terminationRequest.setReason(reason);
-		Date date = new Date();
-		date = Calendar.getInstance().getTime();  
-		String requestDate = DATEFORMAT.format(date);
 		terminationRequest.setDate(requestDate);
 		terminationRequestDAO.createTerminationRequest(terminationRequest);
 		return true;
@@ -394,6 +395,7 @@ public class TaskManagementRest {
 			@PathParam("idRequester") String idRequester){
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		projectCard.setStatus("Request to delete");
+		projectCard.setSubmitReason(reason);
 		projectCardDAO.requestToDeleteProjectCard(projectCard);
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to delete");
