@@ -341,7 +341,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
 		System.out.println(nameList);
-		if(!nameList.get(0).equals("[\" \"]")) {
+		if(!nameList.get(0).equals(" ")) {
 			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
 			List<String> returnedList = new ArrayList<String>();
 			String temp = "";
