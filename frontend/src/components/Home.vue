@@ -6,47 +6,19 @@
         <h1><b> Organization </b></h1><br>
 
         <b-table
-            class="task-management--table"
-            :data="tableUserData"
-            :paginated="true"
-            :per-page="7"
-            default-sort="title">
-
-            <template scope="props">
-                <b-table-column field="department" label="Department" sortable>
-                    {{ props.row.name }}
-                </b-table-column>
-
-                <b-table-column field="numUser" label="Internal" sortable>
-                    {{ props.row.numUser }}
-                </b-table-column>
-            </template>
-        </b-table>
-
-        <b-table
-            class="task-management--table"
-            :data="tableProjectData"
-            :paginated="true"
-            :per-page="7"
-            default-sort="title">
-
-            <template scope="props">
-                <b-table-column field="no" label="No" width="50" sortable numeric centered>
-                    {{ props.row.no }}
-                </b-table-column>
-
-                <b-table-column field="projectName" label="Project Name" sortable>
-                    {{ props.row.name }}
-                </b-table-column>
-
-                <b-table-column field="registeredDate" label="Registered Date" sortable>
-                    {{ props.row.registeredDate }}
-                </b-table-column>
-
-                <b-table-column field="owner" label="Owner" sortable>
-                    {{ props.row.idUser }}
-                </b-table-column>
-            </template>
+          class="task-management--table"
+          :data="tableUserData"
+          :paginated="true"
+          :per-page="7"
+          default-sort="title">
+          <template scope="props">
+            <b-table-column field="department" label="Department">
+                {{ props.row.name }}
+            </b-table-column>
+            <b-table-column field="numUser" label="Internal Users">
+                {{ props.row.numUser }}
+            </b-table-column>
+          </template>
         </b-table>
         <modal-person> </modal-person>
         <br>
@@ -57,22 +29,23 @@
       <el-col :span="11">
         <h1><b>Task management</b></h1><br>
         <b-table
-            class="home--table"
-            :data="tableProjectData"
-            default-sort="title">
-            <template scope="props">
-              <b-table-column field="Department" label="Department" width="50" sortable>
-                  {{ props.row.department }}
-              </b-table-column>
+          class="task-management--table"
+          :data="tableProjectData"
+          :paginated="true"
+          :per-page="7"
+          default-sort="title">
 
-              <b-table-column field="Project" label="Total Project" sortable>
-                  {{ props.row.project }}
-              </b-table-column>
-
-              <b-table-column field="TaskCard" label="Total Task Card" sortable>
-                  {{ props.row.taskCard }}
-              </b-table-column>
-            </template>
+          <template scope="props">
+            <b-table-column field="department" label="Department">
+                {{ props.row.name }}
+            </b-table-column>
+            <b-table-column field="numProject" label="Projects">
+                {{ props.row.numProject }}
+            </b-table-column>
+            <b-table-column field="numCard" label="Task Card">
+                {{ props.row.numTaskCard }}
+            </b-table-column>
+          </template>
         </b-table>
         <modal-task> </modal-task>
       </el-col>
@@ -91,28 +64,27 @@ export default {
       arrLength: 0,
       dialogVisible: false,
       tableUserData: [{ 'name': 'DapartmentName', 'numUser': 'Internal' }],
-      tableProjectData: [{ 'department': 'A', 'project': 3, 'taskCard': 5 }]
+      tableProjectData: [{ 'name': 'DapartmentName', 'numProject': '3', 'numTaskCard': '5' }]
     }
   },
   async mounted () {
-    // let response = await Axios.get(`http://localhost:8091/get/all-project/`)
-    // this.tableUserData = response.data
-    // this.arrLength = response.data.length
-    // for (let i = 0; i < this.arrLength; i++) {
-    //   let id = response.data[i].idUser
-    //   let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${id}`)
-    //   console.log(nameResponse)
-    //   this.tableUserData[i].idUser = nameResponse.data.name
-    // }
-    // user
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.tableUserData = response.data
+    this.tableProjectData = response.data
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idDepartment
-      let numResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
-      console.log(numResponse)
-      this.tableUserData[i].numUser = numResponse.data.length
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      // get all-project from idDepartment
+      let numProjectResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      // get all-task-card from idDepartment
+      let numTaskCardResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      // console.log(numUserResponse.data.length)
+      // console.log(numProjectResponse.data.length)
+      // console.log('++++')
+      this.tableUserData[i].numUser = numUserResponse.data.length
+      this.tableProjectData[i].numProject = numProjectResponse.data.length
+      this.tableProjectData[i].numTaskCard = numTaskCardResponse.data.length
     }
   },
   computed: {

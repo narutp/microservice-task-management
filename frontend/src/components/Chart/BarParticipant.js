@@ -1,22 +1,38 @@
 import {Bar} from 'vue-chartjs'
+import Axios from 'axios'
 
 export default {
   extends: Bar,
   data () {
     return {
       datacollection: {
-        labels: ['Department A', 'Department B', 'Department C', 'Department D'],
+        labels: ['Department A', 'Department B', 'Department C'],
         datasets: [
           {
             label: ['Participants'],
             backgroundColor: '#585858',
-            data: [12, 20, 12, 18]
+            data: [0, 0, 0, 0]
           }
         ]
       }
     }
   },
-  mounted () {
+  async mounted () {
+    let departmentArray = ['A', 'B', 'C', 'D']
+    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    this.datacollection.labels = response.data
+    // this.datacollection.labels[0] = 'A'
+    // this.datacollection.labels[1] = 'B'
+    // this.datacollection.labels[2] = 'C'
+    // this.datacollection.labels[3] = 'D'
+    this.arrLength = response.data.length
+    for (let i = 0; i < this.arrLength; i++) {
+      let id = response.data[i].idDepartment
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      this.datacollection.labels[i] = departmentArray[i]
+      this.datacollection.datasets[0].data[i] = numUserResponse.data.length
+      // console.log(this.datacollection.datasets[0].data[i])
+    }
     this.renderChart(this.datacollection, {responsive: true, maintainAspectRatio: false})
   }
 }
