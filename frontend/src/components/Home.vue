@@ -17,9 +17,7 @@
               </b-table-column>
             </template>
         </b-table>
-        <div @click="dialogVisible = true">
-          <horizontal-bar-participant> </horizontal-bar-participant>
-        </div>
+        <modal-person> </modal-person>
         <br>
       </el-col>
       <el-col :span="2">
@@ -45,22 +43,9 @@
               </b-table-column>
             </template>
         </b-table>
-        <div @click="dialogVisible = true">
-          <doughnut-department></doughnut-department>
-        </div>
+        <modal-task> </modal-task>
       </el-col>
     </el-row>
-    <el-dialog
-      title="Task Card from Each department"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <div class="modal-mask">
-        <modal-task> </modal-task>
-      </div>
-      <span slot="footer" class="dialog-footer">
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -68,9 +53,6 @@
 // import { mapActions } from 'vuex'
 import ModalTask from '@/components/ModalTask'
 import ModalPerson from '@/components/ModalPerson'
-import PieProject from '@/components/Chart/PieProject'
-import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
-import HorizontalBarParticipant from '@/components/Chart/HorizontalBarParticipant'
 export default {
   data () {
     return {
@@ -96,9 +78,6 @@ export default {
     // })
   },
   components: {
-    PieProject,
-    DoughnutDepartment,
-    HorizontalBarParticipant,
     ModalTask,
     ModalPerson
   }
