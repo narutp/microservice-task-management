@@ -157,9 +157,10 @@ public class TaskManagementRest {
 			@PathParam("idInternalUserList") List<String> idInList,
 			@PathParam("idExternalUserList") List<String> idExList) {
 		
-		System.out.println("ININ");
+		System.out.println("ININ ===============================");
+		System.out.println(idExList.get(0));
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
-		if(!idInList.get(0).equals("[]")) {
+		if(!idInList.get(0).equals("null")) {
 			List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
 			List<String> idInternalUserList = new ArrayList<String>();
 			String temp = "";
@@ -187,7 +188,7 @@ public class TaskManagementRest {
 			projectCard.setInternalParticipants(inList);
 			
 		}
-		if(!idExList.get(0).equals("[]")) {
+		if(!idExList.get(0).equals("null")) {
 			String temp = "";
 			List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
 			List<String> idExternalUserList = new ArrayList<String>();
