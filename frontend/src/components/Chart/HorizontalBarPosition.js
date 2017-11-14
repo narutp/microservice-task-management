@@ -24,8 +24,8 @@ export default {
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idDepartment
-      // each position in each department
-      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      // position-list in each department
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/position-list/department/${id}`)
       this.datacollection.labels[i] = positionArray[i]
       this.datacollection.datasets[0].data[i] = numUserResponse.data.length
       // console.log(this.datacollection.datasets[0].data[i])
