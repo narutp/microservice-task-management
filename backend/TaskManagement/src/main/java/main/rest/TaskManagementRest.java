@@ -395,6 +395,7 @@ public class TaskManagementRest {
 			@PathParam("idRequester") String idRequester){
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		projectCard.setStatus("Request to delete");
+		projectCard.setSubmitReason(reason);
 		projectCardDAO.requestToDeleteProjectCard(projectCard);
 		terminationRequest.setIdProjectCard(idProjectCard);
 		terminationRequest.setType("Request to delete");
