@@ -9,22 +9,8 @@
       width="100%"
       :before-close="handleClose">
       <div class="in-modal-mask">
-        <div class="small-chart">
-          <span> Department A </span>
-          <horizontal-bar-position> </horizontal-bar-position>
-        </div>
-        <div class="small-chart">
-          <span> Department B </span>
-          <horizontal-bar-position> </horizontal-bar-position>
-        </div>
-        <br>
-        <br>
-        <div class="small-chart">
-          <span> Department C </span>
-          <horizontal-bar-position> </horizontal-bar-position>
-        </div>
-        <div class="small-chart">
-          <span> Department D </span>
+        <div v-for="item in items" class="small-chart">
+          <span> {{item.name}} </span>
           <horizontal-bar-position> </horizontal-bar-position>
         </div>
       </div>
@@ -37,12 +23,36 @@
 <script>
 import BarParticipant from '@/components/Chart/BarParticipant'
 import HorizontalBarPosition from '@/components/Chart/HorizontalBarPosition'
+import Axios from 'axios'
 
 export default {
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      items: [
+        { name: 'Department A' }
+      ]
+
     }
+  },
+  async mounted () {
+    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    this.items = response.data
+    // this.arrLength = response.data.length
+    // for (let i = 0; i < this.arrLength; i++) {
+    //   let id = response.data[i].idDepartment
+    //   let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+    //   // get all-project from idDepartment
+    //   let numProjectResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+    //   // get all-task-card from idDepartment
+    //   let numTaskCardResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+    //   // console.log(numUserResponse.data.length)
+    //   // console.log(numProjectResponse.data.length)
+    //   // console.log('++++')
+    //   this.tableUserData[i].numUser = numUserResponse.data.length
+    //   this.tableProjectData[i].numProject = numProjectResponse.data.length
+    //   this.tableProjectData[i].numTaskCard = numTaskCardResponse.data.length
+    // }
   },
   methods: {
   },

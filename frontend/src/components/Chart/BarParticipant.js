@@ -21,10 +21,6 @@ export default {
     let departmentArray = ['A', 'B', 'C', 'D']
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.datacollection.labels = response.data
-    // this.datacollection.labels[0] = 'A'
-    // this.datacollection.labels[1] = 'B'
-    // this.datacollection.labels[2] = 'C'
-    // this.datacollection.labels[3] = 'D'
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idDepartment
