@@ -1,5 +1,4 @@
 import { Doughnut } from 'vue-chartjs'
-// import the component - chart you need
 
 export default Doughnut.extend({
   mounted () {

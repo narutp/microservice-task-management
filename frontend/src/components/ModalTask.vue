@@ -9,22 +9,8 @@
       width="100%"
       :before-close="handleClose">
       <div class="in-modal-mask">
-        <div class="small-chart">
-          <span> Department A </span>
-          <pie-project></pie-project>
-        </div>
-        <div class="small-chart">
-          <span> Department B </span>
-          <pie-project></pie-project>
-        </div>
-        <br>
-        <br>
-        <div class="small-chart">
-          <span> Department C </span>
-          <pie-project></pie-project>
-        </div>
-        <div class="small-chart">
-          <span> Department D </span>
+        <div v-for="item in items" class="small-chart">
+          <span> {{item.department}} </span>
           <pie-project></pie-project>
         </div>
       </div>
@@ -41,7 +27,13 @@ import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
 export default {
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      items: [
+        { department: 'Department A' },
+        { department: 'Department B' },
+        { department: 'Department C' },
+        { department: 'Department D' }
+      ]
     }
   },
   methods: {
