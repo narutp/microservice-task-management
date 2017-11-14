@@ -339,10 +339,10 @@ public class TaskManagementRest {
 	@GET
 	@Path("get/idUserList/nameList/{nameList}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
-		System.out.println(nameList);
-		if(!nameList.get(0).equals("[]")) {
-			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
+	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") String nameList) {
+		System.out.println(nameList + "[]");
+		if(!nameList.equals("[]")) {
+			List<String> userList = Arrays.asList(nameList.split("\\s*,\\s*"));
 			List<String> returnedList = new ArrayList<String>();
 			String temp = "";
 			for(String user : userList) {

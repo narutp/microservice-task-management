@@ -137,7 +137,13 @@ export default {
     },
     async save () {
       let idCard = localStorage.getItem('id_create_card')
-
+      // For add only each internal or external by sending space instead of undefine empty obj to server
+      if (this.internalAddList.length === 0) {
+        this.internalAddList.push(' ')
+      }
+      if (this.externalAddList.length === 0) {
+        this.externalAddList.push(' ')
+      }
       let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
       let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
 
