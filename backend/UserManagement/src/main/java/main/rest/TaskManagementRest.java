@@ -359,9 +359,9 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("create/user-history/{idProjectCard}/{idInternalList}/{idExternalList}")
+	@Path("add/history/{idProjectCard}/{idInternalList}/{idExternalList}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean createUserHistoryByIdUserList(
+	public boolean addHistoryByIdUserList(
 			@PathParam("idProjectCard") String idProjectCard,
 			@PathParam("idInternalList") List<String> idInternalList,
 			@PathParam("idExternalList") List<String> idExternalList) {
