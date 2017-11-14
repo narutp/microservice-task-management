@@ -151,9 +151,8 @@
           <b-table
               class="update-user--table"
               :data="tableData"
-              :paginated="true"
-              :per-page="7"
-              default-sort="title">
+              :paginated="isPaginated"
+              :per-page="5">
 
               <template scope="props">
                   <b-table-column field="no" label="No" width="50" sortable numeric centered>
@@ -166,7 +165,7 @@
                   </b-table-column>
 
                   <b-table-column field="card Name" label="Card Name" width="200" sortable>
-                      {{ props.row.name }}
+                      {{ props.row.idProjectCards }}
                   </b-table-column>
 
                   <b-table-column field="Start date" label="Start date" width="150" sortable>
@@ -239,8 +238,13 @@ export default {
       }
     }
     return {
-      tableData: [{ 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' }],
+      tableData: [{ 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' }],
       index: true,
+      isPaginated: true,
       form: {
         name: '',
         birthdate: '',
@@ -311,12 +315,24 @@ export default {
       this.index = false
       let idUser = localStorage.getItem('user_userId')
       let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history/${idUser}`)
-      // let arrLength = userHistoryResponse.data.idProjectCards.length
-      this.tableData = userHistoryResponse.data
-      // for (let i = 0; i < arrLength; i++) {
-      //   console.log(arrLength)
-      // }
       console.log(userHistoryResponse.data)
+      let arrLength = userHistoryResponse.data.idProjectCards.length
+      for (let i = 0; i < arrLength; i++) {
+        console.log(userHistoryResponse.data.idProjectCards[i])
+        let idCard = userHistoryResponse.data.idProjectCards[i]
+        this.tableData[i].idProjectCards = idCard
+
+        // get card detail to show in table
+        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${idCard}`)
+        this.tableData[i].idProjectCards = cardResponse.data.name
+        this.tableData[i].startDate = cardResponse.data.startDate
+        this.tableData[i].endDate = cardResponse.data.endDate
+
+        // get project
+        let idProject = cardResponse.data.idProject
+        let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+        this.tableData[i].idProject = projectResponse.data.name
+      }
     },
     async setUser () {
       // localStorage.clear()
