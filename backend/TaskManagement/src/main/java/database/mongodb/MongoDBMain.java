@@ -11,10 +11,10 @@ import database.dao.DatabaseModel;
 
 public class MongoDBMain implements DatabaseModel{
 
-	private static final String DB_NAME = "taskdb";
-    private static final String CARD_COLLECTION = "card";
+	private static final String DB_NAME = "projectdb";
+    private static final String PROJECT_CARD_COLLECTION = "project-card";
     private static final String PROJECT_COLLECTION = "project";
-    private static final String REQUEST_COLLECTION = "request";
+    private static final String TERMINATION_REQUEST_COLLECTION = "termination-request";
     private static final String MONGO_HOST = "localhost";
     private static final int MONGO_PORT = 27017;
     private static MongoClient mongo;
@@ -42,11 +42,11 @@ public class MongoDBMain implements DatabaseModel{
     public static String getProjectCollection(){
     	return PROJECT_COLLECTION;
     }
-    public static String getCardCollection(){
-    	return CARD_COLLECTION;
+    public static String getProjectCardCollection(){
+    	return PROJECT_CARD_COLLECTION;
     }
-    public static String getRequestCollection(){
-    	return REQUEST_COLLECTION;
+    public static String getTerminationRequestCollection(){
+    	return TERMINATION_REQUEST_COLLECTION;
     }
     public static String getHost(){
     	return MONGO_HOST;

@@ -109,7 +109,7 @@ export default {
   // TODO can't get data in select at first
   async mounted () {
     this.idCard = localStorage.getItem('id_create_card')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/card/${this.idCard}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
     console.log(cardResponse.data)
     let internalArr = cardResponse.data.internalParticipants.length
     let externalArr = cardResponse.data.externalParticipants.length
@@ -146,7 +146,7 @@ export default {
       this.externalAddList.push(this.externalUser)
     },
     async cancleUpdateParticipants () {
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${this.idCard}`)
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/${this.idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {

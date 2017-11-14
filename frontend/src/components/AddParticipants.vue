@@ -128,7 +128,7 @@ export default {
     },
     async cancleAddParticipants () {
       let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/card/${idCard}`)
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/${idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {

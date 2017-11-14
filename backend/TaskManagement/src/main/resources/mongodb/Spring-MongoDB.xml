@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.5.xsd">
  
 <mongo:mongo host="localhost" port="27017" id="mongo" />
-<mongo:db-factory dbname="taskdb" mongo-ref="mongo" id="mongoDbFactory" />
+<mongo:db-factory dbname="projectdb" mongo-ref="mongo" id="mongoDbFactory" />
 
 <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
     <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
@@ -16,10 +16,10 @@
 <bean id="projectDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
-<bean id="cardDAO" class="database.mongodb.MongoDAOImpl">
+<bean id="projectCardDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
-<bean id="requestDAO" class="database.mongodb.MongoDAOImpl">
+<bean id="terminationRequestDAO" class="database.mongodb.MongoDAOImpl">
     <constructor-arg name="mongoOps" ref="mongoTemplate"/>
 </bean>
 </beans>

@@ -26,7 +26,7 @@ import main.Application;
 import main.model.Department;
 import main.model.Position;
 import main.model.User;
-import main.model.UserLog;
+import main.model.UserHistory;
 import database.dao.*;
 import database.mongodb.MongoDAOImpl;
 
@@ -37,12 +37,12 @@ public class TaskManagementRest {
 	private User user;
 	private Department department;
 	private Position position;
-	private UserLog userLog;
+	private UserHistory userHistory;
 	private ApplicationContext ctx = Application.database.getContext();
 	private UserDAO userDAO = ctx.getBean("userDAO", UserDAO.class);
 	private DepartmentDAO departmentDAO = ctx.getBean("departmentDAO", DepartmentDAO.class);
 	private PositionDAO positionDAO = ctx.getBean("positionDAO", PositionDAO.class);
-	private UserLogDAO userLogDAO = ctx.getBean("userlogDAO", UserLogDAO.class);
+	private UserHistoryDAO userHistoryDAO = ctx.getBean("userHistoryDAO", UserHistoryDAO.class);
 	
 	private final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -53,7 +53,7 @@ public class TaskManagementRest {
 		this.user = new User();
 		this.department = new Department();
 		this.position = new Position();
-		this.userLog = new UserLog();
+		this.userHistory = new UserHistory();
 	}
 	
 	@GET
@@ -94,6 +94,9 @@ public class TaskManagementRest {
 		user.setUsername(username);
 		user.setPassword(password);
 		userDAO.createUser(user);
+		userHistory.setIdUser(user.getIdUser());
+		userHistory.setIdProjectCards(new ArrayList<String>());
+		userHistoryDAO.createUserHistory(userHistory);
 		System.out.println("Set Id: " + user.getIdUser());
 		System.out.println("Set Name: " + user.getName());
 		System.out.println("Set Birth: " + user.getPassword());
@@ -146,17 +149,17 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/all-user-log/{user-id}")
+	@Path("get/user-history/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserLog> getAllUserLogByUserIdAPI(@PathParam("user-id") String userId) {
-		return userLogDAO.getAllUserLogByUserId(userId);
+	public List<UserHistory> getAllUserHistoryByUserIdAPI(@PathParam("idUser") String idUser) {
+		return userHistoryDAO.getAllUserHistoryByIdUser(idUser);
 	}
 	
 	@GET
-	@Path("get/all-user-log")
+	@Path("get/all-user-history")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserLog> getAllUserLogAPI() {
-		return userLogDAO.getAllUserLog();
+	public List<UserHistory> getAllUserHistoryAPI() {
+		return userHistoryDAO.getAllUserHistory();
 	}
 	
 	@POST
@@ -268,7 +271,7 @@ public class TaskManagementRest {
 	@POST
 	@Path("set/manager/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean setManagerByUsername(@PathParam("username") String username) {
+	public boolean setManagerByUsernameAPI(@PathParam("username") String username) {
 		user = userDAO.getUserByUsername(username);
 		userDAO.setManagerByUser(user);
 		return true;
@@ -337,14 +340,19 @@ public class TaskManagementRest {
 	@Path("get/idUserList/nameList/{nameList}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
-		List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
-		List<String> returnedList = new ArrayList<String>();
-		String temp = "";
-		for(String user : userList) {
-			temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
-			returnedList.add(temp);
+		System.out.println(nameList);
+		if(!nameList.get(0).equals("[]")) {
+			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for(String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
+				returnedList.add(temp);
+			}
+			return userDAO.getIdUserListByNameList(returnedList);
 		}
-		return userDAO.getIdUserListByNameList(returnedList);
+		return new ArrayList<String>();
+		
 	}
 	
 	

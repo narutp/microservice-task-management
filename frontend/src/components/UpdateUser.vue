@@ -1,9 +1,17 @@
 <template lang="html">
-  <div class="user--container">
+  <div class="update-user--container">
     <div class="content" align="left">
       <el-row>
-        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules">
-          <div class="margin-bottom"> <b>Personal Information</b> </div>
+        <div class="update-user--header">
+          <el-button size="small" @click="index=true">User information</el-button>
+          <span>|</span>
+          <el-button size="small" @click="index=false">User history</el-button>
+        </div>
+        <!--  index is attribute that show user information or user history  -->
+        <!--  User Information part  -->
+        <el-form label-position="top" label-width="150px" :model="form" ref="form" :rules="rules" v-if="index === true">
+          <div class=""><b>Personal Information</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -46,7 +54,8 @@
             </el-col>
           </el-row>
           <br>
-          <div class="margin-bottom"> <b>Account</b> </div>
+          <div class="margin-bottom"><b>Account</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -78,13 +87,14 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="rePassword">
+              <el-form-item prop="password">
                 <el-input type="password" v-model="form.newPassword"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <br>
-          <div class="margin-bottom"> <b>Information</b> </div>
+          <div class=""><b>Other Information</b></div>
+          <hr>
           <el-row>
             <el-col :span="12">
               <el-form-item>
@@ -118,18 +128,57 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <br>
+          <el-row>
+            <el-col :span="12">
+                <p class="update-user--update-information"><i>Update your account with these data</i></p>
+            </el-col>
+            <el-col :span="12">
+              <el-button round type="info" class="full--width" @click="updateUser()">
+                Update User
+              </el-button>
+            </el-col>
+          </el-row>
         </el-form>
-        <br>
-        <el-row>
-          <el-col :span="12">
-              <p>Update your account with these data</p>
-          </el-col>
-          <el-col :span="12">
-            <button class="button is-success full--width" @click="updateUser()">
-              Update User
-            </button>
-          </el-col>
-        </el-row>
+      </el-row>
+      <!--  User history part  -->
+      <el-row v-if="index === false">
+        <section class="update-user--table--container">
+          <div style="font-size: 18px;" align="center">
+            <b>User history</b>
+          </div>
+          <br>
+          <b-table
+              class="update-user--table"
+              :data="tableData"
+              :paginated="true"
+              :per-page="7"
+              default-sort="title">
+
+              <template scope="props">
+                  <b-table-column field="no" label="No" width="50" sortable numeric centered>
+                      {{ props.row.no }}
+                  </b-table-column>
+
+                  <b-table-column field="projectName" label="Project Name" width="200" sortable>
+                      {{ props.row.idProject }}
+                      <!-- {{ props.row }} -->
+                  </b-table-column>
+
+                  <b-table-column field="card Name" label="Card Name" width="200" sortable>
+                      {{ props.row.name }}
+                  </b-table-column>
+
+                  <b-table-column field="Start date" label="Start date" width="150" sortable>
+                      {{ props.row.startDate }}
+                  </b-table-column>
+
+                  <b-table-column field="End date" label="End date" width="150" sortable>
+                      {{ props.row.endDate }}
+                  </b-table-column>
+              </template>
+          </b-table>
+        </section>
       </el-row>
     </div>
   </div>
@@ -139,15 +188,67 @@
 import Axios from 'axios'
 export default {
   data () {
+    let checkName = (rule, value, callback) => {
+      // alphabetic regular expression (Both Uppercase and Lowercase)
+      let regex = /^[A-Za-z ]+$/
+      if (!value) {
+        callback(new Error('Please input your name'))
+      } else if (value.length > 20) {
+        callback(new Error('Your name must be at most 20 characters'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Name must only be in alphabetic'))
+      } else {
+        callback()
+      }
+    }
+    let checkUsername = (rule, value, callback) => {
+      let regex = /^[A-Za-z0-9]+$/
+      let numericRegex = /^(0|[1-9][0-9]*)$/
+      let alphabeticRegex = /^[A-Za-z]+$/
+      if (!value) {
+        callback(new Error('Please input your username'))
+      } else if (value.length < 6 || value.length > 16) {
+        callback(new Error('Your username length must be 6-16 characters'))
+      } else if (value.match(numericRegex) || value.match(alphabeticRegex)) {
+        callback(new Error('Username must contain with both letters and numbers'))
+      } else if (!value.match(regex)) {
+        callback(new Error('Username must contain with only letters and numbers'))
+      } else {
+        callback()
+      }
+    }
+    let checkPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the password'))
+      } else if (value.length < 8 || value.length > 20) {
+        callback(new Error('Your password length must be 8-20 characters'))
+      } else {
+        callback()
+      }
+    }
+    let checkPhone = (rule, value, callback) => {
+      let numericRegex = /^(0|[0-9][0-9]*)$/
+      if (value === '') {
+        callback(new Error('Please input your phone number'))
+      } else if (value.length > 11) {
+        callback(new Error('Your phone must be at most 11 numbers'))
+      } else if (!value.match(numericRegex)) {
+        callback(new Error('Your phone must be in numeric'))
+      } else {
+        callback()
+      }
+    }
     return {
+      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2' }],
+      index: true,
       form: {
-        name: 'Makhamwan',
-        birthdate: '2017-11-01',
-        phone: '01073094860',
-        department: 'A',
-        position: 'Intern',
-        email: 'mkhv@gmail.com',
-        username: 'makhamwan',
+        name: '',
+        birthdate: '',
+        phone: '',
+        department: '',
+        position: '',
+        email: '',
+        username: '',
         password: '',
         newPassword: ''
       },
@@ -155,6 +256,30 @@ export default {
         disabledDate (time) {
           return time.getTime() > Date.now() - 8.64e7
         }
+      },
+      rules: {
+        name: [
+          { validator: checkName }
+        ],
+        phone: [
+          { validator: checkPhone }
+        ],
+        email: [
+          { required: true, message: 'Please input your email address', trigger: 'blur' },
+          { type: 'email', message: 'Please input correct email address format', trigger: 'blur,change' }
+        ],
+        username: [
+          { validator: checkUsername }
+        ],
+        password: [
+          { validator: checkPass }
+        ],
+        department: [
+          { required: true, message: 'Please pick your department' }
+        ],
+        position: [
+          { required: true, message: 'Please pick your position' }
+        ]
       }
     }
   },
@@ -204,30 +329,20 @@ export default {
 </script>
 
 <style scoped>
-.user--container {
+.update-user--container {
   background-color: #fff;
   padding: 30px;
   padding-left: 100px;
   padding-right: 100px;
 }
-.content {
-  width: 75%;
+.update-user--header {
+  margin-bottom: 30px;
 }
 .full--width {
   width: 100%;
 }
-.margin-bottom {
-  margin-bottom: 20px;
-}
-button {
-  width: 180px;
-  height: 50px;
-  border-radius: 30px;
-  padding: 0;
-  margin: 0;
-  margin-bottom: 15px;
-  left: 0;
-  display: inline-block;
+.update-user--update-information {
+  font-size: 14px;
 }
 p {
   padding-top: 10px;

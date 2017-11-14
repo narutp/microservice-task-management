@@ -21,25 +21,25 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.client.RestTemplate;
 
-import database.dao.CardDAO;
+import database.dao.ProjectCardDAO;
 import database.dao.ProjectDAO;
-import database.dao.RequestDAO;
+import database.dao.TerminationRequestDAO;
 import main.Application;
 import main.model.Project;
-import main.model.Request;
-import main.model.Card;
+import main.model.TerminationRequest;
+import main.model.ProjectCard;
 
 @Named
 @Path("/")
 public class TaskManagementRest {
 
 	private Project project;
-	private Card card;
-	private Request request;
+	private ProjectCard projectCard;
+	private TerminationRequest terminationRequest;
 	private ApplicationContext ctx = Application.database.getContext();
 	private ProjectDAO projectDAO = ctx.getBean("projectDAO",ProjectDAO.class);
-	private CardDAO cardDAO = ctx.getBean("cardDAO",CardDAO.class);
-	private RequestDAO requestDAO = ctx.getBean("requestDAO",RequestDAO.class);
+	private ProjectCardDAO projectCardDAO = ctx.getBean("projectCardDAO",ProjectCardDAO.class);
+	private TerminationRequestDAO terminationRequestDAO = ctx.getBean("terminationRequestDAO",TerminationRequestDAO.class);
 	
 	private final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -48,8 +48,8 @@ public class TaskManagementRest {
 	
 	public TaskManagementRest() {
 		this.project = new Project();
-		this.card = new Card();
-		this.request = new Request();
+		this.projectCard = new ProjectCard();
+		this.terminationRequest = new TerminationRequest();
 	}
 	
 	@POST
@@ -70,7 +70,6 @@ public class TaskManagementRest {
 			project.setDescription(description);
 		project.setIdUser(idUser);
 		
-		//date convert to string
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String regisDate = DATEFORMAT.format(date);
@@ -102,61 +101,11 @@ public class TaskManagementRest {
 		return true;
 	}
 	
-	@POST
-	@Path("create/card/{idUser}/{idProject}/{name}/{description}/{startDate}/{endDate}/{internalParticipants}/{externalParticipants}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean createCardAPI(
-			@PathParam("idUser") String idUser,
-			@PathParam("idProject") String idProject,
-			@PathParam("name") String name,
-			@PathParam("description") String description,
-			@PathParam("startDate") String startDate,
-			@PathParam("endDate") String endDate,
-			@PathParam("internalParticipants") List<String> internalParticipants,
-			@PathParam("externalParticipants") List<String> externalParticipants) {
-	
-		if(name.equals(""))
-			card.setName("-");
-		else
-			card.setName(name);
-		if(description.equals(""))
-			card.setDescription("-");
-		else
-			card.setDescription(description);
-		if(startDate.equals(""))
-			card.setStartDate("-");
-		else
-			card.setStartDate(startDate);
-		if(endDate.equals(""))
-			card.setEndDate("-");
-		else
-			card.setEndDate(endDate);
-		if(internalParticipants.equals(null))
-			card.setInternalParticipants(null);
-		else
-			card.setInternalParticipants(internalParticipants);
-		if(externalParticipants.equals(null))
-			card.setExternalParticipants(null);
-		else
-			card.setExternalParticipants(externalParticipants);
-		
-		//date convert to string
-		Date date = new Date();
-		date = Calendar.getInstance().getTime();  
-		String regisDate = DATEFORMAT.format(date);
-		card.setRegisteredDate(regisDate);
-		card.setStatus("In progress");
-		card.setSubmitReason("-");
-		card.setFinishDate("-");
-		
-		cardDAO.createCard(card);
-		return true;
-	}
 	
 	@GET
-	@Path("create/card/{idUser}/{projectName}/{name}/{description}/{startDate}/{endDate}")
+	@Path("create/project-card/{idUser}/{projectName}/{name}/{description}/{startDate}/{endDate}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createCardWithoutParticipantAPI(
+	public String createProjectCardWithoutParticipantAPI(
 			@PathParam("idUser") String idUser,
 			@PathParam("projectName") String projectName,
 			@PathParam("name") String name,
@@ -164,277 +113,207 @@ public class TaskManagementRest {
 			@PathParam("startDate") String startDate,
 			@PathParam("endDate") String endDate) {
 		
-		card.setIdUser(idUser);
+		projectCard.setIdUser(idUser);
 	
 		if(name.equals(""))
-			card.setName("-");
+			projectCard.setName("-");
 		else
-			card.setName(name);
-		card.setIdProject(projectDAO.getProjectByName(projectName).getIdProject());
+			projectCard.setName(name);
+		projectCard.setIdProject(projectDAO.getProjectByName(projectName).getIdProject());
 		if(description.equals(""))
-			card.setDescription("-");
+			projectCard.setDescription("-");
 		else
-			card.setDescription(description);
+			projectCard.setDescription(description);
 		if(startDate.equals(""))
-			card.setStartDate("-");
+			projectCard.setStartDate("-");
 		else
-			card.setStartDate(startDate);
+			projectCard.setStartDate(startDate);
 		if(endDate.equals(""))
-			card.setEndDate("-");
+			projectCard.setEndDate("-");
 		else
-			card.setEndDate(endDate);
-		card.setInternalParticipants(new ArrayList<String>());
-		card.setExternalParticipants(new ArrayList<String>());
+			projectCard.setEndDate(endDate);
+		projectCard.setInternalParticipants(new ArrayList<String>());
+		projectCard.setExternalParticipants(new ArrayList<String>());
 		//date convert to string
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String regisDate = DATEFORMAT.format(date);
-		card.setRegisteredDate(regisDate);
-		card.setStatus("In progress");
-		card.setSubmitReason("-");
-		card.setFinishDate("-");
+		projectCard.setRegisteredDate(regisDate);
+		projectCard.setStatus("In progress");
+		projectCard.setSubmitReason("-");
+		projectCard.setFinishDate("-");
 		
-		String idCard = cardDAO.createCard(card);
-		System.out.println(idCard);
-		return idCard;
+		String idProjectCard = projectCardDAO.createProjectCard(projectCard);
+		System.out.println(idProjectCard);
+		return idProjectCard;
 	
 	}
 	
 	@POST
-	@Path("add/external-participant/{idCard}/{idUser}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean addExternalParticipantAPI(
-			@PathParam("idCard") String idCard,
-			@PathParam("idUser") String idUser) {
-		
-		card = cardDAO.getCardByIdCard(idCard);
-		List<String> exList = card.getExternalParticipants();
-		exList.add(idUser);
-		card.setExternalParticipants(exList);
-		cardDAO.addExternalParticipantByIdCard(idCard,card);
-		return true;
-	}
-	
-	@POST
-	@Path("add/external-participants/{idCard}/{idUserList}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean addExternalParticipantsAPI(
-			@PathParam("idCard") String idCard,
-			@PathParam("idUserList") List<String> idList) {
-		
-		List<String> userList = Arrays.asList(idList.get(0).split("\\s*,\\s*"));
-		List<String> idUserList = new ArrayList<String>();
-		String temp = "";
-		for(String user : userList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idUserList.add(temp);
-		}
-		card = cardDAO.getCardByIdCard(idCard);
-		List<String> exList = card.getExternalParticipants();
-		for(String idUser : idUserList) {
-			exList.add(idUser);
-		}
-		card.setExternalParticipants(exList);
-		cardDAO.addExternalParticipantByIdCard(idCard,card);
-		return true;
-	}
-	
-	@POST
-	@Path("add/internal-participant/{idCard}/{idUser}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean addInternalParticipantAPI(
-			@PathParam("idCard") String idCard,
-			@PathParam("idUser") String idUser) {
-		
-		card = cardDAO.getCardByIdCard(idCard);
-		List<String> inList = card.getInternalParticipants();
-		inList.add(idUser);
-		card.setInternalParticipants(inList);
-		cardDAO.addInternalParticipantByIdCard(idCard,card);
-		return true;
-	}
-	
-	@POST
-	@Path("add/internal-participants/{idCard}/{idUserList}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean addInternalParticipantsAPI(
-			@PathParam("idCard") String idCard,
-			@PathParam("idUserList") String idList) {
-		
-		System.out.println("ININ");
-		List<String> userList = Arrays.asList(idList.split("\\s*,\\s*"));
-		List<String> idUserList = new ArrayList<String>();
-		String temp = "";
-		for(String user : userList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idUserList.add(temp);
-		}
-		card = cardDAO.getCardByIdCard(idCard);
-		List<String> inList = card.getInternalParticipants();
-		for(String idUser : idUserList) {
-			System.out.println(idUser);
-			inList.add(idUser);
-		}
-		card.setInternalParticipants(inList);
-		cardDAO.addInternalParticipantByIdCard(idCard,card);
-		System.out.println("ds");
-		return true;
-	}
-	
-	@POST
-	@Path("add/participants/{idCard}/{idInternalUserList}/{idExternalUserList}")
+	@Path("add/participants/{idProjectCard}/{idInternalUserList}/{idExternalUserList}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean addParticipantsAPI(
-			@PathParam("idCard") String idCard,
+			@PathParam("idProjectCard") String idProjectCard,
 			@PathParam("idInternalUserList") List<String> idInList,
 			@PathParam("idExternalUserList") List<String> idExList) {
 		
 		System.out.println("ININ");
-		List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
-		List<String> idInternalUserList = new ArrayList<String>();
-		String temp = "";
-		for(String user : tempInUserList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idInternalUserList.add(temp);
-		}
-		
-		List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
-		List<String> idExternalUserList = new ArrayList<String>();
-		for(String user : tempExUserList) {
-			temp = user.replaceAll("[^a-zA-Z0-9]+","");
-			idExternalUserList.add(temp);
-		}
-		
-		card = cardDAO.getCardByIdCard(idCard);
-		List<String> inList = card.getInternalParticipants();
-		List<String> exList = card.getExternalParticipants();
-		boolean exist = false;
-		for(String idUser : idInternalUserList) {
-			exist = false;
-			for(String eachInList : inList) {
-				if(eachInList.equals(idUser)) {
-					exist = true;
-					break;
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+		if(!idInList.get(0).equals("[]")) {
+			List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
+			List<String> idInternalUserList = new ArrayList<String>();
+			String temp = "";
+			for(String user : tempInUserList) {
+				temp = user.replaceAll("[^a-zA-Z0-9]+","");
+				idInternalUserList.add(temp);
+			}
+			
+			List<String> inList = projectCard.getInternalParticipants();
+			
+			boolean exist = false;
+			for(String idUser : idInternalUserList) {
+				exist = false;
+				for(String eachInList : inList) {
+					if(eachInList.equals(idUser)) {
+						exist = true;
+						break;
+					}
+				}
+				if(!exist) {
+					inList.add(idUser);
 				}
 			}
-			if(!exist) {
-				inList.add(idUser);
-			}
+			
+			projectCard.setInternalParticipants(inList);
+			
 		}
-		for(String idUser : idExternalUserList) {
-			exist = false;
-			for(String eachExList : exList) {
-				if(eachExList.equals(idUser)) {
-					exist = true;
-					break;
+		if(!idExList.get(0).equals("[]")) {
+			String temp = "";
+			List<String> tempExUserList = Arrays.asList(idExList.get(0).split("\\s*,\\s*"));
+			List<String> idExternalUserList = new ArrayList<String>();
+			for(String user : tempExUserList) {
+				temp = user.replaceAll("[^a-zA-Z0-9]+","");
+				idExternalUserList.add(temp);
+			}
+			List<String> exList = projectCard.getExternalParticipants();
+			boolean exist = false;
+			for(String idUser : idExternalUserList) {
+				exist = false;
+				for(String eachExList : exList) {
+					if(eachExList.equals(idUser)) {
+						exist = true;
+						break;
+					}
+				}
+				if(!exist) {
+					exList.add(idUser);
 				}
 			}
-			if(!exist) {
-				exList.add(idUser);
-			}
+			
+			projectCard.setExternalParticipants(exList);
 		}
-		card.setInternalParticipants(inList);
-		card.setExternalParticipants(exList);
-		cardDAO.addParticipantsByIdCard(idCard,card);
+		
+		
+		
+		projectCardDAO.addParticipantsByIdProjectCard(idProjectCard,projectCard);
 		return true;
 	}
 	
 	@POST
-	@Path("update/card/{idCard}/{name}/{description}/{endDate}/{internalParticipants}/{externalParticipants}")
+	@Path("update/project-card/{idProjectCard}/{name}/{description}/{endDate}/{internalParticipants}/{externalParticipants}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean updateCardAPI(
-			@PathParam("idCard") String idCard,
+			@PathParam("idProjectCard") String idProjectCard,
 			@PathParam("name") String name,
 			@PathParam("description") String description,
 			@PathParam("endDate") String endDate,
 			@PathParam("internalParticipants") List<String> internalParticipants,
 			@PathParam("externalParticipants") List<String> externalParticipants) {
 		
-		card = cardDAO.getCardByIdCard(idCard);
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		if(name.equals(""))
-			card.setName("-");
+			projectCard.setName("-");
 		else
-			card.setName(name);
+			projectCard.setName(name);
 		if(description.equals(""))
-			card.setDescription("-");
+			projectCard.setDescription("-");
 		else
-			card.setDescription(description);
+			projectCard.setDescription(description);
 		if(endDate.equals(""))
-			card.setEndDate("-");
+			projectCard.setEndDate("-");
 		else
-			card.setEndDate(endDate);
+			projectCard.setEndDate(endDate);
 		if(internalParticipants.equals(null))
-			card.setInternalParticipants(null);
+			projectCard.setInternalParticipants(null);
 		else
-			card.setInternalParticipants(internalParticipants);
+			projectCard.setInternalParticipants(internalParticipants);
 		if(externalParticipants.equals(null))
-			card.setExternalParticipants(null);
+			projectCard.setExternalParticipants(null);
 		else
-			card.setExternalParticipants(externalParticipants);
+			projectCard.setExternalParticipants(externalParticipants);
 		
-		cardDAO.updateCardByIdCard(idCard, card);
+		projectCardDAO.updateProjectCardByIdProjectCard(idProjectCard, projectCard);
 		return true;
 	}
 	
 	 @GET
-	 @Path("get/all-request/{idUser}")
+	 @Path("get/all-termination-request/{idUser}")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public List<Request> getAllRequestByIdUserAPI(@PathParam("idUser") String idUser) {
-		List<Request> requestList = requestDAO.getAllRequestByIdUser(idUser);
-	 	return requestList;
+	 public List<TerminationRequest> getAllTerminationRequestByIdUserAPI(@PathParam("idUser") String idUser) {
+		List<TerminationRequest> terminationRequestList = terminationRequestDAO.getAllTerminationRequestByIdUser(idUser);
+	 	return terminationRequestList;
 	 }
 	 
 	 @GET
-	 @Path("get/all-request")
+	 @Path("get/all-termination-request")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public List<Request> getAllRequestAPI() {
-	 	return requestDAO.getAllRequest();
+	 public List<TerminationRequest> getAllTerminationRequestAPI() {
+	 	return terminationRequestDAO.getAllTerminationRequest();
 	 }
 
-//	 @GET
-//	 @Path("get/request/{idUser}")
-//	 @Produces(MediaType.APPLICATION_JSON)
-//	 public Request getRequestInfoByIdAPI (@PathParam("idUser") String idUser) {
-//	 	Request request = requestDAO.getRequestInfoByIdUser(idUser);
-//	 	return request;
-//	 }
-
-	 @GET
-	 @Path("approve/request/{idRequest}")
+	 @POST
+	 @Path("approve/request/{projectName}/{projectCardName}")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public boolean approveRequestByIdUserAPI (@PathParam("idRequest") String idRequest) {
+	 public boolean approveTerminationRequestAPI (
+			 @PathParam("projectName") String projectName,
+			 @PathParam("projectCardName") String projectCardName) {
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String approveDate = DATEFORMAT.format(date);
 		
-		requestDAO.approveRequestById(idRequest, approveDate);
+		terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
+		terminationRequestDAO.approveTerminationRequestById(terminationRequest.getIdTerminationRequest(), approveDate);
 	 	return true;
 	 }
 
-	 @GET
-	 @Path("reject/request/{idRequest}")
+	 @POST
+	 @Path("reject/request/{projectName}/{projectCardName}")
 	 @Produces(MediaType.APPLICATION_JSON) 
-	 public boolean rejectRequestByIdAPI (@PathParam("idRequest") String idRequest) {		
-		requestDAO.rejectRequestById(idRequest);
+	 public boolean rejectTerminationRequestAPI (
+			 @PathParam("projectName") String projectName,
+			 @PathParam("projectCardName") String projectCardName) {
+		 terminationRequest = terminationRequestDAO.getTerminationRequestByProjectAndProjectCardName(projectName, projectCardName);
+		 projectCard = projectCardDAO.getProjectCardByIdProjectCard(terminationRequest.getIdProjectCard());
+		 projectCard.setStatus("In progress");
+		 terminationRequestDAO.rejectTerminationRequestById(terminationRequest, projectCard);
 		
 		return true;
 	 }
 
-
 	@GET
-	@Path("get/all-card")
+	@Path("get/all-project-card")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Card> getAllCardAPI() {
-		List<Card> CardList = cardDAO.getAllCard();
-		return  CardList;
+	public List<ProjectCard> getAllCardAPI() {
+		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCard();
+		return projectCardList;
 	}
 	
 	@GET
-	@Path("get/all-card/{idUser}")
+	@Path("get/all-project-card/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Card> getAllCardByUserIdAPI(@PathParam("idUser") String idUser) {
-		List<Card> cardList = cardDAO.getAllCardByIdUserParticipated(idUser);
-		return  cardList;
+	public List<ProjectCard> getAllProjectCardByUserIdAPI(@PathParam("idUser") String idUser) {
+		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCardByIdUserParticipated(idUser);
+		return projectCardList;
 	}
 	
 	@GET
@@ -445,50 +324,17 @@ public class TaskManagementRest {
 		return project;
 	}
 	
-//	@GET
-//	@Path("request/finish/{submitReason}/{idCard}/{idUser}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public boolean finishCardAPI(
-//			@PathParam("submitReason") String submitReason,
-//			@PathParam("idCard") String idCard,
-//			@PathParam("idUser") String idUser
-//			) {
-//		request.setType("finish");
-//		if(approveRequestByIdUserAPI(idUser))
-//			card.setStatus("Done");
-//		else 
-//			rejectRequestByIdUserAPI(idUser);
-//			
-//		return true;
-//	}
-	
-	
-//	@GET
-//	@Path("request/delete/{submitReason}/{idCard}/{idUser}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public boolean deleteCardAPI(
-//			@PathParam("submitReason") String submitReason,
-//			@PathParam("idCard") String idCard,
-//			@PathParam("idUser") String idUser) {
-//		request.setType("delete");
-//		if(approveRequestByIdUserAPI(idUser))
-//			cardDAO.deleteCardByIdCard(idCard);
-//		else
-//			rejectRequestByIdUserAPI(idUser);
-//		return true;
-//	}
-	
 	@GET
-	@Path("get/finish-card/{idUser}")
+	@Path("get/finish-project-card/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Card> getFinishedCardByIdUserAPI(@PathParam("idUser") String idUser) {
-		return cardDAO.getFinishedCardByIdUser(idUser);
+	public List<ProjectCard> getFinishProjectCardByIdUserAPI(@PathParam("idUser") String idUser) {
+		return projectCardDAO.getFinishProjectCardByIdUser(idUser);
 	}
 	
 	@GET
-	@Path("get/department-card/{idUserList}")
+	@Path("get/department-project-card/{idUserList}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Card> getDepartmentCardByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
+	public List<ProjectCard> getDepartmentProjectCardByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
 		List<String> userList = Arrays.asList(idUserList.get(0).split("\\s*,\\s*"));
 		List<String> returnedList = new ArrayList<String>();
 		String temp = "";
@@ -496,7 +342,7 @@ public class TaskManagementRest {
 			temp = user.replaceAll("[^a-zA-Z0-9]+","");
 			returnedList.add(temp);
 		}
-		return cardDAO.getAllCardByIdUserList(returnedList);
+		return projectCardDAO.getAllProjectCardByIdUserList(returnedList);
 	}
 	
 	@GET
@@ -514,10 +360,10 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/count/department-card/{idUserList}")
+	@Path("get/count/department-project-card/{idUserList}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public int getCountDepartmentCardByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
-		return cardDAO.getCountAllCardByIdUserList(idUserList);
+	public int getCountDepartmentProjectCardByIdUserListAPI(@PathParam("idUserList") List<String> idUserList) {
+		return projectCardDAO.getCountAllProjectCardByIdUserList(idUserList);
 	}
 	
 	@GET
@@ -528,48 +374,51 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("request/finish/{idCard}/{reason}/{idRequester}")
+	@Path("request/finish/{idProjectCard}/{reason}/{idRequester}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean requestToFinishCardAPI(
-			@PathParam("idCard") String idCard,
+	public boolean requestToFinishProjectCardAPI(
+			@PathParam("idProjectCard") String idProjectCard,
 			@PathParam("reason") String reason,
 			@PathParam("idRequester") String idRequester){
-		card = cardDAO.getCardByIdCard(idCard);
-		card.setStatus("Request to finish");
-		cardDAO.requestToFinishCard(card);
-		request.setIdCard(idCard);
-		request.setType("Request to finish");
-		request.setIdProject(card.getIdProject());
-		request.setReason(reason);
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+		projectCard.setStatus("Request to finish");
+		projectCard.setSubmitReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String requestDate = DATEFORMAT.format(date);
-		request.setDate(requestDate);
-		request.setIdRequester(idRequester);
-		requestDAO.createRequest(request);
+		projectCard.setFinishDate(requestDate);
+		projectCardDAO.requestToFinishProjectCard(projectCard);
+		terminationRequest.setIdProjectCard(idProjectCard);
+		terminationRequest.setType("Request to finish");
+		terminationRequest.setIdProject(projectCard.getIdProject());
+		terminationRequest.setIdRequester(idRequester);
+		terminationRequest.setReason(reason);
+		terminationRequest.setDate(requestDate);
+		terminationRequestDAO.createTerminationRequest(terminationRequest);
 		return true;
 	}
 	
 	@POST
-	@Path("request/delete/{idCard}/{reason}/{idRequester}")
+	@Path("request/delete/{idProjectCard}/{reason}/{idRequester}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean requestToDeleteCardAPI(
-			@PathParam("idCard") String idCard,
+	public boolean requestToDeleteProjectCardAPI(
+			@PathParam("idProjectCard") String idProjectCard,
 			@PathParam("reason") String reason,
 			@PathParam("idRequester") String idRequester){
-		card = cardDAO.getCardByIdCard(idCard);
-		card.setStatus("Request to delete");
-		cardDAO.requestToDeleteCard(card);
-		request.setIdCard(idCard);
-		request.setType("Request to delete");
-		request.setIdProject(card.getIdProject());
-		request.setReason(reason);
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+		projectCard.setStatus("Request to delete");
+		projectCard.setSubmitReason(reason);
+		projectCardDAO.requestToDeleteProjectCard(projectCard);
+		terminationRequest.setIdProjectCard(idProjectCard);
+		terminationRequest.setType("Request to delete");
+		terminationRequest.setIdProject(projectCard.getIdProject());
+		terminationRequest.setIdRequester(idRequester);
+		terminationRequest.setReason(reason);
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String requestDate = DATEFORMAT.format(date);
-		request.setDate(requestDate);
-		request.setIdRequester(idRequester);
-		requestDAO.createRequest(request);
+		terminationRequest.setDate(requestDate);
+		terminationRequestDAO.createTerminationRequest(terminationRequest);
 		return true;
 	}
 	
@@ -589,10 +438,10 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("delete/card/{idCard}")
+	@Path("delete/project-card/{idProjectCard}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteCardByIdAPI(@PathParam("idCard") String idCard) {
-		cardDAO.deleteCardById(idCard);
+	public boolean deleteProjectCardByIdAPI(@PathParam("idProjectCard") String idProjectCard) {
+		projectCardDAO.deleteProjectCardById(idProjectCard);
 		return true;
 	}
 	
@@ -605,44 +454,62 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("delete/all-card")
+	@Path("delete/all-project-card")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteAllCardAPI() {
-		cardDAO.deleteAllCard();
+	public boolean deleteAllProjectCardAPI() {
+		projectCardDAO.deleteAllProjectCard();
 		return true;
 	}
 	
-	@GET
-	@Path("get/idDepartment/card/{idCard}")
+	@POST
+	@Path("delete/all-request")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getIdDepartmentByIdCardAPI(@PathParam("idCard") String idCard) {
-		System.out.println(idCard);
-		String idDepartment = projectDAO.getIdDepartmentByIdCard(idCard);
+	public boolean deleteAllRequestAPI() {
+		terminationRequestDAO.deleteAllTerminationRequest();
+		return true;
+	}
+	
+	
+	@GET
+	@Path("get/idDepartment/project-card/{idProjectCard}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getIdDepartmentByIdProjectCardAPI(@PathParam("idProjectCard") String idProjectCard) {
+		System.out.println(idProjectCard);
+		String idDepartment = projectDAO.getIdDepartmentByIdProjectCard(idProjectCard);
 		System.out.println("In get idDepartment");
 		System.out.println(idDepartment);
 		return idDepartment;
 	}
 	
 	@GET
-	@Path("get/card/{idCard}")
+	@Path("get/project-card/{idProjectCard}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Card getCardByIdCardAPI(@PathParam("idCard") String idCard) {
-		return cardDAO.getCardByIdCard(idCard);
+	public ProjectCard getProjectCardByIdProjectCardAPI(@PathParam("idProjectCard") String idProjectCard) {
+		return projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 	}
 	
 	@POST
-	@Path("finish/card/{idCard}")
+	@Path("finish/project-card/{idProjectCard}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean finishCardByIdCardAPI(@PathParam("idCard") String idCard) {
-		card = cardDAO.getCardByIdCard(idCard);
-		card.setStatus("Finish");
+	public boolean finishProjectCardByIdProjectCardAPI(@PathParam("idProjectCard") String idProjectCard) {
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+		projectCard.setStatus("Finish");
 		Date date = new Date();
 		date = Calendar.getInstance().getTime();  
 		String finishDate = DATEFORMAT.format(date);
 		System.out.println(finishDate);
-		card.setFinishDate(finishDate);
-		cardDAO.setFinish(idCard,card);
+		projectCard.setFinishDate(finishDate);
+		projectCardDAO.setFinish(idProjectCard,projectCard);
 		return true;
+	}
+	
+	@GET
+	@Path("get/project-card/{projectName}/{projectCardName}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ProjectCard getProjectCardByProjectAndProjectCardNameAPI(
+			@PathParam("projectName") String projectName,
+			@PathParam("projectCardName") String projectCardName) {
+		return projectCardDAO.getProjectCardByProjectAndProjectCardName(projectName, projectCardName);
 	}
 	
 	

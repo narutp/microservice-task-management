@@ -1,18 +1,7 @@
 <template lang="html">
   <div class="update-task--container">
     <div>
-      <el-dialog title = "Update Project" :visible.sync="dialogClicked">
-        <div class="columns">
-          <div class="column" align="right">
-            <button class="button no-border">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button class="button no-border">
-              <i class="fa fa-close" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
+      <el-dialog title = "Update Project" :visible.sync="updateProjectList.dialogClicked">
         <el-row>
           <div align="left">
             Project Name
@@ -21,7 +10,7 @@
 
         <el-row>
           <div class="update-project--value">
-            <input v-model="projectName" class="input title-field" type="text">
+            <input v-model="updateProjectList.projectName" class="input title-field" type="text">
           </div>
         </el-row>
 
@@ -33,7 +22,7 @@
 
         <el-row>
           <div class="update-project--value">
-            <textarea v-model="projectDescription" class="textarea"></textarea>
+            <textarea v-model="updateProjectList.projectDescription" class="textarea"></textarea>
           </div>
         </el-row>
 
@@ -54,11 +43,11 @@ export default {
     return {
     }
   },
-  props: ['projectName', 'dialogClicked', 'projectDescription', 'projectId'],
+  props: ['updateProjectList'],
   methods: {
     updateProject () {
       let self = this
-      Axios.post(`http://localhost:8091/edit/project/${this.projectId}/${this.projectName}/${this.projectDescription}`).then(function (response) {
+      Axios.post(`http://localhost:8091/edit/project/${this.updateProjectList.projectId}/${this.updateProjectList.projectName}/${this.updateProjectList.projectDescription}`).then(function (response) {
         self.$router.go({
           path: '/project-management',
           force: true

@@ -4,6 +4,7 @@
       <div style="font-size: 18px;">
         <b>Department {{department}}</b>
       </div>
+      <br>
       <b-table
           class="task-management--table"
           :data="tableData"
@@ -62,7 +63,7 @@ import Axios from 'axios'
 export default {
   data () {
     return {
-      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2', 'idUser': 'Boo', 'status': 'hello' }],
+      tableData: [{ 'no': '', 'idProject': '', 'name': '', 'startDate': '', 'endDate': '', 'idUser': '', 'status': '' }],
       department: '',
       arrLength: ''
     }
@@ -72,7 +73,7 @@ export default {
     // get user list by sending department name of that user
     let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${this.department}`)
 
-    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-card/${userListResponse.data}`)
+    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card/${userListResponse.data}`)
     console.log(departmentCardResponse)
     this.tableData = departmentCardResponse.data
     this.arrLength = departmentCardResponse.data.length

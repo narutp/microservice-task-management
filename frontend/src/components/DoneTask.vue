@@ -58,7 +58,7 @@ export default {
   },
   async mounted () {
     let idUser = localStorage.getItem('user_userId')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/finish-card/${idUser}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/finish-project-card/${idUser}`)
     console.log(cardResponse)
     this.tableData = cardResponse.data
     this.arrLength = cardResponse.data.length

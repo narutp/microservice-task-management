@@ -15,13 +15,13 @@ import com.mongodb.WriteResult;
 import database.dao.DepartmentDAO;
 import database.dao.PositionDAO;
 import database.dao.UserDAO;
-import database.dao.UserLogDAO;
+import database.dao.UserHistoryDAO;
 import main.model.Department;
 import main.model.Position;
 import main.model.User;
-import main.model.UserLog;
+import main.model.UserHistory;
 
-public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLogDAO {
+public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHistoryDAO {
 	
 	private MongoOperations mongoOps;
 	private static String collection = MongoDBMain.getUserCollection();
@@ -59,6 +59,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	public void createUser(User user) {
 		collection = MongoDBMain.getUserCollection();
 		System.out.println("DAO: Add new user");
+		
 		this.mongoOps.insert(user, collection);
 	}
 
@@ -217,17 +218,17 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 	}
 
 	@Override
-	public List<UserLog> getAllUserLog() {
-		collection = MongoDBMain.getUserLogCollection();
-		return this.mongoOps.findAll(UserLog.class, collection);
+	public List<UserHistory> getAllUserHistory() {
+		collection = MongoDBMain.getUserHistoryCollection();
+		return this.mongoOps.findAll(UserHistory.class, collection);
 	}
 
 	@Override
-	public List<UserLog> getAllUserLogByUserId(String userId) {
-		collection = MongoDBMain.getUserLogCollection();
+	public List<UserHistory> getAllUserHistoryByIdUser(String idUser) {
+		collection = MongoDBMain.getUserHistoryCollection();
 		Query query = new Query();
-		query.addCriteria(Criteria.where("idUser").is(userId));
-		return this.mongoOps.find(query, UserLog.class, collection);
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		return this.mongoOps.find(query, UserHistory.class, collection);
 	}
 
 	@Override
@@ -329,6 +330,20 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserLo
 			idList.add(getUserByName(name).getIdUser());
 		}
 		return idList;
+	}
+
+	@Override
+	public void createUserHistory(UserHistory userHistory) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		this.mongoOps.insert(userHistory, collection);
+	}
+
+	@Override
+	public UserHistory getUserHistoryByIdUser(String idUser) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		return this.mongoOps.findOne(query, UserHistory.class, collection);
 	}
 
 }

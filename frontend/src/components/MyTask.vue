@@ -73,13 +73,13 @@ export default {
       this.$router.replace({ path: '/create-card' })
     },
     updateCard (card) {
-      localStorage.setItem('card_update', card.idCard)
+      localStorage.setItem('card_update', card.idProjectCard)
 
       this.$router.replace({ path: '/update-card' })
     }
   },
   async mounted () {
-    let cardResponse = await Axios.get(`http://localhost:8091/get/all-card/`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/`)
     this.tableData = cardResponse.data
     this.arrLength = cardResponse.data.length
 
