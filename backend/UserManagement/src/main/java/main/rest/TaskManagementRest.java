@@ -94,6 +94,9 @@ public class TaskManagementRest {
 		user.setUsername(username);
 		user.setPassword(password);
 		userDAO.createUser(user);
+		userHistory.setIdUser(user.getIdUser());
+		userHistory.setIdProjectCards(new ArrayList<String>());
+		userHistoryDAO.createUserHistory(userHistory);
 		System.out.println("Set Id: " + user.getIdUser());
 		System.out.println("Set Name: " + user.getName());
 		System.out.println("Set Birth: " + user.getPassword());
@@ -337,14 +340,19 @@ public class TaskManagementRest {
 	@Path("get/idUserList/nameList/{nameList}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
-		List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
-		List<String> returnedList = new ArrayList<String>();
-		String temp = "";
-		for(String user : userList) {
-			temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
-			returnedList.add(temp);
+		System.out.println(nameList);
+		if(!nameList.get(0).equals("[]")) {
+			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for(String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
+				returnedList.add(temp);
+			}
+			return userDAO.getIdUserListByNameList(returnedList);
 		}
-		return userDAO.getIdUserListByNameList(returnedList);
+		return new ArrayList<String>();
+		
 	}
 	
 	
