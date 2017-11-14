@@ -147,15 +147,24 @@ export default {
       console.log(this.internalAddList)
       console.log(this.externalAddList)
 
+      let self = this
       let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
       let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
       console.log(idExternalUserListResponse.data)
       let response = await Axios.post(`http://localhost:8091/add/participants/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
       if (response.data === true) {
-        this.$router.replace({ path: '/create-card' })
+        let historyResponse = await Axios.post(`http://localhost:8090/add/history/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
+        if (historyResponse.data === true) {
+          self.$router.replace({ path: '/create-card' })
+        } else {
+          alert('failed to add history')
+        }
       } else {
-        alert('failed')
+        alert('failed to add participants')
       }
+    },
+    async addHistory () {
+
     }
   }
 }

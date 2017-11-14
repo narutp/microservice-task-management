@@ -239,7 +239,7 @@ export default {
       }
     }
     return {
-      tableData: [{ 'no': '', 'idProject': '', 'idProjectCard': '', 'startDate': '', 'endDate': '' }],
+      tableData: [{ 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' }],
       index: true,
       form: {
         name: '',
@@ -311,6 +311,11 @@ export default {
       this.index = false
       let idUser = localStorage.getItem('user_userId')
       let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history/${idUser}`)
+      // let arrLength = userHistoryResponse.data.idProjectCards.length
+      this.tableData = userHistoryResponse.data
+      // for (let i = 0; i < arrLength; i++) {
+      //   console.log(arrLength)
+      // }
       console.log(userHistoryResponse.data)
     },
     async setUser () {
