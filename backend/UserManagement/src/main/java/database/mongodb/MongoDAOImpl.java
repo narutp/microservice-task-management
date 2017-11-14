@@ -346,4 +346,20 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		return this.mongoOps.findOne(query, UserHistory.class, collection);
 	}
 
+	@Override
+	public void addIdProjectCard(String idUser, String idProjectCard) {
+		System.out.println(idUser);
+		UserHistory userHistory = getUserHistoryByIdUser(idUser);
+		List<String> list = userHistory.getIdProjectCards();
+		list.add(idProjectCard);
+		userHistory.setIdProjectCards(list);
+		
+		collection = MongoDBMain.getUserHistoryCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		Update update = new Update();
+		update.set("idProjectCards", userHistory.getIdProjectCards());
+		this.mongoOps.findAndModify(query, update, UserHistory.class, collection);
+	}
+
 }

@@ -151,8 +151,8 @@ public class TaskManagementRest {
 	@GET
 	@Path("get/user-history/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserHistory> getAllUserHistoryByUserIdAPI(@PathParam("idUser") String idUser) {
-		return userHistoryDAO.getAllUserHistoryByIdUser(idUser);
+	public UserHistory getUserHistoryByIdUserAPI(@PathParam("idUser") String idUser) {
+		return userHistoryDAO.getUserHistoryByIdUser(idUser);
 	}
 	
 	@GET
@@ -357,6 +357,47 @@ public class TaskManagementRest {
 		return list;
 		
 	}
+	
+	@POST
+	@Path("create/user-history/{idProjectCard}/{idInternalList}/{idExternalList}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean createUserHistoryByIdUserList(
+			@PathParam("idProjectCard") String idProjectCard,
+			@PathParam("idInternalList") List<String> idInternalList,
+			@PathParam("idExternalList") List<String> idExternalList) {
+		List<String> idUserList = new ArrayList<String>();
+		System.out.println(idInternalList.get(0));
+		if(!idInternalList.get(0).equals("null")) {
+			List<String> userList = Arrays.asList(idInternalList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for(String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
+				returnedList.add(temp);
+			}
+			for(String id : returnedList) {
+				idUserList.add(id);
+			}
+		}
+		if(!idExternalList.get(0).equals("null")) {
+			List<String> userList = Arrays.asList(idExternalList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for(String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+","");
+				returnedList.add(temp);
+			}
+			for(String id : returnedList) {
+				idUserList.add(id);
+			}
+		}
+		for(String idUser : idUserList) {
+			System.out.println(idUser);
+			userHistoryDAO.addIdProjectCard(idUser, idProjectCard);
+		}
+		return true;
+	}
+	
 	
 	
 	
