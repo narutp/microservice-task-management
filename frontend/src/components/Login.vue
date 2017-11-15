@@ -59,7 +59,7 @@ export default {
     },
     login () {
       let self = this
-      Axios.get(`http://localhost:8090/login/${this.username}/${this.password}`).then(function (response) {
+      Axios.get(`http://localhost:8090/login?username=${this.username}&password=${this.password}`).then(function (response) {
         if (response.data === true) {
           // self.setUser(self.username)
           self.setUser(self.username)

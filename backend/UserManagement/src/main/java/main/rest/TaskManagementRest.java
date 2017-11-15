@@ -57,9 +57,9 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("login/{username}/{password}")
+	@Path("login")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean loginAPI(@PathParam("username") String username, @PathParam("password") String password) {
+	public boolean loginAPI(@QueryParam("username") String username, @QueryParam("password") String password) {
 		System.out.println("GET: /name/" + username + password);
 		boolean check = userDAO.checkLogin(username, password);
 		System.out.println(check);
