@@ -67,12 +67,12 @@ public class TaskManagementRest {
 	}
 
 	@POST
-	@Path("register/{name}/{birth}/{phone}/{department}/{position}/{email}/{username}/{password}")
+	@Path("register")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean registerAPI(@PathParam("name") String name, @PathParam("birth") String birth,
-			@PathParam("phone") String phone, @PathParam("department") String department,
-			@PathParam("position") String position, @PathParam("email") String email,
-			@PathParam("username") String username, @PathParam("password") String password) {
+	public boolean registerAPI(@QueryParam("name") String name, @QueryParam("birth") String birth,
+			@QueryParam("phone") String phone, @QueryParam("department") String department,
+			@QueryParam("position") String position, @QueryParam("email") String email,
+			@QueryParam("username") String username, @QueryParam("password") String password) {
 		user.setName(name);
 
 		System.out.println("BIRTH : " + birth);
