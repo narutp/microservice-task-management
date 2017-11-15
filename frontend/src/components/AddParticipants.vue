@@ -15,10 +15,6 @@
     <!--  Internal Participants -->
     <div class="columns">
       <div class="column">
-        <input v-model="temp" class="input" type="text" placeholder="Card name">
-      </div>
-
-      <div class="column">
         <section class="my-task-table--body">
           <b-select v-model="internalUser" placeholder="Select a name">
             <option
@@ -39,10 +35,6 @@
 
     <!--  external participants  -->
     <div class="columns">
-      <div class="column">
-        <input v-model="temp2" class="input" type="text" placeholder="Card name">
-      </div>
-
       <div class="column">
         <section class="my-task-table--body">
           <b-select v-model="externalUser" placeholder="Select external">
@@ -96,8 +88,6 @@ export default {
     return {
       isPaginated: true,
       isPaginationSimple: false,
-      temp: '',
-      temp2: '',
       internalUser: '',
       internalUserList: [],
       internalAddList: [],
@@ -106,15 +96,18 @@ export default {
       externalAddList: []
     }
   },
-  // TODO can't get data in select at first
   async mounted () {
     let idDepartment = localStorage.getItem('id_department_owner_card')
     let internalResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
+    // can now get list at once by set all list array to equal to data that recieve first
+    // then set it (replace) it to equal to list name
+    this.internalUserList = internalResponse.data
     for (let i = 0; i < internalResponse.data.length; i++) {
       this.internalUserList[i] = internalResponse.data[i].name
     }
 
     let externalResponse = await Axios.get(`http://localhost:8090/get/external-user-list/department/${idDepartment}`)
+    this.externalUserList = externalResponse.data
     for (let j = 0; j < externalResponse.data.length; j++) {
       this.externalUserList[j] = externalResponse.data[j].name
     }
