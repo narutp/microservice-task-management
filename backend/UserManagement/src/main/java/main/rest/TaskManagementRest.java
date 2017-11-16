@@ -57,20 +57,26 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("login/{username}/{password}")
+	@Path("login")
 	@Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
 	public boolean loginAPI(
 			@PathParam("username") String username, 
 			@PathParam("password") String password ){
 		System.out.println("GET: /name/"+username+password);
+=======
+	public boolean loginAPI(@QueryParam("username") String username, @QueryParam("password") String password) {
+		System.out.println("GET: /name/" + username + password);
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		boolean check = userDAO.checkLogin(username, password);
 		System.out.println(check);
 		return check;
 	}
 	
 	@POST
-	@Path("register/{name}/{birth}/{phone}/{department}/{position}/{email}/{username}/{password}")
+	@Path("register")
 	@Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
 	public boolean registerAPI(
 			@PathParam("name") String name, 
 			@PathParam("birth") String birth, 
@@ -80,6 +86,12 @@ public class TaskManagementRest {
 			@PathParam("email") String email, 
 			@PathParam("username") String username, 
 			@PathParam("password") String password ){
+=======
+	public boolean registerAPI(@QueryParam("name") String name, @QueryParam("birth") String birth,
+			@QueryParam("phone") String phone, @QueryParam("department") String department,
+			@QueryParam("position") String position, @QueryParam("email") String email,
+			@QueryParam("username") String username, @QueryParam("password") String password) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		user.setName(name);
 			
 		System.out.println("BIRTH : " + birth);
@@ -110,24 +122,23 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("check/email/{email}")
+	@Path("check/email")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean checkEmailAPI(@PathParam("email") String email) {
+	public boolean checkEmailAPI(@QueryParam("email") String email) {
 		return userDAO.isEmailExist(email);
 	}
 	
 	@GET
-	@Path("check/username/{username}")
+	@Path("check/username")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean checkUsernameAPI(@PathParam("username") String username) {
-		System.out.println("aefhkeahfahfaeilefhail");
+	public boolean checkUsernameAPI(@QueryParam("username") String username) {
 		return userDAO.isUsernameExist(username);
 	}
 	
 	@GET
-	@Path("get/user/id/{id}")
+	@Path("get/user")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByIdAPI(@PathParam("id") String id) {
+	public User getUserByIdAPI(@QueryParam("id") String id) {
 		return userDAO.getUserById(id);
 	}
 	
@@ -140,19 +151,28 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("check/password/{id}/{password}")
+	@Path("check/password")
 	@Produces(MediaType.APPLICATION_JSON)
+<<<<<<< HEAD
 	public boolean checkPasswordByIdAPI(
 			@PathParam("id") String id, 
 			@PathParam("password") String password ) {
+=======
+	public boolean checkPasswordByIdAPI(@QueryParam("id") String id, @QueryParam("password") String password) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		return userDAO.checkPasswordById(id, password);
 	}
 	
 	@GET
-	@Path("get/user-history/{idUser}")
+	@Path("get/user-history")
 	@Produces(MediaType.APPLICATION_JSON)
+<<<<<<< HEAD
 	public List<UserHistory> getAllUserHistoryByUserIdAPI(@PathParam("idUser") String idUser) {
 		return userHistoryDAO.getAllUserHistoryByIdUser(idUser);
+=======
+	public UserHistory getUserHistoryByIdUserAPI(@QueryParam("idUser") String idUser) {
+		return userHistoryDAO.getUserHistoryByIdUser(idUser);
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 	}
 	
 	@GET
@@ -163,8 +183,9 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("edit/user/{username}/{name}/{birth}/{phone}/{department}/{position}/{email}/{password}")
+	@Path("edit/user")
 	@Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
 	public boolean editUserAPI(
 			@PathParam("username") String username,
 			@PathParam("name") String name, 
@@ -174,6 +195,12 @@ public class TaskManagementRest {
 			@PathParam("position") String position, 
 			@PathParam("email") String email,
 			@PathParam("password") String password ){
+=======
+	public boolean editUserAPI(@QueryParam("username") String username, @QueryParam("name") String name,
+			@QueryParam("birth") String birth, @QueryParam("phone") String phone,
+			@QueryParam("department") String department, @QueryParam("position") String position,
+			@QueryParam("email") String email, @QueryParam("password") String password) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		user = userDAO.getUserByUsername(username);
 		user.setName(name);
 		user.setBirthdate(birth);
@@ -201,9 +228,13 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("create/department/{name}")
+	@Path("create/department")
 	@Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
 	public boolean createDepartmentAPI(@PathParam("name") String name){
+=======
+	public boolean createDepartmentAPI(@QueryParam("name") String name) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		department.setName(name);
 		departmentDAO.createDepartment(department);
 		System.out.println("ID : " + department.getIdDepartment());
@@ -212,9 +243,13 @@ public class TaskManagementRest {
 	}
 	
 	@POST
-	@Path("create/position/{name}")
+	@Path("create/position")
 	@Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
 	public boolean createPositionAPI(@PathParam("name") String name){
+=======
+	public boolean createPositionAPI(@QueryParam("name") String name) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 		position.setName(name);
 		positionDAO.createPosition(position);
 		System.out.println("ID : " + position.getIdPosition());
@@ -239,69 +274,69 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("delete-department/{name}")
+	@Path("delete/department")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteDepartmentAPI(@PathParam("name") String name) {
+	public boolean deleteDepartmentAPI(@QueryParam("name") String name) {
 		departmentDAO.deleteDepartment(name);
 		return true;
 	}
 	
 	@GET
-	@Path("delete-position/{name}")
+	@Path("delete/position")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deletePositionAPI(@PathParam("name") String name) {
+	public boolean deletePositionAPI(@QueryParam("name") String name) {
 		positionDAO.deletePosition(name);
 		return true;
 	}
 	
 	@GET
-	@Path("get/user/username/{username}")
+	@Path("get/user")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsernameAPI(@PathParam("username") String username) {
+	public User getUserByUsernameAPI(@QueryParam("username") String username) {
 		return userDAO.getUserByUsername(username);
 	}
 	
 	@GET
-	@Path("get/idUser/department/{departmentName}")
+	@Path("get/idUser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getIdUserListByDepartmentNameAPI(@PathParam("departmentName") String departmentName) {
+	public List<String> getIdUserListByDepartmentNameAPI(@QueryParam("departmentName") String departmentName) {
 		return userDAO.getIdUserListByDepartmentName(departmentName);
 	}
 	
 	@POST
-	@Path("set/manager/{username}")
+	@Path("set/manager")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean setManagerByUsernameAPI(@PathParam("username") String username) {
+	public boolean setManagerByUsernameAPI(@QueryParam("username") String username) {
 		user = userDAO.getUserByUsername(username);
 		userDAO.setManagerByUser(user);
 		return true;
 	}
 	
 	@GET
-	@Path("get/internal-user-list/department/{idDepartment}")
+	@Path("get/internal-user-list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getInternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+	public List<User> getInternalUserListByIdDepartmentAPI(@QueryParam("idDepartment") String idDepartment) {
 		return userDAO.getInternalUserListByIdDepartment(idDepartment);
 	}
 	
 	@GET
-	@Path("get/external-user-list/department/{idDepartment}")
+	@Path("get/external-user-list")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getExternalUserListByIdDepartmentAPI(@PathParam("idDepartment") String idDepartment) {
+	public List<User> getExternalUserListByIdDepartmentAPI(@QueryParam("idDepartment") String idDepartment) {
 		return userDAO.getExternalUserListByIdDepartment(idDepartment);
 	}
 	
 	@GET
-	@Path("get/department/id/{id}")
+	@Path("get/department")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Department getDepartmentByIdAPI(@PathParam("id") String id) {
+	public Department getDepartmentByIdAPI(@QueryParam("id") String id) {
 		return departmentDAO.getDepartmentById(id);
 	}
 	
 	@GET
-	@Path("get/position/id/{id}")
+	@Path("get/position")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Position getPositionById(@PathParam("id") String id) {
+	public Position getPositionById(@QueryParam("id") String id) {
 		return positionDAO.getPositionById(id);
 	}
 	
@@ -330,18 +365,24 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/position/name/{name}")
+	@Path("get/position")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Position getPositionByNameAPI(@PathParam("name") String name) {
+	public Position getPositionByNameAPI(@QueryParam("name") String name) {
 		return positionDAO.getPositionByName(name);
 	}
 	
 	@GET
-	@Path("get/idUserList/nameList/{nameList}")
+	@Path("get/idUserList")
 	@Produces(MediaType.APPLICATION_JSON)
+<<<<<<< HEAD
 	public List<String> getIdUserListByNameListAPI(@PathParam("nameList") List<String> nameList) {
 		System.out.println(nameList);
 		if(!nameList.get(0).equals("[]")) {
+=======
+	public List<String> getIdUserListByNameListAPI(@QueryParam("nameList") List<String> nameList) {
+		System.out.println(nameList.get(0));
+		if (!nameList.get(0).equals("null")) {
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 			List<String> userList = Arrays.asList(nameList.get(0).split("\\s*,\\s*"));
 			List<String> returnedList = new ArrayList<String>();
 			String temp = "";
@@ -351,8 +392,55 @@ public class TaskManagementRest {
 			}
 			return userDAO.getIdUserListByNameList(returnedList);
 		}
+<<<<<<< HEAD
 		return new ArrayList<String>();
 		
+=======
+		System.out.println("Set Blank");
+		List<String> list = new ArrayList<String>();
+		list.add("null");
+		return list;
+
+	}
+
+	@POST
+	@Path("add/history")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean addHistoryByIdUserList(@QueryParam("idProjectCard") String idProjectCard,
+			@QueryParam("idInternalList") List<String> idInternalList,
+			@QueryParam("idExternalList") List<String> idExternalList) {
+		List<String> idUserList = new ArrayList<String>();
+		System.out.println(idInternalList.get(0));
+		if (!idInternalList.get(0).equals("null")) {
+			List<String> userList = Arrays.asList(idInternalList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for (String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+", "");
+				returnedList.add(temp);
+			}
+			for (String id : returnedList) {
+				idUserList.add(id);
+			}
+		}
+		if (!idExternalList.get(0).equals("null")) {
+			List<String> userList = Arrays.asList(idExternalList.get(0).split("\\s*,\\s*"));
+			List<String> returnedList = new ArrayList<String>();
+			String temp = "";
+			for (String user : userList) {
+				temp = user.replaceAll("[^.a-zA-Z0-9 ]+", "");
+				returnedList.add(temp);
+			}
+			for (String id : returnedList) {
+				idUserList.add(id);
+			}
+		}
+		for (String idUser : idUserList) {
+			System.out.println(idUser);
+			userHistoryDAO.addIdProjectCard(idUser, idProjectCard);
+		}
+		return true;
+>>>>>>> 38a5ad793d724c6d7269765f012a023732217cce
 	}
 	
 	

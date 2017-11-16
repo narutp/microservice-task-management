@@ -204,9 +204,12 @@ export default {
       this.$router.replace({ path: 'my-project' })
     }
   },
-  // TODO can't get all project at once
   async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+
+    // can now get project at once by set all project array to equal to data that recieve first
+    // then set it to equal to project name
+    this.allProject = response.data
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
@@ -214,7 +217,6 @@ export default {
     // get card to show participants inside the card
     let idCard = localStorage.getItem('id_create_card')
     let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${idCard}`)
-    console.log(cardResponse.data)
 
     // get arr length of both internal and external user in a card to find their names
     this.internalArrLength = cardResponse.data.internalParticipants.length
