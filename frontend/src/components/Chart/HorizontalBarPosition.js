@@ -1,5 +1,4 @@
 import {HorizontalBar} from 'vue-chartjs'
-import Axios from 'axios'
 
 export default {
   extends: HorizontalBar,
@@ -17,19 +16,15 @@ export default {
       }
     }
   },
-  async mounted () {
-    let positionArray = ['Professor', 'Project Manager', 'Student', 'Intern']
-    let response = await Axios.get(`http://localhost:8090/get/all-position`)
-    this.datacollection.labels = response.data
-    this.arrLength = response.data.length
-    for (let i = 0; i < this.arrLength; i++) {
-      let id = response.data[i].idDepartment
-      // position-list in each department
-      let numUserResponse = await Axios.get(`http://localhost:8090/get/position-list/department/${id}`)
-      this.datacollection.labels[i] = positionArray[i]
-      this.datacollection.datasets[0].data[i] = numUserResponse.data.length
-      // console.log(this.datacollection.datasets[0].data[i])
-    }
+  mounted () {
     this.renderChart(this.datacollection, {responsive: true})
   }
 }
+
+// export default {
+//   extends: HorizontalBar,
+//   props: ['data', 'options'],
+//   mounted () {
+//     this.renderChart(this.data, this.options)
+//   }
+// }
