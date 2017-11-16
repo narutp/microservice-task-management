@@ -9,8 +9,20 @@
       width="100%"
       :before-close="handleClose">
       <div class="in-modal-mask">
-        <div v-for="item in items" class="small-chart">
-          <bar-chart :data="projectBarChart"></bar-chart>
+        <!-- <div v-for="item in items" class="small-chart">
+          <bar-chart :data="items[index]"></bar-chart>
+        </div> -->
+        <div class="small-chart">
+          <bar-chart :data="items[0]"></bar-chart>
+        </div>
+        <div class="small-chart">
+          <bar-chart :data="items[1]"></bar-chart>
+        </div>
+        <div class="small-chart">
+          <bar-chart :data="items[2]"></bar-chart>
+        </div>
+        <div class="small-chart">
+          <bar-chart :data="items[3]"></bar-chart>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -28,30 +40,57 @@ export default {
     return {
       dialogVisible: false,
       userColumnChart: [{'name': '', 'numUser': 0}],
-      items: [
-        {'name': '', 'idDepartment': 0},
-        {'name': '', 'idDepartment': 0}
-      ],
-      projectBarChart: [{'name': '', 'numUser': 0}]
+      items: [],
+      positionBarChart: []
     }
   },
   async mounted () {
     // Department
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
-    console.log(response)
+    // console.log(response)
     this.arrLength = response.data.length
     var datasets = []
+    var datasets2 = []
+    var dataCollections = []
+
     for (let i = 0; i < this.arrLength; i++) {
       let data = []
-      console.log('data: ' + data)
+      // console.log('data: ' + data)
       let departmentName = response.data[i].name
-      console.log('id : ' + departmentName)
+      // console.log('id : ' + departmentName)
       let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
-      console.log(numUserResponse)
+      // console.log(numUserResponse)
       data.push(departmentName, numUserResponse.data.length)
       datasets.push(data)
+      // console.log(datasets)
     }
     this.userColumnChart = datasets
+
+    let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
+    let c = 0
+    for (let j = 0; j < this.arrLength; j++) {
+      let positionResponse = await Axios.get(`http://localhost:8090/get/all-position`)
+      this.positionLength = positionResponse.data.length
+      for (let i = 0; i < this.positionLength; i++) {
+        let data = []
+        // console.log('data: ' + data)
+        let positionName = positionResponse.data[i].name
+        // console.log('position : ' + positionName)
+        // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
+        // console.log(numPositionResponse)
+        data.push(positionName, numRandom[c])
+        c += 1
+        // console.log(data)
+        datasets2.push(data)
+        // console.log(datasets2)
+      }
+      // console.log('check----------datasets2')
+      // console.log(datasets2)
+      // this.items.push(datasets2)
+      dataCollections.push(datasets2)
+      datasets2 = []
+    }
+    this.items = dataCollections
   },
   methods: {
   },
