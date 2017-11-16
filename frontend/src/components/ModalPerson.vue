@@ -10,7 +10,9 @@
       :before-close="handleClose">
       <div class="in-modal-mask">
         <div v-for="n in 4" class="small-chart">
+          <span> Department {{departmentList[n-1]}}</span>
           <bar-chart :data="positionBarChart[n-1]"></bar-chart>
+          <br>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -27,7 +29,8 @@ export default {
     return {
       dialogVisible: false,
       userColumnChart: [{'name': '', 'numUser': 0}],
-      positionBarChart: []
+      positionBarChart: [],
+      departmentList: []
     }
   },
   async mounted () {
@@ -43,6 +46,7 @@ export default {
       let data = []
       // console.log('data: ' + data)
       let departmentName = response.data[i].name
+      this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
       let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
       // console.log(numUserResponse)
@@ -82,10 +86,9 @@ export default {
 <style scoped>
   .small-chart {
     display: inline-block;
-    width: 250px;
+    width: 300px;
   }
   .modal--container {
     text-align: center;
-    width: 600px;
   }
 </style>
