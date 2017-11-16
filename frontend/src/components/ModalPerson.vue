@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content" align="center">
     <div class="modal-mask" @click="dialogVisible = true">
-      <bar-participant> </bar-participant>
+      <column-chart :data="tableUserData"></column-chart>
     </div>
     <el-dialog
       title="Position from Each department"
@@ -10,15 +10,7 @@
       :before-close="handleClose">
       <div class="in-modal-mask">
         <div v-for="item in items" class="small-chart">
-          <span> {{item.name}} </span>
           <horizontal-bar-position> </horizontal-bar-position>
-          <!-- <horizontal-bar-position
-            :labels="['Professor', 'Project Manager', 'Student', 'Intern']",
-            :data="tableUserData"
-            :options="{responsive: false, maintainAspectRatio: false}"
-            :width="250"
-            :height="200"
-          > </horizontal-bar-position> -->
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -36,30 +28,25 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      items: [
-        { name: 'Department A' }
-      ],
-      tableUserData: [{ 'name': 'DapartmentName', 'numUser': 'Internal' }]
+      tableUserData: [{'name': '', 'idDepartment': 0}]
     }
   },
   async mounted () {
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
-    this.items = response.data
-    // this.arrLength = response.data.length
-    // for (let i = 0; i < this.arrLength; i++) {
-    //   let id = response.data[i].idDepartment
-    //   let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
-    //   // get all-project from idDepartment
-    //   let numProjectResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
-    //   // get all-task-card from idDepartment
-    //   let numTaskCardResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
-    //   // console.log(numUserResponse.data.length)
-    //   // console.log(numProjectResponse.data.length)
-    //   // console.log('++++')
-    //   this.tableUserData[i].numUser = numUserResponse.data.length
-    //   this.tableProjectData[i].numProject = numProjectResponse.data.length
-    //   this.tableProjectData[i].numTaskCard = numTaskCardResponse.data.length
-    // }
+    this.arrLength = response.data.length
+    var datasets = []
+    console.log('------')
+    for (let i = 0; i < this.arrLength; i++) {
+      var data = []
+      let id = response.data[i].idDepartment
+      let departmentName = response.data[i].name
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      data.push(departmentName, numUserResponse.data.length)
+      console.log(data)
+      datasets.push(data)
+    }
+    console.log(datasets)
+    this.tableUserData = datasets
   },
   methods: {
   },

@@ -11,12 +11,15 @@ import { store } from './store'
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-default/index.css'
 import 'buefy/lib/buefy.css'
+import Chartkick from 'chartkick'
+import VueChartkick from 'vue-chartkick'
 
 Vue.config.productionTip = false
 Vue.use(bulma)
 Vue.use(Buefy)
 Vue.use(ElementUI, { locale })
 Vue.use(moment)
+Vue.use(VueChartkick, { Chartkick })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

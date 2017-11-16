@@ -33,7 +33,6 @@
           :paginated="true"
           :per-page="7"
           default-sort="title">
-
           <template scope="props">
             <b-table-column field="department" label="Department">
                 {{ props.row.name }}
