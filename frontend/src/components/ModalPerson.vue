@@ -70,7 +70,7 @@ export default {
       datasets2 = []
     }
     this.positionBarChart = dataCollections
-    console.log(dataCollections)
+    // console.log(dataCollections)
   },
   methods: {
   },

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content" align="center">
     <div class="modal-mask" @click="dialogVisible = true">
-      <doughnut-department></doughnut-department>
+      <pie-chart :data="projectPieChart"></pie-chart>
     </div>
     <el-dialog
       title="Task Card from Each department"
@@ -22,25 +22,63 @@
 
 <script>
 import PieProject from '@/components/Chart/PieProject'
-import DoughnutDepartment from '@/components/Chart/DoughnutDepartment'
+import Axios from 'axios'
 
 export default {
   data () {
     return {
       dialogVisible: false,
-      items: [
-        { department: 'Department A' },
-        { department: 'Department B' },
-        { department: 'Department C' },
-        { department: 'Department D' }
-      ]
+      projectPieChart: [{'name': '', 'numProject': 0}]
     }
+  },
+  async mounted () {
+    // Department
+    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    this.arrLength = response.data.length
+    var datasets = []
+    // var datasets2 = []
+    // var dataCollections = []
+
+    for (let i = 0; i < this.arrLength; i++) {
+      let data = []
+      // console.log('data: ' + data)
+      let departmentName = response.data[i].name
+      // console.log('id : ' + departmentName)
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      // console.log(numUserResponse.data)
+      let idUserList = numUserResponse.data
+      let departmentProject = await Axios.get(`http://localhost:8091/get/department-project/${idUserList}`)
+      // console.log(departmentProject)
+      data.push(departmentName, departmentProject.data.length)
+      datasets.push(data)
+      console.log(data)
+    }
+    console.log(datasets)
+    this.projectPieChart = datasets
+
+    // let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
+    // let c = 0
+    // for (let j = 0; j < this.arrLength; j++) {
+    //   let positionResponse = await Axios.get(`http://localhost:8090/get/all-position`)
+    //   this.positionLength = positionResponse.data.length
+    //   for (let i = 0; i < this.positionLength; i++) {
+    //     let data = []
+    //     let positionName = positionResponse.data[i].name
+    //     // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
+    //     // console.log(numPositionResponse)
+    //     data.push(positionName, numRandom[c])
+    //     c += 1
+    //     datasets2.push(data)
+    //   }
+    //   dataCollections.push(datasets2)
+    //   datasets2 = []
+    // }
+    // this.positionBarChart = dataCollections
   },
   methods: {
   },
   components: {
-    PieProject,
-    DoughnutDepartment
+    PieProject
   }
 }
 </script>
