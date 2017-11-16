@@ -12,6 +12,13 @@
         <div v-for="item in items" class="small-chart">
           <span> {{item.name}} </span>
           <horizontal-bar-position> </horizontal-bar-position>
+          <!-- <horizontal-bar-position
+            :labels="['Professor', 'Project Manager', 'Student', 'Intern']",
+            :data="tableUserData"
+            :options="{responsive: false, maintainAspectRatio: false}"
+            :width="250"
+            :height="200"
+          > </horizontal-bar-position> -->
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -31,8 +38,8 @@ export default {
       dialogVisible: false,
       items: [
         { name: 'Department A' }
-      ]
-
+      ],
+      tableUserData: [{ 'name': 'DapartmentName', 'numUser': 'Internal' }]
     }
   },
   async mounted () {
