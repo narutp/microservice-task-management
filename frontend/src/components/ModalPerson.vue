@@ -10,7 +10,7 @@
       :before-close="handleClose">
       <div class="in-modal-mask">
         <!-- <div v-for="item in items" class="small-chart">
-          <bar-chart :data="items[index]"></bar-chart>
+          <bar-chart :data="items[0]"></bar-chart>
         </div> -->
         <div class="small-chart">
           <bar-chart :data="items[0]"></bar-chart>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import HorizontalBarPosition from '@/components/Chart/HorizontalBarPosition'
 import Axios from 'axios'
 
 export default {
@@ -40,8 +39,7 @@ export default {
     return {
       dialogVisible: false,
       userColumnChart: [{'name': '', 'numUser': 0}],
-      items: [],
-      positionBarChart: []
+      items: []
     }
   },
   async mounted () {
@@ -73,29 +71,22 @@ export default {
       this.positionLength = positionResponse.data.length
       for (let i = 0; i < this.positionLength; i++) {
         let data = []
-        // console.log('data: ' + data)
         let positionName = positionResponse.data[i].name
-        // console.log('position : ' + positionName)
         // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
         // console.log(numPositionResponse)
         data.push(positionName, numRandom[c])
         c += 1
-        // console.log(data)
         datasets2.push(data)
-        // console.log(datasets2)
       }
-      // console.log('check----------datasets2')
-      // console.log(datasets2)
-      // this.items.push(datasets2)
       dataCollections.push(datasets2)
       datasets2 = []
     }
     this.items = dataCollections
+    console.log(dataCollections)
   },
   methods: {
   },
   components: {
-    HorizontalBarPosition
   }
 }
 </script>
