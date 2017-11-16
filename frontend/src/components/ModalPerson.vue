@@ -38,18 +38,20 @@ export default {
   async mounted () {
     // Department
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    console.log(response)
     this.arrLength = response.data.length
     var datasets = []
     for (let i = 0; i < this.arrLength; i++) {
       let data = []
-      let id = response.data[i].idDepartment
+      console.log('data: ' + data)
       let departmentName = response.data[i].name
-      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
+      console.log('id : ' + departmentName)
+      let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      console.log(numUserResponse)
       data.push(departmentName, numUserResponse.data.length)
       datasets.push(data)
     }
     this.userColumnChart = datasets
-    this.items = datasets
   },
   methods: {
   },
