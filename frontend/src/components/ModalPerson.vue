@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content" align="center">
     <div class="modal-mask" @click="dialogVisible = true">
-      <column-chart :data="tableUserData"></column-chart>
+      <column-chart :data="userColumnChart"></column-chart>
     </div>
     <el-dialog
       title="Position from Each department"
@@ -10,7 +10,7 @@
       :before-close="handleClose">
       <div class="in-modal-mask">
         <div v-for="item in items" class="small-chart">
-          <horizontal-bar-position> </horizontal-bar-position>
+          <bar-chart :data="projectBarChart"></bar-chart>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import BarParticipant from '@/components/Chart/BarParticipant'
 import HorizontalBarPosition from '@/components/Chart/HorizontalBarPosition'
 import Axios from 'axios'
 
@@ -28,30 +27,33 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      tableUserData: [{'name': '', 'idDepartment': 0}]
+      userColumnChart: [{'name': '', 'numUser': 0}],
+      items: [
+        {'name': '', 'idDepartment': 0},
+        {'name': '', 'idDepartment': 0}
+      ],
+      projectBarChart: [{'name': '', 'numUser': 0}]
     }
   },
   async mounted () {
+    // Department
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.arrLength = response.data.length
     var datasets = []
-    console.log('------')
     for (let i = 0; i < this.arrLength; i++) {
-      var data = []
+      let data = []
       let id = response.data[i].idDepartment
       let departmentName = response.data[i].name
       let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
       data.push(departmentName, numUserResponse.data.length)
-      console.log(data)
       datasets.push(data)
     }
-    console.log(datasets)
-    this.tableUserData = datasets
+    this.userColumnChart = datasets
+    this.items = datasets
   },
   methods: {
   },
   components: {
-    BarParticipant,
     HorizontalBarPosition
   }
 }
