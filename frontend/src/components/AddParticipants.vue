@@ -98,7 +98,7 @@ export default {
   },
   async mounted () {
     let idDepartment = localStorage.getItem('id_department_owner_card')
-    let internalResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${idDepartment}`)
+    let internalResponse = await Axios.get(`http://localhost:8090/get/internal-user-list?idDepartment=${idDepartment}`)
     // can now get list at once by set all list array to equal to data that recieve first
     // then set it (replace) it to equal to list name
     this.internalUserList = internalResponse.data
@@ -106,7 +106,7 @@ export default {
       this.internalUserList[i] = internalResponse.data[i].name
     }
 
-    let externalResponse = await Axios.get(`http://localhost:8090/get/external-user-list/department/${idDepartment}`)
+    let externalResponse = await Axios.get(`http://localhost:8090/get/external-user-list?idDepartment=${idDepartment}`)
     this.externalUserList = externalResponse.data
     for (let j = 0; j < externalResponse.data.length; j++) {
       this.externalUserList[j] = externalResponse.data[j].name
@@ -121,7 +121,7 @@ export default {
     },
     async cancleAddParticipants () {
       let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/${idCard}`)
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/idProjectCard?idProjectCard=${idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/create-card' })
       } else {
@@ -141,12 +141,12 @@ export default {
       console.log(this.externalAddList)
 
       let self = this
-      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.internalAddList}`)
-      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList/nameList/${this.externalAddList}`)
+      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.internalAddList}`)
+      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.externalAddList}`)
       console.log(idExternalUserListResponse.data)
-      let response = await Axios.post(`http://localhost:8091/add/participants/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
+      let response = await Axios.post(`http://localhost:8091/add/participants?idProjectCard=${idCard}&idInternalUserList=${idInternalUserListResponse.data}&idExternalUserList=${idExternalUserListResponse.data}`)
       if (response.data === true) {
-        let historyResponse = await Axios.post(`http://localhost:8090/add/history/${idCard}/${idInternalUserListResponse.data}/${idExternalUserListResponse.data}`)
+        let historyResponse = await Axios.post(`http://localhost:8090/add/history?idProjectCard=${idCard}&idInternalList=${idInternalUserListResponse.data}&idExternalList=${idExternalUserListResponse.data}`)
         if (historyResponse.data === true) {
           self.$router.replace({ path: '/create-card' })
         } else {

@@ -86,8 +86,8 @@ export default {
     for (let i = 0; i < this.arrLength; i++) {
       let idProject = cardResponse.data[i].idProject
       let idUser = cardResponse.data[i].idUser
-      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
-      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
       this.tableData[i].idProject = projectResponse.data.name
       this.tableData[i].idUser = nameResponse.data.name
     }
