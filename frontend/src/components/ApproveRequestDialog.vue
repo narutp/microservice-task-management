@@ -61,7 +61,7 @@ export default {
   props: ['approveObj'],
   methods: {
     async approveRequest () {
-      let response = await Axios.post(`http://localhost:8091/approve/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+      let response = await Axios.post(`http://localhost:8091/approve/request?projectName=${this.approveObj.projectName}&projectCardName=${this.approveObj.cardName}`)
       if (response.data === true) {
         this.$router.go({ path: '/request-project', force: true })
       } else {
@@ -69,7 +69,7 @@ export default {
       }
     },
     async rejectRequest () {
-      let response = await Axios.post(`http://localhost:8091/reject/request/${this.approveObj.projectName}/${this.approveObj.cardName}`)
+      let response = await Axios.post(`http://localhost:8091/reject/request?projectName=${this.approveObj.projectName}&projectCardName=${this.approveObj.cardName}`)
       if (response.data === true) {
         this.$router.go({ path: '/request-project', force: true })
       } else {

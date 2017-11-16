@@ -200,11 +200,11 @@ export default {
   },
   methods: {
     async updateCard () {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
+      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
       this.internalList = cardResponse.data.internalParticipants
       this.externalList = cardResponse.data.externalParticipants
       let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
-      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card/${this.idCard}/${this.cardName}/${this.cardDescription}/${formatEndDate}/${this.internalList}/${this.externalList}`)
+      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card?idProjectCard=${this.idCard}&name=${this.cardName}&description=${this.cardDescription}&endDate=${formatEndDate}&internalParticipants=${this.internalList}&externalParticipants=${this.externalList}`)
 
       if (updateResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
@@ -232,7 +232,7 @@ export default {
     this.requestDeleteList.idCard = this.idCard
     this.requestDeleteList.idUser = this.idUser
 
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${this.idCard}`)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
     let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
@@ -247,7 +247,7 @@ export default {
     this.startDate = cardResponse.data.startDate
     this.endDate = cardResponse.data.endDate
 
-    let projectResponse = await Axios.get(`http://localhost:8091/get/project/${cardResponse.data.idProject}`)
+    let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${cardResponse.data.idProject}`)
     this.projectName = projectResponse.data.name
 
     // get arr length of both internal and external user in a card to find their names
@@ -256,9 +256,9 @@ export default {
     // set value of internal participant table
     for (let i = 0; i < internalArrLength; i++) {
       let idInternalUser = cardResponse.data.internalParticipants[i]
-      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idInternalUser}`)
-      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${internalNameResponse.data.idPosition}`)
-      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${internalNameResponse.data.idDepartment}`)
+      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idInternalUser}`)
+      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${internalNameResponse.data.idPosition}`)
+      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${internalNameResponse.data.idDepartment}`)
       this.tableData[i].user = internalNameResponse.data.name
       this.tableData[i].email = internalNameResponse.data.email
       this.tableData[i].status = 'INTERNAL'
@@ -268,9 +268,9 @@ export default {
     // set value of external participant table
     for (let i = 0; i < externalArrLength; i++) {
       let idExternalUser = cardResponse.data.externalParticipants[i]
-      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idExternalUser}`)
-      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${externalNameResponse.data.idPosition}`)
-      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${externalNameResponse.data.idDepartment}`)
+      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idExternalUser}`)
+      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${externalNameResponse.data.idPosition}`)
+      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${externalNameResponse.data.idDepartment}`)
       this.tableData2[i].user = externalNameResponse.data.name
       this.tableData2[i].email = externalNameResponse.data.email
       this.tableData2[i].status = 'EXTERNAL'

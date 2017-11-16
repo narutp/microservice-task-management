@@ -245,7 +245,7 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/all-termination-request")
+	@Path("get/all-termination-request/idUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TerminationRequest> getAllTerminationRequestByIdUserAPI(@QueryParam("idUser") String idUser) {
 		List<TerminationRequest> terminationRequestList = terminationRequestDAO
@@ -298,7 +298,7 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/all-project-card")
+	@Path("get/all-project-card/idUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ProjectCard> getAllProjectCardByUserIdAPI(@QueryParam("idUser") String idUser) {
 		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCardByIdUserParticipated(idUser);
@@ -415,7 +415,7 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("delete/project")
+	@Path("delete/project/idProject")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteProjectByIdAPI(@QueryParam("idProject") String idProject) {
 		projectDAO.deleteProjectById(idProject);
@@ -423,7 +423,7 @@ public class TaskManagementRest {
 	}
 
 	@POST
-	@Path("delete/project-card")
+	@Path("delete/project-card/idProjectCard")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean deleteProjectCardByIdAPI(@QueryParam("idProjectCard") String idProjectCard) {
 		projectCardDAO.deleteProjectCardById(idProjectCard);
@@ -466,7 +466,7 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/project-card")
+	@Path("get/project-card/idProjectCard")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProjectCard getProjectCardByIdProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard) {
 		return projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
@@ -488,7 +488,7 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/project-card")
+	@Path("get/project-card/projectName")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProjectCard getProjectCardByProjectAndProjectCardNameAPI(@QueryParam("projectName") String projectName,
 			@QueryParam("projectCardName") String projectCardName) {

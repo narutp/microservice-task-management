@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async requestFinish () {
-      let requestResponse = await Axios.post(`http://localhost:8091/request/finish/${this.requestFinishList.idCard}/${this.reason}/${this.requestFinishList.idUser}`)
+      let requestResponse = await Axios.post(`http://localhost:8091/request/finish?idProjectCard=${this.requestFinishList.idCard}&reason=${this.reason}&idRequester=${this.requestFinishList.idUser}`)
       if (requestResponse.data === true) {
         this.$router.replace({ path: 'my-project' })
       } else {

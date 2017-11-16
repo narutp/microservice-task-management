@@ -300,9 +300,9 @@ export default {
   },
   methods: {
     async updateUser () {
-      let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
-        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/
-        ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
+      let response = await Axios.post(`http://localhost:8090/edit/user?username=${this.form.username}&name=
+        ${this.form.name}&birth=${this.form.birthdate}&phone=${this.form.phone}&department=${this.form.department}&position=
+        ${this.form.position}&email=${this.form.email}&password=${this.form.newPassword}`)
 
       console.log(response.data)
       if (response.data === true) {
@@ -314,7 +314,7 @@ export default {
     async fetchUserHistory () {
       this.index = false
       let idUser = localStorage.getItem('user_userId')
-      let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history/${idUser}`)
+      let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history?idUser=${idUser}`)
       console.log(userHistoryResponse.data)
       let arrLength = userHistoryResponse.data.idProjectCards.length
       for (let i = 0; i < arrLength; i++) {
@@ -323,14 +323,14 @@ export default {
         this.tableData[i].idProjectCards = idCard
 
         // get card detail to show in table
-        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${idCard}`)
+        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
         this.tableData[i].idProjectCards = cardResponse.data.name
         this.tableData[i].startDate = cardResponse.data.startDate
         this.tableData[i].endDate = cardResponse.data.endDate
 
         // get project
         let idProject = cardResponse.data.idProject
-        let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+        let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
         this.tableData[i].idProject = projectResponse.data.name
       }
     },

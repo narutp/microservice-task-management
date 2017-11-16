@@ -117,10 +117,17 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/user")
+	@Path("get/user/id")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserByIdAPI(@QueryParam("id") String id) {
 		return userDAO.getUserById(id);
+	}
+
+	@GET
+	@Path("get/user/username")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserByUsernameAPI(@QueryParam("username") String username) {
+		return userDAO.getUserByUsername(username);
 	}
 
 	@GET
@@ -240,13 +247,6 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/user")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsernameAPI(@QueryParam("username") String username) {
-		return userDAO.getUserByUsername(username);
-	}
-
-	@GET
 	@Path("get/idUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdUserListByDepartmentNameAPI(@QueryParam("departmentName") String departmentName) {
@@ -277,17 +277,24 @@ public class TaskManagementRest {
 	}
 
 	@GET
-	@Path("get/department")
+	@Path("get/department/id")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Department getDepartmentByIdAPI(@QueryParam("id") String id) {
 		return departmentDAO.getDepartmentById(id);
 	}
 
 	@GET
-	@Path("get/position")
+	@Path("get/position/id")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Position getPositionById(@QueryParam("id") String id) {
 		return positionDAO.getPositionById(id);
+	}
+
+	@GET
+	@Path("get/position/name")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Position getPositionByNameAPI(@QueryParam("name") String name) {
+		return positionDAO.getPositionByName(name);
 	}
 
 	@GET
@@ -312,13 +319,6 @@ public class TaskManagementRest {
 	public boolean deleteAllDepartmentAPI() {
 		departmentDAO.deleteAllDepartment();
 		return true;
-	}
-
-	@GET
-	@Path("get/position")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Position getPositionByNameAPI(@QueryParam("name") String name) {
-		return positionDAO.getPositionByName(name);
 	}
 
 	@GET
