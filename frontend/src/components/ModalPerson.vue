@@ -9,20 +9,8 @@
       width="100%"
       :before-close="handleClose">
       <div class="in-modal-mask">
-        <!-- <div v-for="item in items" class="small-chart">
-          <bar-chart :data="items[0]"></bar-chart>
-        </div> -->
-        <div class="small-chart">
-          <bar-chart :data="items[0]"></bar-chart>
-        </div>
-        <div class="small-chart">
-          <bar-chart :data="items[1]"></bar-chart>
-        </div>
-        <div class="small-chart">
-          <bar-chart :data="items[2]"></bar-chart>
-        </div>
-        <div class="small-chart">
-          <bar-chart :data="items[3]"></bar-chart>
+        <div v-for="n in 4" class="small-chart">
+          <bar-chart :data="positionBarChart[n-1]"></bar-chart>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -39,7 +27,7 @@ export default {
     return {
       dialogVisible: false,
       userColumnChart: [{'name': '', 'numUser': 0}],
-      items: []
+      positionBarChart: []
     }
   },
   async mounted () {
@@ -81,7 +69,7 @@ export default {
       dataCollections.push(datasets2)
       datasets2 = []
     }
-    this.items = dataCollections
+    this.positionBarChart = dataCollections
     console.log(dataCollections)
   },
   methods: {
