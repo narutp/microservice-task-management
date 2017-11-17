@@ -54,15 +54,15 @@ export default {
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
       let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
-      // console.log(numUserResponse.data)
+      console.log(numUserResponse.data)
       let idUserList = numUserResponse.data
       let departmentProject = await Axios.get(`http://localhost:8091/get/department-project/${idUserList}`)
       // console.log(departmentProject)
       data.push(departmentName, departmentProject.data.length)
       datasets.push(data)
       // console.log(data)
-      console.log(i)
-      console.log(departmentProject)
+      // console.log(i)
+      // console.log(departmentProject)
     }
     // console.log(datasets)
     this.projectPieChart = datasets
@@ -70,11 +70,11 @@ export default {
     // let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
     // let c = 0
 
-    for (let j = 0; j < this.arrLength; j++) {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/`)
-      this.cardLength = cardResponse.data.length
-      console.log(this.cardLength)
-      for (let i = 0; i < this.positionLength; i++) {
+    // for (let j = 0; j < this.arrLength; j++) {
+    //   let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/`)
+    //   this.cardLength = cardResponse.data.length
+    //   console.log(this.cardLength)
+    //   for (let i = 0; i < this.positionLength; i++) {
     //     let data = []
     //     let positionName = positionResponse.data[i].name
     //     // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
@@ -82,10 +82,10 @@ export default {
     //     data.push(positionName, numRandom[c])
     //     c += 1
     //     datasets2.push(data)
-      }
+      // }
     //   dataCollections.push(datasets2)
     //   datasets2 = []
-    }
+    // }
     // this.positionBarChart = dataCollections
   },
   methods: {
