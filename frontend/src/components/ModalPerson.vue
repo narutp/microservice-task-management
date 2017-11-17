@@ -48,9 +48,9 @@ export default {
       let departmentName = response.data[i].name
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
-      let numUserResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
-      // console.log(numUserResponse)
-      data.push(departmentName, numUserResponse.data.length)
+      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      console.log(userList)
+      data.push(departmentName, userList.data.length)
       datasets.push(data)
       // console.log(datasets)
     }
