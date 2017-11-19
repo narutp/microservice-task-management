@@ -180,11 +180,11 @@ export default {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      let response = await Axios.get(`http://localhost:8091/create/project-card/${idUser}/${this.project}/${this.cardName}/${this.description}/${sDate}/${eDate}`)
+      let response = await Axios.get(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${sDate}&endDate=${eDate}`)
       let idCard = response.data
       localStorage.setItem('id_create_card', idCard)
       console.log(idCard)
-      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card/${idCard}`)
+      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
       let idDepartment = idDepartmentResponse.data
       // console.log(idDepartmentResponse)
 
@@ -193,7 +193,7 @@ export default {
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card/${idCard}`)
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card?idProjectCard=${idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
       } else {
@@ -204,17 +204,19 @@ export default {
       this.$router.replace({ path: 'my-project' })
     }
   },
-  // TODO can't get all project at once
   async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+
+    // can now get project at once by set all project array to equal to data that recieve first
+    // then set it to equal to project name
+    this.allProject = response.data
     for (let i = 0; i < response.data.length; i++) {
       this.allProject[i] = response.data[i].name
     }
 
     // get card to show participants inside the card
     let idCard = localStorage.getItem('id_create_card')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/${idCard}`)
-    console.log(cardResponse.data)
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
 
     // get arr length of both internal and external user in a card to find their names
     this.internalArrLength = cardResponse.data.internalParticipants.length
@@ -223,9 +225,9 @@ export default {
     // set value of internal participant table
     for (let i = 0; i < this.internalArrLength; i++) {
       let idInternalUser = cardResponse.data.internalParticipants[i]
-      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idInternalUser}`)
-      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${internalNameResponse.data.idPosition}`)
-      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${internalNameResponse.data.idDepartment}`)
+      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idInternalUser}`)
+      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${internalNameResponse.data.idPosition}`)
+      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${internalNameResponse.data.idDepartment}`)
       this.tableData[i].user = internalNameResponse.data.name
       this.tableData[i].email = internalNameResponse.data.email
       this.tableData[i].status = 'INTERNAL'
@@ -235,9 +237,9 @@ export default {
     // set value of external participant table
     for (let i = 0; i < this.externalArrLength; i++) {
       let idExternalUser = cardResponse.data.externalParticipants[i]
-      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idExternalUser}`)
-      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id/${externalNameResponse.data.idPosition}`)
-      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${externalNameResponse.data.idDepartment}`)
+      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idExternalUser}`)
+      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${externalNameResponse.data.idPosition}`)
+      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${externalNameResponse.data.idDepartment}`)
       this.tableData2[i].user = externalNameResponse.data.name
       this.tableData2[i].email = externalNameResponse.data.email
       this.tableData2[i].status = 'EXTERNAL'

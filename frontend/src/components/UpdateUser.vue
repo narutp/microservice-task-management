@@ -5,7 +5,7 @@
         <div class="update-user--header">
           <el-button size="small" @click="index=true">User information</el-button>
           <span>|</span>
-          <el-button size="small" @click="index=false">User history</el-button>
+          <el-button size="small" @click="fetchUserHistory()">User history</el-button>
         </div>
         <!--  index is attribute that show user information or user history  -->
         <!--  User Information part  -->
@@ -151,9 +151,8 @@
           <b-table
               class="update-user--table"
               :data="tableData"
-              :paginated="true"
-              :per-page="7"
-              default-sort="title">
+              :paginated="isPaginated"
+              :per-page="5">
 
               <template scope="props">
                   <b-table-column field="no" label="No" width="50" sortable numeric centered>
@@ -166,7 +165,7 @@
                   </b-table-column>
 
                   <b-table-column field="card Name" label="Card Name" width="200" sortable>
-                      {{ props.row.name }}
+                      {{ props.row.idProjectCards }}
                   </b-table-column>
 
                   <b-table-column field="Start date" label="Start date" width="150" sortable>
@@ -239,8 +238,13 @@ export default {
       }
     }
     return {
-      tableData: [{ 'no': 1, 'idProject': 'project', 'name': 'Test Project 1', 'startDate': '1', 'endDate': '2' }],
+      tableData: [{ 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
+      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' }],
       index: true,
+      isPaginated: true,
       form: {
         name: '',
         birthdate: '',
@@ -296,15 +300,38 @@ export default {
   },
   methods: {
     async updateUser () {
-      let response = await Axios.post(`http://localhost:8090/edit/user/${this.form.username}/
-        ${this.form.name}/${this.form.birthdate}/${this.form.phone}/${this.form.department}/
-        ${this.form.position}/${this.form.email}/${this.form.newPassword}`)
+      let response = await Axios.post(`http://localhost:8090/edit/user?username=${this.form.username}&name=
+        ${this.form.name}&birth=${this.form.birthdate}&phone=${this.form.phone}&department=${this.form.department}&position=
+        ${this.form.position}&email=${this.form.email}&password=${this.form.newPassword}`)
 
       console.log(response.data)
       if (response.data === true) {
         this.setUser()
       } else {
         alert('Update failed')
+      }
+    },
+    async fetchUserHistory () {
+      this.index = false
+      let idUser = localStorage.getItem('user_userId')
+      let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history?idUser=${idUser}`)
+      console.log(userHistoryResponse.data)
+      let arrLength = userHistoryResponse.data.idProjectCards.length
+      for (let i = 0; i < arrLength; i++) {
+        console.log(userHistoryResponse.data.idProjectCards[i])
+        let idCard = userHistoryResponse.data.idProjectCards[i]
+        this.tableData[i].idProjectCards = idCard
+
+        // get card detail to show in table
+        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
+        this.tableData[i].idProjectCards = cardResponse.data.name
+        this.tableData[i].startDate = cardResponse.data.startDate
+        this.tableData[i].endDate = cardResponse.data.endDate
+
+        // get project
+        let idProject = cardResponse.data.idProject
+        let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
+        this.tableData[i].idProject = projectResponse.data.name
       }
     },
     async setUser () {

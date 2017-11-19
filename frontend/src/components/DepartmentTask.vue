@@ -71,17 +71,17 @@ export default {
   async mounted () {
     this.department = localStorage.getItem('user_department')
     // get user list by sending department name of that user
-    let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/${this.department}`)
+    let userListResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${this.department}`)
 
-    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card/${userListResponse.data}`)
+    let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card?idUserList=${userListResponse.data}`)
     console.log(departmentCardResponse)
     this.tableData = departmentCardResponse.data
     this.arrLength = departmentCardResponse.data.length
     for (let i = 0; i < this.arrLength; i++) {
       let idUser = departmentCardResponse.data[i].idUser
       let idProject = departmentCardResponse.data[i].idProject
-      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id/${idUser}`)
-      let projectResponse = await Axios.get(`http://localhost:8091/get/project/${idProject}`)
+      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+      let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
       this.tableData[i].idUser = nameResponse.data.name
       this.tableData[i].idProject = projectResponse.data.name
     }

@@ -51,7 +51,7 @@ export default {
     async createProject () {
       // task api
       let idDepartment = localStorage.getItem('user_departmentId')
-      let response = await Axios.post(`http://localhost:8091/create/project/${this.projectName}/${this.projectDescription}/${this.userId}/${idDepartment}`)
+      let response = await Axios.post(`http://localhost:8091/create/project?name=${this.projectName}&description=${this.projectDescription}&idUser=${this.userId}&idDepartment=${idDepartment}`)
       if (response.data === true) {
         this.back()
       } else {

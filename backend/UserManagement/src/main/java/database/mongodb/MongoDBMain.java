@@ -59,9 +59,9 @@ public class MongoDBMain implements DatabaseModel {
     }
 
 	public ClassPathXmlApplicationContext getContext() {
-		if(ctx == null){
+		if (ctx == null) {
 			ctx = new ClassPathXmlApplicationContext("mongodb/Spring-MongoDB.xml");
 		}
-		return ctx; 
+		return ctx;
 	}
 }

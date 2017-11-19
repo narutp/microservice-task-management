@@ -59,7 +59,7 @@ export default {
     },
     login () {
       let self = this
-      Axios.get(`http://localhost:8090/login/${this.username}/${this.password}`).then(function (response) {
+      Axios.get(`http://localhost:8090/login?username=${this.username}&password=${this.password}`).then(function (response) {
         if (response.data === true) {
           // self.setUser(self.username)
           self.setUser(self.username)
@@ -72,7 +72,7 @@ export default {
       })
     },
     async setUser (username) {
-      let response = await Axios.get(`http://localhost:8090/get/user/username/${username}`)
+      let response = await Axios.get(`http://localhost:8090/get/user/username?username=${username}`)
       // Save data to the current local store
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
@@ -87,8 +87,8 @@ export default {
       let idPosition = response.data.idPosition
       // console.log(response.data)
 
-      let departmentResponse = await Axios.get(`http://localhost:8090/get/department/id/${idDepartment}`)
-      let positionResponse = await Axios.get(`http://localhost:8090/get/position/id/${idPosition}`)
+      let departmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+      let positionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
 
       localStorage.setItem('user_department', departmentResponse.data.name)
       localStorage.setItem('user_position', positionResponse.data.name)
