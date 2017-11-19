@@ -13,7 +13,7 @@ public class MongoDBMain implements DatabaseModel {
 
 	private static final String DB_NAME = "userdb";
     private static final String USER_COLLECTION = "user";
-    private static final String USER_HISTORY_COLLECTION = "userHistory";
+    private static final String USER_HISTORY_COLLECTION = "user_history";
     private static final String POSITION_COLLECTION = "position";
     private static final String DEPARTMENT_COLLECTION = "department";
     private static final String MONGO_HOST = "localhost";
@@ -24,8 +24,7 @@ public class MongoDBMain implements DatabaseModel {
     public void run() {
         try {
         	System.out.println("connecting to mongodb at "+MONGO_HOST+":"+MONGO_PORT+"...\ndatabase name: "+DB_NAME+"\ncollection: "+USER_COLLECTION);
-            mongo = new MongoClient(
-                    MONGO_HOST, MONGO_PORT);
+            mongo = new MongoClient(MONGO_HOST, MONGO_PORT);
             System.out.println("connected!");
              
         } catch (UnknownHostException e) {

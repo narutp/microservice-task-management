@@ -8,8 +8,6 @@ public class ProjectCard {
 	
 	@Id
 	private String idProjectCard;
-	//Move submitReason and finishDate to Request
-	//Add idRequest
 	private String name, status, description, startDate, endDate, registeredDate, idUser, idProject, submitReason, finishDate;
 	private List<String> internalParticipants, externalParticipants;
 	

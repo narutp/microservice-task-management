@@ -136,6 +136,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getAllUserAPI() {
 		List<User> userList = userDAO.getAllUser();
+		System.out.println("fghfhg");
 		return userList;
 	}
 	
