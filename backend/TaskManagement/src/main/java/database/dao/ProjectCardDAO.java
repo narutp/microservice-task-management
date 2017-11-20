@@ -41,4 +41,6 @@ public interface ProjectCardDAO {
 	public void requestToDeleteProjectCard(ProjectCard projectCard);
 
 	public ProjectCard getProjectCardByProjectAndProjectCardName(String projectName, String projectCardName);
+
+	public int getCountProjectCardByIdProject(String idProject);
 }
