@@ -49,25 +49,27 @@ export default {
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
       let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
-      console.log(userList)
+      // console.log(userList)
       data.push(departmentName, userList.data.length)
       datasets.push(data)
       // console.log(datasets)
     }
     this.userColumnChart = datasets
 
-    let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
-    let c = 0
+    // let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
+    // let c = 0
     for (let j = 0; j < this.arrLength; j++) {
       let positionResponse = await Axios.get(`http://localhost:8090/get/all-position`)
       this.positionLength = positionResponse.data.length
+      let departmentName = response.data[j].name
       for (let i = 0; i < this.positionLength; i++) {
         let data = []
         let positionName = positionResponse.data[i].name
-        // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
-        // console.log(numPositionResponse)
-        data.push(positionName, numRandom[c])
-        c += 1
+        console.log(departmentName)
+        let numPositionResponse = await Axios.get(`http://localhost:8090/get/count/position-in-department?departmentName=${departmentName}&positionName=${positionName}`)
+        console.log(numPositionResponse.data)
+        data.push(positionName, numPositionResponse.data)
+        // c += 1
         datasets2.push(data)
       }
       dataCollections.push(datasets2)

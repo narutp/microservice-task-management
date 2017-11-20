@@ -134,6 +134,7 @@ public class TaskManagementRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getAllUserAPI() {
 		List<User> userList = userDAO.getAllUser();
+		System.out.println("fghfhg");
 		return userList;
 	}
 	
@@ -379,6 +380,14 @@ public class TaskManagementRest {
 			userHistoryDAO.addIdProjectCard(idUser, idProjectCard);
 		}
 		return true;
+	}
+	
+	@GET
+	@Path("get/count/position-in-department")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getCountPositionInDepartmentAPI(@QueryParam("departmentName") String departmentName,
+			@QueryParam("positionName") String positionName) {
+		return userDAO.getCountPositionInDepartmentByName(departmentName, positionName);
 	}
 	
 	
