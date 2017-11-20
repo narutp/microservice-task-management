@@ -11,7 +11,7 @@
       <div class="in-modal-mask">
         <div v-for="n in 4" class="small-chart">
           <span> Department {{departmentList[n-1]}}</span>
-          <pie-chart :data="projectPieChart"></pie-chart>
+          <pie-chart :data="projectCardPieChart[n-1]"></pie-chart>
           <br>
         </div>
       </div>
@@ -36,6 +36,7 @@ export default {
     return {
       dialogVisible: false,
       projectPieChart: [{'name': '', 'numProject': 0}],
+      projectCardPieChart: [],
       departmentList: []
     }
   },
@@ -44,8 +45,8 @@ export default {
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.arrLength = response.data.length
     var datasets = []
-    // var datasets2 = []
-    // var dataCollections = []
+    var datasets2 = []
+    var dataCollections = []
 
     for (let i = 0; i < this.arrLength; i++) {
       let data = []
@@ -54,37 +55,42 @@ export default {
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
       let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
-      console.log(i)
+      // console.log(i)
       let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
-      console.log(projectResponse.data)
+      // console.log(projectResponse.data)
       data.push(departmentName, projectResponse.data.length)
       datasets.push(data)
-      // console.log(datasets)
     }
     this.projectPieChart = datasets
 
-    // let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
-    // let c = 0
-    // for (let j = 0; j < this.arrLength; j++) {
-    //   // project list in each department
-    //   let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/`)
-    //   this.cardLength = cardResponse.data.length
-    //   console.log(this.cardLength)
-    //
-    //   // project list in each department
-    //   for (let i = 0; i < this.cardLength; i++) {
-    //     let data = []
-    //     let positionName = positionResponse.data[i].name
-    //     // let numPositionResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=A`)
-    //     // console.log(numPositionResponse)
-    //     data.push(positionName, numRandom[c])
-    //     c += 1
-    //     datasets2.push(data)
-    //   }
-    //   // dataCollections.push(datasets2)
-    //   // datasets2 = []
-    // }
-    // this.positionBarChart = dataCollections
+    for (let j = 0; j < this.arrLength; j++) {
+      let departmentName = response.data[j].name
+      console.log(departmentName)
+      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      // console.log(userList)
+      let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
+      // console.log(projectResponse.data.length)
+      let numProject = projectResponse.data.length
+      // console.log('numproject')
+      // console.log(numProject)
+      // project list in each department
+      for (let i = 0; i < numProject; i++) {
+        let data = []
+        let id = projectResponse.data[i].idProject
+        console.log(id)
+        let projectName = projectResponse.data[i].name
+        console.log(projectName)
+        let cardResponse = await Axios.get(`http://localhost:8091/get/count/project-card/idProject?idProject=${id}`)
+        console.log('cardResponse')
+        console.log(cardResponse.data)
+        data.push(projectName, cardResponse.data)
+        datasets2.push(data)
+      }
+      dataCollections.push(datasets2)
+      datasets2 = []
+    }
+    console.log(dataCollections)
+    this.projectCardPieChart = dataCollections
   },
   methods: {
   },

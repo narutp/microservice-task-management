@@ -72,7 +72,7 @@ export default {
     this.department = localStorage.getItem('user_department')
     // get user list by sending department name of that user
     let userListResponse = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${this.department}`)
-
+    console.log('user iist : ' + userListResponse)
     let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card?idUserList=${userListResponse.data}`)
     console.log(departmentCardResponse)
     this.tableData = departmentCardResponse.data

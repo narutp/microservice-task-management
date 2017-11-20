@@ -56,8 +56,6 @@ export default {
     }
     this.userColumnChart = datasets
 
-    // let numRandom = [0, 2, 4, 11, 3, 4, 12, 17, 5, 10, 23, 2, 7, 11, 8, 9, 22, 1, 3, 8]
-    // let c = 0
     for (let j = 0; j < this.arrLength; j++) {
       let positionResponse = await Axios.get(`http://localhost:8090/get/all-position`)
       this.positionLength = positionResponse.data.length
@@ -65,11 +63,10 @@ export default {
       for (let i = 0; i < this.positionLength; i++) {
         let data = []
         let positionName = positionResponse.data[i].name
-        console.log(departmentName)
+        // console.log(departmentName)
         let numPositionResponse = await Axios.get(`http://localhost:8090/get/count/position-in-department?departmentName=${departmentName}&positionName=${positionName}`)
-        console.log(numPositionResponse.data)
+        // console.log(numPositionResponse.data)
         data.push(positionName, numPositionResponse.data)
-        // c += 1
         datasets2.push(data)
       }
       dataCollections.push(datasets2)
