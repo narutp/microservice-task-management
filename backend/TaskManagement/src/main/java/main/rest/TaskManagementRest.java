@@ -494,5 +494,12 @@ public class TaskManagementRest {
 			@QueryParam("projectCardName") String projectCardName) {
 		return projectCardDAO.getProjectCardByProjectAndProjectCardName(projectName, projectCardName);
 	}
+	
+	@GET
+	@Path("get/count/project-card/idProject")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getCountProjectCardByIdProject(@QueryParam("idProject") String idProject) {
+		return projectCardDAO.getCountProjectCardByIdProject(idProject);
+	}
 
 }
