@@ -40,7 +40,8 @@
           v-model="startDate"
           type="date"
           range-separator=" to "
-          placeholder="Start date">
+          placeholder="Start date"
+          :picker-options="startDateOption">
         </el-date-picker>
       </div>
       <div class="column is-one-quarters">
@@ -48,7 +49,8 @@
           v-model="endDate"
           type="date"
           range-separator=" to "
-          placeholder="End date">
+          placeholder="End date"
+          :picker-options="endDateOption">
         </el-date-picker>
       </div>
       <div class="column" align="right">
@@ -172,7 +174,12 @@ export default {
       endDate: '',
       allProject: [],
       internalArrLength: '',
-      externalArrLength: ''
+      externalArrLength: '',
+      startDateOption: {
+        disabledDate (time) {
+          return time.getTime() < Date.now() - 8.64e7
+        }
+      }
     }
   },
   methods: {
