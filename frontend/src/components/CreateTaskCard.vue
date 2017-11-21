@@ -187,10 +187,15 @@ export default {
       let idUser = localStorage.getItem('user_userId')
       let sDate = moment(this.startDate).format('YYYY-MM-DD')
       let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      let response = await Axios.get(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${sDate}&endDate=${eDate}`)
-      let idCard = response.data
+      let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${sDate}&endDate=${eDate}`)
+      let idCard = ''
+      if (response.data === true) {
+        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
+        idCard = cardResponse.data.idProjectCard
+      } else {
+        alert('failed')
+      }
       localStorage.setItem('id_create_card', idCard)
-      console.log(idCard)
       let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
       let idDepartment = idDepartmentResponse.data
       // console.log(idDepartmentResponse)

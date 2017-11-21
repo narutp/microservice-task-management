@@ -6,7 +6,7 @@ import main.model.ProjectCard;
 
 public interface ProjectCardDAO {
 
-	public String createProjectCard(ProjectCard projectCard);
+	public void createProjectCard(ProjectCard projectCard);
 
 	public List<ProjectCard> getAllProjectCard();
 

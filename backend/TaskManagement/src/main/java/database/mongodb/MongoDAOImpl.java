@@ -65,11 +65,10 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		return (Integer) (this.mongoOps.getCollection(collection).getStats().get("count"));
 	}
 
-	public String createProjectCard(ProjectCard projectCard) {
+	public void createProjectCard(ProjectCard projectCard) {
 		collection = MongoDBMain.getProjectCardCollection();
 		System.out.println("DAO: Add new ProjectCard");
 		this.mongoOps.insert(projectCard, collection);
-		return projectCard.getIdProjectCard();
 	}
 
 	public List<ProjectCard> getAllProjectCard() {
