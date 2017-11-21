@@ -362,4 +362,19 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		this.mongoOps.findAndModify(query, update, UserHistory.class, collection);
 	}
 
+	@Override
+	public int getCountPositionInDepartmentByName(String departmentName, String positionName) {
+		String idDepartment = getDepartmentByName(departmentName).getIdDepartment();
+		String idPosition = getPositionByName(positionName).getIdPosition();
+		List<User> userList = getAllUser();
+		int counter = 0;
+		for(User user : userList) {
+			if(user.getIdDepartment().equals(idDepartment) && user.getIdPosition().equals(idPosition)) {
+				counter++;
+			}
+		}
+		return counter;
+		
+	}
+
 }

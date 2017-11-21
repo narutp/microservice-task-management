@@ -39,4 +39,6 @@ public interface UserDAO {
 	public List<String> getIdUserListByNameList (List<String> nameList);
 
 	public User getUserByName(String name);
+
+	public int getCountPositionInDepartmentByName(String departmentName, String positionName);
 }

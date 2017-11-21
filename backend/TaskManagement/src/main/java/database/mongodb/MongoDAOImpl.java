@@ -444,4 +444,12 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		this.mongoOps.remove(new Query(), collection);
 	}
 
+	@Override
+	public int getCountProjectCardByIdProject(String idProject) {
+		collection = MongoDBMain.getProjectCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idProject").is(idProject));
+		return (int) this.mongoOps.count(query, collection);
+	}
+
 }
