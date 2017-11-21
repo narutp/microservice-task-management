@@ -98,10 +98,10 @@ public class TaskManagementRest {
 		return true;
 	}
 
-	@GET
+	@POST
 	@Path("create/project-card")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String createProjectCardWithoutParticipantAPI(@QueryParam("idUser") String idUser,
+	public boolean createProjectCardWithoutParticipantAPI(@QueryParam("idUser") String idUser,
 			@QueryParam("projectName") String projectName, @QueryParam("name") String name,
 			@QueryParam("description") String description, @QueryParam("startDate") String startDate,
 			@QueryParam("endDate") String endDate) {
@@ -136,9 +136,8 @@ public class TaskManagementRest {
 		projectCard.setSubmitReason("-");
 		projectCard.setFinishDate("-");
 
-		String idProjectCard = projectCardDAO.createProjectCard(projectCard);
-		System.out.println(idProjectCard);
-		return idProjectCard;
+		projectCardDAO.createProjectCard(projectCard);
+		return true;
 
 	}
 
