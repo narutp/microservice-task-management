@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import UpdateTask from '@/components/UpdateTask'
+import UpdateProject from '@/components/UpdateProject'
 import Axios from 'axios'
 export default {
   data () {
@@ -81,7 +81,7 @@ export default {
     }
   },
   components: {
-    UpdateTask
+    UpdateProject
   }
 }
 </script>

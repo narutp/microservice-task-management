@@ -10,7 +10,7 @@
           <b>Microservice Task Management | </b>
           <span v-if="$route.path === '/'">Sign in</span>
           <span v-if="$route.path === '/register'">Sign up</span>
-          <span v-if="$route.path === '/home'">Dashboard</span>
+          <span v-if="$route.path === '/dashboard'">Dashboard</span>
           <span v-if="index == 2">My Project</span>
           <span v-if="index == 3">Department Project</span>
           <span v-if="index == 4">Done Project</span>
@@ -120,7 +120,7 @@ export default {
     //   getUser: 'GET_USER'
     // }),
     index () {
-      if (this.$route.path === '/home') { return '1' }
+      if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
       if (this.$route.path === '/done-project') { return '4' }
@@ -143,7 +143,7 @@ export default {
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {
-      this.$router.replace({ path: '/home' })
+      this.$router.replace({ path: '/dashboard' })
     },
     MyProjectClicked () {
       this.$router.replace({ path: '/my-project' })
