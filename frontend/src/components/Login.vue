@@ -34,6 +34,7 @@
         </div>
       </div>
     </div>
+    <b-loading :active.sync="isLoading"></b-loading>
   </div>
 
 </template>
@@ -46,7 +47,8 @@ export default {
     return {
       username: '',
       password: '',
-      checkLoginFailed: false
+      checkLoginFailed: false,
+      isLoading: false
     }
   },
   components: {
@@ -72,6 +74,8 @@ export default {
     async setUser (username) {
       let response = await Axios.get(`http://localhost:8090/get/user/username?username=${username}`)
       // Save data to the current local store
+      this.isLoading = true
+
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
       localStorage.setItem('user_email', response.data.email)
@@ -91,8 +95,11 @@ export default {
       localStorage.setItem('user_department', departmentResponse.data.name)
       localStorage.setItem('user_position', positionResponse.data.name)
 
-      this.$router.go({ path: '/dashboard', force: true })
-      this.$router.replace({ path: '/dashboard' })
+      setTimeout(() => {
+        this.isLoading = false
+        this.$router.go({ path: '/dashboard', force: true })
+        this.$router.replace({ path: '/dashboard' })
+      }, 2 * 1000)
     }
   }
 }
