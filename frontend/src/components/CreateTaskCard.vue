@@ -37,29 +37,17 @@
     <div class="columns">
       <div class="column is-one-quarters">
         <el-date-picker
-          v-model="startDate"
-          type="date"
+          v-model="date"
+          type="daterange"
           range-separator=" to "
-          placeholder="Start date"
+          placeholder="Pick date range"
           :picker-options="startDateOption">
-        </el-date-picker>
-      </div>
-      <div class="column is-one-quarters">
-        <el-date-picker
-          v-model="endDate"
-          type="date"
-          range-separator=" to "
-          placeholder="End date"
-          :picker-options="endDateOption">
         </el-date-picker>
       </div>
       <div class="column" align="right">
         <button class="button" style="width: 200px" @click="addParticipant()">
           <span> Add Participants + </span>
         </button>
-        <!-- <button class="button" style="width: 200px" @click="addExternal()">
-          <span> Add External + </span>
-        </button> -->
       </div>
     </div>
 
@@ -170,7 +158,7 @@ export default {
       cardName: '',
       project: '',
       description: '',
-      startDate: '',
+      date: '',
       endDate: '',
       allProject: [],
       internalArrLength: '',
@@ -185,9 +173,7 @@ export default {
   methods: {
     async addParticipant () {
       let idUser = localStorage.getItem('user_userId')
-      let sDate = moment(this.startDate).format('YYYY-MM-DD')
-      let eDate = moment(this.endDate).format('YYYY-MM-DD')
-      let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${sDate}&endDate=${eDate}`)
+      let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
       let idCard = ''
       if (response.data === true) {
         let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
@@ -257,6 +243,13 @@ export default {
       this.tableData2[i].status = 'EXTERNAL'
       this.tableData2[i].position = externalPositionResponse.data.name
       this.tableData2[i].department = externalDepartmentResponse.data.name
+    }
+  },
+  // change format of date each time that click
+  watch: {
+    'date': function (val) {
+      this.date[0] = moment(val[0]).format('YYYY-MM-DD')
+      this.date[1] = moment(val[1]).format('YYYY-MM-DD')
     }
   }
 }
