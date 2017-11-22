@@ -5,9 +5,24 @@
         <h6 style="margin-top: 16px"><b>New Project +</b></h6>
       </div>
       <div class="column" align="right">
-        <button class="button no-border" @click="back()">
+        <button class="button no-border is-danger" @click="back()">
           <i class="fa fa-close" aria-hidden="true"></i>
         </button>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div class="create-project--alert">
+          <template>
+            <el-alert v-if="alertInfo" type="info" show-icon :closable="false"
+              title="Please fill all information below">
+            </el-alert>
+            <el-alert v-if="alertError" type="error" show-icon :closable="false"
+              title="Please fill all information to create project">
+            </el-alert>
+          </template>
+        </div>
       </div>
     </div>
 
@@ -41,7 +56,9 @@ export default {
     return {
       projectName: '',
       projectDescription: '',
-      userId: ''
+      userId: '',
+      alertInfo: true,
+      alertError: false
     }
   },
   mounted () {
@@ -55,7 +72,8 @@ export default {
       if (response.data === true) {
         this.back()
       } else {
-        alert('failed')
+        this.alertInfo = false
+        this.alertError = true
       }
     },
     back () {
