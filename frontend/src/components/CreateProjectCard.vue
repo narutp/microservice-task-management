@@ -22,6 +22,9 @@
             <el-alert v-if="alertError" type="error" show-icon :closable="false"
               title="Please fill all information to create project card">
             </el-alert>
+            <el-alert v-if="alertErrorDuplicate" type="error" show-icon :closable="false"
+              title="Duplicate project card name">
+            </el-alert>
           </template>
         </div>
       </div>
@@ -180,6 +183,7 @@ export default {
       externalArrLength: '',
       alertInfo: true,
       alertError: false,
+      alertErrorDuplicate: false,
       startDateOption: {
         disabledDate (time) {
           return time.getTime() < Date.now() - 8.64e7
@@ -194,25 +198,33 @@ export default {
         this.alertError = true
         this.alertInfo = false
       }
+      // check if the project card name is same in database
+      let checkDuplicateResponse = await Axios.get(`http://localhost:8091/check/project-card-name?projectName=${this.project}&projectCardName=${this.cardName}`)
+      // false is already have this project name
 
-      let idUser = localStorage.getItem('user_userId')
-      let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
-      let idCard = ''
-      if (response.data === true) {
-        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
-        idCard = cardResponse.data.idProjectCard
-      } else {
-        // if response failed, the alert error occur
-        this.alertError = true
-        this.alertInfo = false
+      if (checkDuplicateResponse.data === true) {
+        let idUser = localStorage.getItem('user_userId')
+        let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
+        let idCard = ''
+        if (response.data === true) {
+          let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
+          idCard = cardResponse.data.idProjectCard
+        } else {
+          // if response failed, the alert error occur
+          this.alertError = true
+          this.alertInfo = false
+        }
+        localStorage.setItem('id_create_card', idCard)
+        let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
+        let idDepartment = idDepartmentResponse.data
+        // console.log(idDepartmentResponse)
+
+        localStorage.setItem('id_department_owner_card', idDepartment)
+        this.$router.replace({ path: '/add-participants' })
       }
-      localStorage.setItem('id_create_card', idCard)
-      let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
-      let idDepartment = idDepartmentResponse.data
-      // console.log(idDepartmentResponse)
-
-      localStorage.setItem('id_department_owner_card', idDepartment)
-      this.$router.replace({ path: '/add-participants' })
+      this.alertError = false
+      this.alertInfo = false
+      this.alertErrorDuplicate = true
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
