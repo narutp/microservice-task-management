@@ -43,4 +43,6 @@ public interface ProjectCardDAO {
 	public ProjectCard getProjectCardByProjectAndProjectCardName(String projectName, String projectCardName);
 
 	public int getCountProjectCardByIdProject(String idProject);
+
+	public boolean isProjectCardNameExist(String projectCardName, String projectName);
 }

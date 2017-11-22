@@ -451,4 +451,35 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 		return (int) this.mongoOps.count(query, collection);
 	}
 
+	@Override
+	public boolean isProjectNameExist(String projectName) {
+		List<Project> projectList = getAllProject();
+		if (projectList == null)
+			return false;
+		for (Project project : projectList) {
+			if (project.getName().equals(projectName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isProjectCardNameExist(String projectCardName, String projectName) {
+		Project project = getProjectByName(projectName);
+		String idProject = project.getIdProject();
+		collection = MongoDBMain.getProjectCardCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idProject").is(idProject));
+		List<ProjectCard> projectCardList = this.mongoOps.find(query, ProjectCard.class, collection);
+		if(projectCardList == null)
+			return false;
+		for(ProjectCard projectCard : projectCardList) {
+			if(projectCard.getName().equals(projectCardName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

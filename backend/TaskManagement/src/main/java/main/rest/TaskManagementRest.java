@@ -501,5 +501,22 @@ public class TaskManagementRest {
 	public int getCountProjectCardByIdProjectAPI(@QueryParam("idProject") String idProject) {
 		return projectCardDAO.getCountProjectCardByIdProject(idProject);
 	}
+	
+	@GET
+	@Path("check/project-name")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean checkProjectNameAPI(@QueryParam("projectName") String projectName) {
+		return !projectDAO.isProjectNameExist(projectName);
+	}
+	
+	@GET
+	@Path("check/project-card-name")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean checkProjectCardNameAPI(@QueryParam("projectCardName") String projectCardName,
+			@QueryParam("projectName") String projectName) {
+		return !projectCardDAO.isProjectCardNameExist(projectCardName,projectName);
+	}
+	
+	
 
 }

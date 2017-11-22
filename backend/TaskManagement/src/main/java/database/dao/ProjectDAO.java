@@ -30,4 +30,6 @@ public interface ProjectDAO {
 
 	public Project getProjectByName(String name);
 
+	public boolean isProjectNameExist(String projectName);
+
 }
