@@ -8,7 +8,7 @@
       </el-row>
 
       <el-row>
-        <div class="update-project--value">
+        <div class="request-finish--input">
           <textarea v-model="reason" class="textarea"></textarea>
         </div>
       </el-row>

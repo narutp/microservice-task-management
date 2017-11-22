@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="create-task-card--container" align="left">
+  <div class="create-project-card--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
@@ -66,9 +66,9 @@
       </div>
     </div>
 
-    <section class="my-task-table--body">
+    <section class="create-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="create-project-card--table"
           :data="tableData"
           :paginated="true"
           :per-page="5"
@@ -104,9 +104,9 @@
     </section>
 
     <hr>
-    <section class="my-task-table--body">
+    <section class="create-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="create-project-card--table"
           :data="tableData2"
           :paginated="true"
           :per-page="5"
@@ -281,7 +281,7 @@ export default {
 </script>
 
 <style scoped>
-.create-task-card--container {
+.create-project-card--container {
   background-color: #fff;
   padding: 30px;
 }

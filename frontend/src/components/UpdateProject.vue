@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="update-task--container">
+  <div class="update-project--container">
     <div>
       <el-dialog title = "Update Project" :visible.sync="updateProjectList.dialogClicked">
         <el-row>
@@ -9,7 +9,7 @@
         </el-row>
 
         <el-row>
-          <div class="update-project--value">
+          <div class="update-project--input">
             <input v-model="updateProjectList.projectName" class="input title-field" type="text">
           </div>
         </el-row>
@@ -21,7 +21,7 @@
         </el-row>
 
         <el-row>
-          <div class="update-project--value">
+          <div class="update-project--input">
             <textarea v-model="updateProjectList.projectDescription" class="textarea"></textarea>
           </div>
         </el-row>
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-.update-project--value {
+.update-project--input {
   margin-bottom: 20px;
 }
 .create-section {

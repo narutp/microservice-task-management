@@ -66,7 +66,7 @@
             Register
           </button>
         </div>
-        <span class="login--signup" @click="login()">Already have an account? <b>Back to login</b></span>
+        <span class="register--signup" @click="login()">Already have an account? <b>Back to login</b></span>
       </div>
     </div>
   </div>
@@ -243,18 +243,10 @@ export default {
 .register--register-field {
   margin-bottom: 15px;
 }
-.button {
-  width: 180px;
-  height: 50px;
-  border-radius: 30px;
-  padding: 0;
-  margin: 0;
-  margin-bottom: 15px;
-  left: 0;
-  display: inline-block;
-}
-.margin-right {
-  margin-right: 20px;
+.register--signup {
+  color: #8E9296;
+  font-size: 14px;
+  cursor: pointer;
 }
 .register--register-field span {
   float: left;
@@ -275,15 +267,23 @@ export default {
   border-bottom: 1px;
   margin-bottom: 30px;
 }
+.button {
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 15px;
+  left: 0;
+  display: inline-block;
+}
+.margin-right {
+  margin-right: 20px;
+}
 .el-input {
   height: 50px;
   border-radius: 30px;
   box-shadow: 0;
-}
-.login--signup {
-  color: #8E9296;
-  font-size: 14px;
-  cursor: pointer;
 }
 hr {
   background-color: #848484;

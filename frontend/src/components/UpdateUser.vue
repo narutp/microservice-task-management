@@ -143,7 +143,7 @@
       </el-row>
       <!--  User history part  -->
       <el-row v-if="index === false">
-        <section class="update-user--table--container">
+        <section class="update-user--table-container">
           <div style="font-size: 18px;" align="center">
             <b>User history</b>
           </div>

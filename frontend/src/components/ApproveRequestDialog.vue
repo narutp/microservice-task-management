@@ -9,7 +9,7 @@
         </el-row>
 
         <el-row>
-          <div class="update-project--value">
+          <div class="approve-request--input">
             <input v-model="approveObj.projectName" class="input title-field" type="text" disabled>
           </div>
         </el-row>
@@ -21,7 +21,7 @@
         </el-row>
 
         <el-row>
-          <div class="update-project--value">
+          <div class="approve-request--input">
             <input v-model="approveObj.cardName" class="input title-field" disabled>
           </div>
         </el-row>
@@ -33,7 +33,7 @@
         </el-row>
 
         <el-row>
-          <div class="update-project--value">
+          <div class="approve-request--input">
             <input v-model="approveObj.reason" class="input title-field" disabled>
           </div>
         </el-row>
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style scoped>
-.update-project--value {
+.approve-request--input {
   margin-bottom: 20px;
 }
 .create-section {

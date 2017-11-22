@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="content" align="left">
+  <div class="create-project--container" align="left">
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>New Project +</b></h6>
@@ -34,7 +34,7 @@
 
     <div class="columns">
       <div class="column">
-        <textarea v-model="projectDescription" class="textarea" placeholder="Description"></textarea>
+        <textarea v-model="projectDescription" class="create-project--textarea textarea" placeholder="Description"></textarea>
       </div>
     </div>
 
@@ -89,9 +89,6 @@ export default {
 </script>
 
 <style scoped>
-.create-section {
-  margin: 20px;
-}
 .no-border {
   border: 0;
 }
@@ -105,7 +102,7 @@ export default {
   background-color: #fff;
   height: 48px;
 }
-textarea {
+.create-project--textarea {
   margin-top: 8px;
   margin-bottom: 8px;
   border: 0;

@@ -15,7 +15,7 @@
     <!--  Internal Participants -->
     <div class="columns">
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--body">
           <b-select v-model="internalUser" placeholder="Select a name">
             <option
               v-for="option in internalUserList"
@@ -36,7 +36,7 @@
     <!--  external participants  -->
     <div class="columns">
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--table-body">
           <b-select v-model="externalUser" placeholder="Select external">
             <option
               v-for="options in externalUserList"
@@ -57,9 +57,9 @@
     <!--  Can't remove tag ?? -->
     <div class="columns">
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--table-body">
           <b-table
-              class="my-task--table"
+              class="add-participants--table"
               :data="internalTableData"
               :paginated="true"
               :per-page="5"
@@ -80,9 +80,9 @@
         </section>
       </div>
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--table-body">
           <b-table
-              class="my-task--table"
+              class="add-participants--table"
               :data="externalTableData"
               :paginated="true"
               :per-page="5"

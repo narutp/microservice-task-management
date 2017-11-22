@@ -1,16 +1,16 @@
 <template lang="html">
-  <div class="update-project--container" align="left">
+  <div class="update-project-card--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
         <h6 style="margin-top: 16px"><b>Update Task Card </b></h6>
       </div>
-      <div class="update-project--button-request" align="right">
+      <div class="update-project-card--button-request" align="right">
         <button class="button is-info" @click="requestToFinish()">
           <span>Request to finish</span>
         </button>
       </div>
-      <div class="update-project--button-request" align="right">
+      <div class="update-project-card--button-request" align="right">
         <button class="button is-danger" @click="requestToDelete()" :disabled="!ownerAuthority">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
@@ -35,7 +35,7 @@
 
     <div class="columns">
       <div class="column">
-        <textarea :disabled="!ownerAuthority" v-model="cardDescription" class="textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
+        <textarea :disabled="!ownerAuthority" v-model="cardDescription" class="textarea">
         </textarea>
       </div>
     </div>
@@ -67,9 +67,9 @@
       </div>
     </div>
 
-    <section class="my-task-table--body">
+    <section class="update-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="update-project-card--table"
           :data="tableData"
           :paginated="true"
           :per-page="5"
@@ -105,9 +105,9 @@
     </section>
 
     <hr>
-    <section class="my-task-table--body">
+    <section class="update-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="update-project-card--table"
           :data="tableData2"
           :paginated="true"
           :per-page="5"
@@ -289,27 +289,4 @@ export default {
 .update-project--button-request-finish {
   margin: 0;
 }
-/*.create-section {
-  margin: 20px;
-}
-.no-border {
-  border: 0;
-}
-.placeholder {
-  color: #BDBDBD;
-}
-.title-field {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  background-color: #fff;
-  height: 48px;
-}
-textarea {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  background-color: #fff;
-  height: 300px;
-}*/
 </style>

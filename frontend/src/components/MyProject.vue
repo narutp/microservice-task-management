@@ -1,16 +1,16 @@
 <template lang="html">
-  <div class="my-task--container">
-    <section class="my-task-table--body">
+  <div class="my-project--container">
+    <section class="my-project--table-body">
       <div style="font-size: 18px;">
         <b>My Project</b>
       </div>
-      <div class="my-task--button" align="right">
+      <div class="my-project--button" align="right">
         <button class="button is-primary" @click="createCard()">
           <i class="fa fa-plus" aria-hidden="true"> Create Card</i>
         </button>
       </div>
       <b-table
-          class="my-task--table"
+          class="my-project--table"
           :data="tableData"
           :paginated="true"
           :per-page="7"
@@ -26,7 +26,7 @@
               </b-table-column>
 
               <b-table-column field="taskCardName" label="Task Card" sortable>
-                  <u><span @click="updateCard(props.row)" class="my-task--span-task-name">{{ props.row.name }}</span></u>
+                  <u><span @click="updateCard(props.row)" class="my-project--span-project-name">{{ props.row.name }}</span></u>
               </b-table-column>
 
               <b-table-column field="registeredDate" label="Registered Date" sortable>
@@ -102,14 +102,14 @@ export default {
 </script>
 
 <style scoped>
-.my-task--container {
+.my-project--container {
   background-color: #fff;
   padding: 30px;
 }
-.my-task--table {
+.my-project--table {
   margin-top: 20px;
 }
-.my-task--span-task-name {
+.my-project--span-project-name {
   cursor:pointer;
   color:blue;
   text-decoration:underline;
