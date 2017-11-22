@@ -14,6 +14,21 @@
 
     <div class="columns">
       <div class="column">
+        <div class="create-project-card--alert">
+          <template>
+            <el-alert v-if="alertInfo" type="info" show-icon :closable="false"
+              title="Please fill all information below">
+            </el-alert>
+            <el-alert v-if="alertError" type="error" show-icon :closable="false"
+              title="Please fill all information to create project card">
+            </el-alert>
+          </template>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
         <input v-model="cardName" class="input title-field" type="text" placeholder="Card name">
       </div>
       <div class="column">
@@ -163,6 +178,8 @@ export default {
       allProject: [],
       internalArrLength: '',
       externalArrLength: '',
+      alertInfo: true,
+      alertError: false,
       startDateOption: {
         disabledDate (time) {
           return time.getTime() < Date.now() - 8.64e7
@@ -172,6 +189,12 @@ export default {
   },
   methods: {
     async addParticipant () {
+      // check if user fill all details except description or else the alert error will occur
+      if (this.cardName === '' || this.project === '' || this.date[0] === undefined) {
+        this.alertError = true
+        this.alertInfo = false
+      }
+
       let idUser = localStorage.getItem('user_userId')
       let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
       let idCard = ''
@@ -179,7 +202,9 @@ export default {
         let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
         idCard = cardResponse.data.idProjectCard
       } else {
-        alert('failed')
+        // if response failed, the alert error occur
+        this.alertError = true
+        this.alertInfo = false
       }
       localStorage.setItem('id_create_card', idCard)
       let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
@@ -187,7 +212,7 @@ export default {
       // console.log(idDepartmentResponse)
 
       localStorage.setItem('id_department_owner_card', idDepartment)
-      this.$router.replace({ path: '/add-participants' })
+      // this.$router.replace({ path: '/add-participants' })
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
