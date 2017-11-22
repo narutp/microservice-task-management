@@ -212,7 +212,7 @@ export default {
       // console.log(idDepartmentResponse)
 
       localStorage.setItem('id_department_owner_card', idDepartment)
-      // this.$router.replace({ path: '/add-participants' })
+      this.$router.replace({ path: '/add-participants' })
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
