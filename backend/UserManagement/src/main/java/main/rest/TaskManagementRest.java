@@ -123,7 +123,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/user/username")
+	@Path("get/user/username")    
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUserByUsernameAPI(@QueryParam("username") String username) {
 		return userDAO.getUserByUsername(username);
@@ -346,7 +346,7 @@ public class TaskManagementRest {
 	@POST
 	@Path("add/history")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean addHistoryByIdUserList(@QueryParam("idProjectCard") String idProjectCard,
+	public boolean addHistoryByIdUserListAPI(@QueryParam("idProjectCard") String idProjectCard,
 			@QueryParam("idInternalList") List<String> idInternalList,
 			@QueryParam("idExternalList") List<String> idExternalList) {
 		List<String> idUserList = new ArrayList<String>();
