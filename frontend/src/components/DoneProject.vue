@@ -1,13 +1,13 @@
 <template lang="html">
-  <div class="done-task--container">
-    <section class="done-task-table--body">
+  <div class="done-project--container">
+    <section class="done-project--table-body">
       <div style="font-size: 18px;">
         <b>Done Card</b>
       </div>
-      <div class="done-task--button" align="right">
+      <div class="done-project--button" align="right">
       </div>
       <b-table
-          class="done-task--table"
+          class="done-project--table"
           :data="tableData"
           :paginated="isPaginated"
           :per-page="7"
@@ -76,11 +76,11 @@ export default {
 </script>
 
 <style scoped>
-.done-task--container {
+.done-project--container {
   background-color: #fff;
   padding: 30px;
 }
-.done-task--table {
+.done-project--table {
   margin-top: 20px;
 }
 </style>

@@ -2,21 +2,22 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import Home from '@/components/Home'
+import Dashboard from '@/components/Dashboard'
 import AddParticipants from '@/components/AddParticipants'
-import CreateTask from '@/components/CreateTask'
-import CreateTaskCard from '@/components/CreateTaskCard'
-import UpdateTaskCard from '@/components/UpdateTaskCard'
-import MyTask from '@/components/MyTask'
-import DepartmentTask from '@/components/DepartmentTask'
-import TaskManagement from '@/components/TaskManagement'
-import DoneTask from '@/components/DoneTask'
+import CreateProject from '@/components/CreateProject'
+import CreateProjectCard from '@/components/CreateProjectCard'
+import UpdateProjectCard from '@/components/UpdateProjectCard'
+import MyProject from '@/components/MyProject'
+import DepartmentProject from '@/components/DepartmentProject'
+import ProjectManagement from '@/components/ProjectManagement'
+import DoneProject from '@/components/DoneProject'
 import RequestProject from '@/components/RequestProject'
 import UpdateUser from '@/components/UpdateUser'
 import UpdateParticipants from '@/components/UpdateParticipants'
 
 Vue.use(Router)
 
+// Link each url with vue components
 export default new Router({
   routes: [
     {
@@ -30,29 +31,29 @@ export default new Router({
       component: Register
     },
     {
-      path: '/home',
-      name: 'Home',
-      component: Home
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/my-project',
-      name: 'MyTask',
-      component: MyTask
+      name: 'MyProject',
+      component: MyProject
     },
     {
       path: '/create-project',
-      name: 'CreateTask',
-      component: CreateTask
+      name: 'CreateProject',
+      component: CreateProject
     },
     {
       path: '/create-card',
-      name: 'CreateTaskCard',
-      component: CreateTaskCard
+      name: 'CreateProjectCard',
+      component: CreateProjectCard
     },
     {
       path: '/update-card',
-      name: 'UpdateTaskCard',
-      component: UpdateTaskCard
+      name: 'UpdateProjectCard',
+      component: UpdateProjectCard
     },
     {
       path: '/update-participants',
@@ -66,18 +67,18 @@ export default new Router({
     },
     {
       path: '/project-management',
-      name: 'TaskManagement',
-      component: TaskManagement
+      name: 'ProjectManagement',
+      component: ProjectManagement
     },
     {
       path: '/department-project',
-      name: 'DepartmentTask',
-      component: DepartmentTask
+      name: 'DepartmentProject',
+      component: DepartmentProject
     },
     {
       path: '/done-project',
-      name: 'DoneTask',
-      component: DoneTask
+      name: 'DoneProject',
+      component: DoneProject
     },
     {
       path: '/request-project',

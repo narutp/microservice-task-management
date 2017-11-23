@@ -10,7 +10,7 @@
           <b>Microservice Task Management | </b>
           <span v-if="$route.path === '/'">Sign in</span>
           <span v-if="$route.path === '/register'">Sign up</span>
-          <span v-if="$route.path === '/home'">Dashboard</span>
+          <span v-if="$route.path === '/dashboard'">Dashboard</span>
           <span v-if="index == 2">My Project</span>
           <span v-if="index == 3">Department Project</span>
           <span v-if="index == 4">Done Project</span>
@@ -18,8 +18,8 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="button is-dark pull-right logout-button" @click="logout()">
-            Logout
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
           </button>
         </div>
         <el-col class="left" :span="4" v-if="$route.path !== '/' && $route.path !== '/register'">
@@ -31,7 +31,7 @@
           </div><hr>
           <el-menu align="left" mode="vertical" :default-active="index" class="el-menu-vertical-demo app--menubar" v-if="$route.path !== '/' && $route.path !== '/register'">
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
-              <template slot="title">Dashboard</template>
+              <i class="app--icon fa fa-pie-chart" aria-hidden="true" style="display: inline"></i>Dashboard
             </el-menu-item>
             <b-collapse :open.sync="isOpen">
               <div slot="trigger" class="full-width">
@@ -46,13 +46,13 @@
               </div>
               <div class="card-content">
                 <el-menu-item index="2" class="app--menu-item" @click="MyProjectClicked()">
-                  <template slot="title">My Project</template>
+                  <i class="app--icon fa fa-address-book-o" aria-hidden="true" style="display: inline"></i>My Project
                 </el-menu-item>
                 <el-menu-item index="3" class="app--menu-item" @click="DepartmentProjectClicked()">
-                  <template slot="title">Department Project</template>
+                  <i class="app--icon fa fa-building" aria-hidden="true" style="display: inline"></i>Department Project
                 </el-menu-item>
                 <el-menu-item index="4" class="app--menu-item" @click="DoneProjectClicked()">
-                  <template slot="title">Done Card</template>
+                  <i class="app--icon fa fa-check-circle" aria-hidden="true" style="display: inline"></i>Done Card
                 </el-menu-item>
               </div>
             </b-collapse>
@@ -68,10 +68,10 @@
               </div>
               <div class="card-content">
                 <el-menu-item index="5" class="app--menu-item" @click="ProjectManagementClicked()">
-                  <template slot="title">Project Management</template>
+                  <i class="app--icon fa fa-get-pocket" aria-hidden="true" style="display: inline"></i>Project Management
                 </el-menu-item>
                 <el-menu-item index="6" class="app--menu-item" @click="RequestProjectClicked()">
-                  <template slot="title">Request Project</template>
+                  <i class="app--icon fa fa-reply-all" aria-hidden="true" style="display: inline"></i>Request Project
                 </el-menu-item>
               </div>
             </b-collapse>
@@ -120,7 +120,7 @@ export default {
     //   getUser: 'GET_USER'
     // }),
     index () {
-      if (this.$route.path === '/home') { return '1' }
+      if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
       if (this.$route.path === '/done-project') { return '4' }
@@ -143,7 +143,7 @@ export default {
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {
-      this.$router.replace({ path: '/home' })
+      this.$router.replace({ path: '/dashboard' })
     },
     MyProjectClicked () {
       this.$router.replace({ path: '/my-project' })
@@ -193,8 +193,11 @@ export default {
 }
 .app--user-detail {
   cursor:pointer;
-  color:green;
+  color: #DC4C46;
   text-decoration:underline;
+}
+.app--icon {
+  margin-right: 8px;
 }
 .left {
   /*background-color: #2A323B;*/
@@ -207,10 +210,10 @@ export default {
   padding: 50px;
 }
 
-.logout-button {
-  width: 100px;
-  border-radius: 30px;
-  margin: 5px;
+.app--logout-button {
+  border-radius: 50%;
+  top: 20%;
+  right: 1%;
 }
 
 .notification {

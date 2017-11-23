@@ -18,7 +18,7 @@
       </div>
 
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="update-participants--table-body">
           <b-select v-model="internalUser" placeholder="Select a name">
             <option
               v-for="option in internalUserList"
@@ -43,7 +43,7 @@
       </div>
 
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="update-participants--table-body">
           <b-select v-model="externalUser" placeholder="Select external">
             <option
               v-for="options in externalUserList"
@@ -62,7 +62,7 @@
     </div>
 
     <!--  Can't remove tag ?? -->
-    <section class="add-participants-tag--body">
+    <section class="update-participants--tag-body">
       <el-tag
         v-for="tag in internalAddList"
         :key="tag"
@@ -71,7 +71,7 @@
         {{tag}}
       </el-tag>
     </section>
-    <section class="add-participants-tag--body">
+    <section class="update-participants--tag-body">
       <el-tag
         v-for="tags in externalAddList"
         :key="tags"

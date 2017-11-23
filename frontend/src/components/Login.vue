@@ -1,41 +1,40 @@
 <template>
   <div class="login--container inline-template">
-    <div class="col">
-      <div class="login--panel">
-        <div class="column login--box">
-          <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
-          <div class="field">
-            <p class="control has-icons-left has-icons-right">
-              <input v-model="username" class="input" type="" placeholder="Username">
-              <span class="icon is-small is-left">
-                <i class="fa fa-envelope"></i>
-              </span>
-            </p>
-          </div>
-          <div class="field">
-            <p class="control has-icons-left">
-              <input v-model="password" class="input" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fa fa-lock"></i>
-              </span>
-            </p>
-          </div>
-          <div>
-          <hr>
-          <button class="button is-danger is-outlined button margin-right" @click="register()">
-            Register
-          </button>
-          <button class="button is-danger button" @click="login()">
-            Login
-          </button>
-          <span class="login--signup">Forget your password?</span>
-          </div>
-          <div class="notification is-danger" v-if="checkLoginFailed">
-            Wrong username or password
-          </div>
+    <div class="login--panel">
+      <div class="column login--box">
+        <i class="fa fa-user-circle fa-5x login--user-icon" aria-hidden="true"></i>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input v-model="username" class="input" type="" placeholder="Username">
+            <span class="icon is-small is-left">
+              <i class="fa fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input v-model="password" class="input" type="password" placeholder="Password">
+            <span class="icon is-small is-left">
+              <i class="fa fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <div>
+        <hr>
+        <button class="button is-danger is-outlined button margin-right" @click="register()">
+          Register
+        </button>
+        <button class="button is-danger button" @click="login()">
+          Login
+        </button>
+        <span class="login--signup">Forget your password?</span>
+        </div>
+        <div class="notification is-danger" v-if="checkLoginFailed">
+          Wrong username or password
         </div>
       </div>
     </div>
+    <b-loading :active.sync="isLoading"></b-loading>
   </div>
 
 </template>
@@ -48,7 +47,8 @@ export default {
     return {
       username: '',
       password: '',
-      checkLoginFailed: false
+      checkLoginFailed: false,
+      isLoading: false
     }
   },
   components: {
@@ -74,6 +74,8 @@ export default {
     async setUser (username) {
       let response = await Axios.get(`http://localhost:8090/get/user/username?username=${username}`)
       // Save data to the current local store
+      this.isLoading = true
+
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
       localStorage.setItem('user_email', response.data.email)
@@ -93,17 +95,11 @@ export default {
       localStorage.setItem('user_department', departmentResponse.data.name)
       localStorage.setItem('user_position', positionResponse.data.name)
 
-      console.log(localStorage.getItem('user_name'))
-      console.log(localStorage.getItem('user_task_authority'))
-      console.log(localStorage.getItem('user_email'))
-      console.log(localStorage.getItem('user_birthdate'))
-      console.log(localStorage.getItem('user_phone'))
-      console.log(localStorage.getItem('user_password'))
-      console.log(localStorage.getItem('user_department'))
-      console.log(localStorage.getItem('user_position'))
-
-      this.$router.go({ path: '/home', force: true })
-      this.$router.replace({ path: '/home' })
+      setTimeout(() => {
+        this.isLoading = false
+        this.$router.go({ path: '/dashboard', force: true })
+        this.$router.replace({ path: '/dashboard' })
+      }, 2 * 1000)
     }
   }
 }

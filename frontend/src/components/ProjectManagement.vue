@@ -1,17 +1,17 @@
 <template lang="html">
-  <div class="task-management--container">
-    <section class="task-management-table--body">
+  <div class="project-management--container">
+    <section class="project-management--table-body">
       <div style="font-size: 18px;">
         <b>Project Management</b>
       </div>
-      <div class="task-management--button" align="right">
+      <div class="project-management--button" align="right">
         <button class="button is-primary" @click="createProject()">
           <i class="fa fa-plus" aria-hidden="true"> Create Project</i>
         </button>
       </div>
       <!-- {{ tableData }} -->
       <b-table
-          class="task-management--table"
+          class="project-management--table"
           :data="tableData"
           :paginated="true"
           :per-page="7"
@@ -23,7 +23,7 @@
               </b-table-column>
 
               <b-table-column field="projectName" label="Project Name" sortable>
-                  <u><span @click="updateProject(props.row)" class="project-management--span-task-name"> {{ props.row.name }} </span></u>
+                  <u><span @click="updateProject(props.row)" class="project-management--span-project-name"> {{ props.row.name }} </span></u>
                   <!-- {{ props.row }} -->
               </b-table-column>
 
@@ -37,12 +37,12 @@
           </template>
       </b-table>
     </section>
-    <update-task :update-project-list="updateProjectList"></update-task>
+    <update-project :update-project-list="updateProjectList"></update-project>
   </div>
 </template>
 
 <script>
-import UpdateTask from '@/components/UpdateTask'
+import UpdateProject from '@/components/UpdateProject'
 import Axios from 'axios'
 export default {
   data () {
@@ -81,21 +81,21 @@ export default {
     }
   },
   components: {
-    UpdateTask
+    UpdateProject
   }
 }
 </script>
 
 <style scoped>
 /* TODO move all clas-container css to main css */
-.task-management--container {
+.project-management--container {
   background-color: #fff;
   padding: 30px;
 }
-.task-management--table {
+.project-management--table {
   margin-top: 20px;
 }
-.project-management--span-task-name {
+.project-management--span-project-name {
   cursor:pointer;
   color:blue;
   text-decoration:underline;

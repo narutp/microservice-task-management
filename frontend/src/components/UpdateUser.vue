@@ -143,7 +143,7 @@
       </el-row>
       <!--  User history part  -->
       <el-row v-if="index === false">
-        <section class="update-user--table--container">
+        <section class="update-user--table-container">
           <div style="font-size: 18px;" align="center">
             <b>User history</b>
           </div>
@@ -348,8 +348,8 @@ export default {
       localStorage.setItem('user_department', this.form.department)
       localStorage.setItem('user_position', this.form.position)
 
-      this.$router.go({ path: '/home', force: true })
-      this.$router.replace({ path: '/home' })
+      this.$router.go({ path: '/dashboard', force: true })
+      this.$router.replace({ path: '/dashboard' })
     }
   }
 }

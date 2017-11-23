@@ -15,7 +15,7 @@
     <!--  Internal Participants -->
     <div class="columns">
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--body">
           <b-select v-model="internalUser" placeholder="Select a name">
             <option
               v-for="option in internalUserList"
@@ -36,7 +36,7 @@
     <!--  external participants  -->
     <div class="columns">
       <div class="column">
-        <section class="my-task-table--body">
+        <section class="add-participants--table-body">
           <b-select v-model="externalUser" placeholder="Select external">
             <option
               v-for="options in externalUserList"
@@ -55,25 +55,54 @@
     </div>
 
     <!--  Can't remove tag ?? -->
-    <section class="add-participants-tag--body">
-      <el-tag
-        v-for="tag in internalAddList"
-        :key="tag"
-        closable
-        type="success">
-        {{tag}}
-      </el-tag>
-    </section>
-    <section class="add-participants-tag--body">
-      <el-tag
-        v-for="tags in externalAddList"
-        :key="tags"
-        closable
-        @close="handleClose(tag)"
-        type="primary">
-        {{tags}}
-      </el-tag>
-    </section>
+    <div class="columns">
+      <div class="column">
+        <section class="add-participants--table-body">
+          <b-table
+              class="add-participants--table"
+              :data="internalTableData"
+              :paginated="true"
+              :per-page="5"
+              default-sort="title">
+              <template scope="props">
+                <b-table-column field="list" width="350" label="Internal list" sortable>
+                  <span class="tag is-success">
+                      {{ props.row }}
+                  </span>
+                </b-table-column>
+                <b-table-column field="option" label="Option" centered>
+                  <a class="button is-small is-danger button" @click="deleteInternalParticipant(props.row)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </a>
+                </b-table-column>
+              </template>
+          </b-table>
+        </section>
+      </div>
+      <div class="column">
+        <section class="add-participants--table-body">
+          <b-table
+              class="add-participants--table"
+              :data="externalTableData"
+              :paginated="true"
+              :per-page="5"
+              default-sort="title">
+              <template scope="props">
+                <b-table-column field="list" width="350" label="External list" sortable>
+                  <span class="tag is-warning">
+                      {{ props.row }}
+                  </span>
+                </b-table-column>
+                <b-table-column field="option" label="Option" centered>
+                  <a class="button is-small is-danger button" @click="deleteExternalParticipant(props.row)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </a>
+                </b-table-column>
+              </template>
+          </b-table>
+        </section>
+      </div>
+    </div>
     <hr>
     <button class="button is-success" @click="save()">
       <span>Save</span>
@@ -86,14 +115,14 @@ import Axios from 'axios'
 export default {
   data () {
     return {
+      internalTableData: [],
+      externalTableData: [],
       isPaginated: true,
       isPaginationSimple: false,
       internalUser: '',
       internalUserList: [],
-      internalAddList: [],
       externalUser: '',
-      externalUserList: [],
-      externalAddList: []
+      externalUserList: []
     }
   },
   async mounted () {
@@ -114,10 +143,24 @@ export default {
   },
   methods: {
     addInternalParticipant () {
-      this.internalAddList.push(this.internalUser)
+      this.internalTableData.push(this.internalUser)
     },
     addExternalParticipant () {
-      this.externalAddList.push(this.externalUser)
+      this.externalTableData.push(this.externalUser)
+    },
+    deleteInternalParticipant (participant) {
+      let index = this.internalTableData.indexOf(participant)
+      // Prevent null or value below 0
+      if (index > -1) {
+        this.internalTableData.splice(index, 1)
+      }
+    },
+    deleteExternalParticipant (participant) {
+      let index = this.externalTableData.indexOf(participant)
+      // Prevent null or value below 0
+      if (index > -1) {
+        this.externalTableData.splice(index, 1)
+      }
     },
     async cancleAddParticipants () {
       let idCard = localStorage.getItem('id_create_card')
@@ -131,19 +174,16 @@ export default {
     async save () {
       let idCard = localStorage.getItem('id_create_card')
       // For add only each internal or external by sending space instead of undefine empty obj to server
-      if (this.internalAddList.length === 0) {
-        this.internalAddList.push('null')
+      if (this.internalTableData.length === 0) {
+        this.internalTableData.push('null')
       }
-      if (this.externalAddList.length === 0) {
-        this.externalAddList.push('null')
+      if (this.externalTableData.length === 0) {
+        this.externalTableData.push('null')
       }
-      console.log(this.internalAddList)
-      console.log(this.externalAddList)
 
       let self = this
-      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.internalAddList}`)
-      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.externalAddList}`)
-      console.log(idExternalUserListResponse.data)
+      let idInternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.internalTableData}`)
+      let idExternalUserListResponse = await Axios.get(`http://localhost:8090/get/idUserList?nameList=${this.externalTableData}`)
       let response = await Axios.post(`http://localhost:8091/add/participants?idProjectCard=${idCard}&idInternalUserList=${idInternalUserListResponse.data}&idExternalUserList=${idExternalUserListResponse.data}`)
       if (response.data === true) {
         let historyResponse = await Axios.post(`http://localhost:8090/add/history?idProjectCard=${idCard}&idInternalList=${idInternalUserListResponse.data}&idExternalList=${idExternalUserListResponse.data}`)

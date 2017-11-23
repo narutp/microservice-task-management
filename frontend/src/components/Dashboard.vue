@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="home--container">
-    <el-row class="home--chart">
+  <div class="dashboard--container">
+    <el-row class="dashboard--chart">
       <br>
       <el-col :span="11">
         <h1><b> Organization </b></h1><br>
         <b-table
-          class="task-management--table"
+          class="dashboard--table"
           :data="tableUserData"
           :paginated="true"
           :per-page="7"
@@ -28,7 +28,7 @@
       <el-col :span="11">
         <h1><b>Task management</b></h1><br>
         <b-table
-          class="task-management--table"
+          class="dashboard--table"
           :data="tableProjectData"
           :paginated="true"
           :per-page="7"
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
 import ModalTask from '@/components/ModalTask'
 import ModalPerson from '@/components/ModalPerson'
 import Axios from 'axios'
@@ -106,11 +105,11 @@ export default {
 </script>
 
 <style scoped>
-.home--container {
+.dashboard--container {
   background-color: #fff;
   padding: 30px;
 }
-.home--table {
+.dashboard--table {
   margin-bottom: 30px;
 }
 .scroll {

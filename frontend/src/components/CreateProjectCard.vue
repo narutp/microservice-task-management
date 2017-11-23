@@ -1,75 +1,77 @@
 <template lang="html">
-  <div class="update-project--container" align="left">
+  <div class="create-project-card--container" align="left">
 
     <div class="columns">
       <div class="column is-three-quarters">
-        <h6 style="margin-top: 16px"><b>Update Task Card </b></h6>
+        <h6 style="margin-top: 16px"><b>New Card +</b></h6>
       </div>
-      <div class="update-project--button-request" align="right">
-        <button class="button is-info" @click="requestToFinish()">
-          <span>Request to finish</span>
-        </button>
-      </div>
-      <div class="update-project--button-request" align="right">
-        <button class="button is-danger" @click="requestToDelete()" :disabled="!ownerAuthority">
-          <i class="fa fa-trash" aria-hidden="true"></i>
+      <div class="column" align="right">
+        <button class="button no-border" @click="cancle()">
+          <i class="fa fa-close" aria-hidden="true"></i>
         </button>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <b>Card</b>
-        <input :disabled="!ownerAuthority" v-model="cardName" class="input title-field" type="text" placeholder="Create mood board">
-      </div>
-      <div class="column" align="right">
-        <div align="left">
-          <b>Project</b>
+        <div class="create-project-card--alert">
+          <template>
+            <el-alert v-if="alertInfo" type="info" show-icon :closable="false"
+              title="Please fill all information below">
+            </el-alert>
+            <el-alert v-if="alertError" type="error" show-icon :closable="false"
+              title="Please fill all information to create project card">
+            </el-alert>
+            <el-alert v-if="alertErrorDuplicate" type="error" show-icon :closable="false"
+              title="Duplicate project card name">
+            </el-alert>
+          </template>
         </div>
-        <el-input
-          v-model="projectName"
-          :disabled="true">
-        </el-input>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <textarea :disabled="!ownerAuthority" v-model="cardDescription" class="textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
-        </textarea>
+        <input v-model="cardName" class="input title-field" type="text" placeholder="Card name">
+      </div>
+      <div class="column">
+        <b-select v-model="project" align="right" placeholder="Project">
+          <option
+            v-for="option in allProject"
+            :value="option"
+            :key="option">
+            {{ option }}
+          </option>
+        </b-select>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <textarea v-model="description" class="textarea" placeholder="Description"></textarea>
       </div>
     </div>
 
     <div class="columns">
       <div class="column is-one-quarters">
         <el-date-picker
-          v-model="startDate"
-          type="date"
-          :disabled="true"
-          placeholder="Start date">
-        </el-date-picker>
-      </div>
-      <div class="column is-one-quarters">
-        <el-date-picker
-          v-model="endDate"
-          type="date"
-          :disabled="!ownerAuthority"
-          placeholder="End date">
+          v-model="date"
+          type="daterange"
+          range-separator=" to "
+          placeholder="Pick date range"
+          :picker-options="startDateOption">
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="updateParticipant()" :disabled="!ownerAuthority">
+        <button class="button" style="width: 200px" @click="addParticipant()">
           <span> Add Participants + </span>
         </button>
-        <!-- <button class="button" style="width: 200px" @click="addExternal()">
-          <span> Add External + </span>
-        </button> -->
       </div>
     </div>
 
-    <section class="my-task-table--body">
+    <section class="create-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="create-project-card--table"
           :data="tableData"
           :paginated="true"
           :per-page="5"
@@ -91,7 +93,7 @@
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Email" sortable>
+              <b-table-column field="email" label="Registered Date" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
@@ -105,9 +107,9 @@
     </section>
 
     <hr>
-    <section class="my-task-table--body">
+    <section class="create-project-card--table-body">
       <b-table
-          class="my-task--table"
+          class="create-project-card--table"
           :data="tableData2"
           :paginated="true"
           :per-page="5"
@@ -129,7 +131,7 @@
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Email" sortable>
+              <b-table-column field="email" label="Registered Date" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
@@ -146,21 +148,18 @@
     <br>
     <div class="columns" align="center">
       <div class="column">
-          <a :disabled="!ownerAuthority" class="button is-dark" @click="updateCard()">Update Card</a>
+          <a class="button is-dark" @click="createCard()">Create Card</a>
       </div>
     </div>
-    <request-finish-dialog :request-finish-list="requestFinishList"></request-finish-dialog>
-    <request-delete-dialog :request-delete-list="requestDeleteList"></request-delete-dialog>
   </div>
 </template>
 
 <script>
-import RequestDeleteDialog from '@/components/RequestDeleteDialog'
-import RequestFinishDialog from '@/components/RequestFinishDialog'
 import Axios from 'axios'
 import moment from 'moment'
 export default {
   data () {
+    // TODO Bug when input data into the table, the table must already have temp data
     return {
       tableData: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
@@ -174,87 +173,92 @@ export default {
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
       { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
-      isPaginated: true,
-      isPaginationSimple: false,
       cardName: '',
-      cardDescription: '',
-      projectName: '',
-      startDate: '',
+      project: '',
+      description: '',
+      date: '',
       endDate: '',
-      internalList: '',
-      externalList: '',
-      ownerAuthority: false,
-      idCard: '',
-      idUser: '',
-      requestFinishList: {
-        idCard: '',
-        idUser: '',
-        dialogRequestFinishClicked: false
-      },
-      requestDeleteList: {
-        idCard: '',
-        idUser: '',
-        dialogRequestDeleteClicked: false
+      allProject: [],
+      internalArrLength: '',
+      externalArrLength: '',
+      alertInfo: true,
+      alertError: false,
+      alertErrorDuplicate: false,
+      startDateOption: {
+        disabledDate (time) {
+          return time.getTime() < Date.now() - 8.64e7
+        }
       }
     }
   },
   methods: {
-    async updateCard () {
-      let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
-      this.internalList = cardResponse.data.internalParticipants
-      this.externalList = cardResponse.data.externalParticipants
-      let formatEndDate = moment(this.endDate).format('YYYY-MM-DD')
-      let updateResponse = await Axios.post(`http://localhost:8091/update/project-card?idProjectCard=${this.idCard}&name=${this.cardName}&description=${this.cardDescription}&endDate=${formatEndDate}&internalParticipants=${this.internalList}&externalParticipants=${this.externalList}`)
+    async addParticipant () {
+      // check if user fill all details except description or else the alert error will occur
+      if (this.cardName === '' || this.project === '' || this.date[0] === undefined) {
+        this.alertError = true
+        this.alertInfo = false
+      }
+      // check if the project card name is same in database
+      let checkDuplicateResponse = await Axios.get(`http://localhost:8091/check/project-card-name?projectName=${this.project}&projectCardName=${this.cardName}`)
+      // false is already have this project name
 
-      if (updateResponse.data === true) {
+      if (checkDuplicateResponse.data === true) {
+        let idUser = localStorage.getItem('user_userId')
+        let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
+        let idCard = ''
+        if (response.data === true) {
+          let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
+          idCard = cardResponse.data.idProjectCard
+        } else {
+          // if response failed, the alert error occur
+          this.alertError = true
+          this.alertInfo = false
+        }
+        localStorage.setItem('id_create_card', idCard)
+        let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
+        let idDepartment = idDepartmentResponse.data
+        // console.log(idDepartmentResponse)
+
+        localStorage.setItem('id_department_owner_card', idDepartment)
+        this.$router.replace({ path: '/add-participants' })
+      }
+      this.alertError = false
+      this.alertInfo = false
+      this.alertErrorDuplicate = true
+    },
+    async cancle () {
+      let idCard = localStorage.getItem('id_create_card')
+      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card?idProjectCard=${idCard}`)
+      if (cancleResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
       } else {
-        alert('fail to update card')
+        alert('failed')
       }
     },
-    requestToFinish () {
-      this.requestFinishList.dialogRequestFinishClicked = true
-    },
-    requestToDelete () {
-      this.requestDeleteList.dialogRequestDeleteClicked = true
-    },
-    updateParticipant () {
-      this.$router.replace({ path: '/update-participants' })
+    createCard () {
+      this.$router.replace({ path: 'my-project' })
     }
   },
   async mounted () {
-    this.idCard = localStorage.getItem('card_update')
-    this.idUser = localStorage.getItem('user_userId')
-    // Prepare data for sending when click request button
-    // Reason that have to put into 1 obj because to mutate the props that been send.
-    this.requestFinishList.idCard = this.idCard
-    this.requestFinishList.idUser = this.idUser
-    this.requestDeleteList.idCard = this.idCard
-    this.requestDeleteList.idUser = this.idUser
+    let response = await Axios.get(`http://localhost:8091/get/all-project/`)
 
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
-    let idUserOfCard = cardResponse.data.idUser
-
-    // Check owner authority (can be update or not)
-    if (this.idUser === idUserOfCard) {
-      this.ownerAuthority = true
-    } else {
-      this.ownerAuthority = false
+    // can now get project at once by set all project array to equal to data that recieve first
+    // then set it to equal to project name
+    this.allProject = response.data
+    for (let i = 0; i < response.data.length; i++) {
+      this.allProject[i] = response.data[i].name
     }
 
-    this.cardName = cardResponse.data.name
-    this.cardDescription = cardResponse.data.description
-    this.startDate = cardResponse.data.startDate
-    this.endDate = cardResponse.data.endDate
-
-    let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${cardResponse.data.idProject}`)
-    this.projectName = projectResponse.data.name
+    // get card to show participants inside the card
+    let idCard = localStorage.getItem('id_create_card')
+    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
 
     // get arr length of both internal and external user in a card to find their names
-    let internalArrLength = cardResponse.data.internalParticipants.length
-    let externalArrLength = cardResponse.data.externalParticipants.length
+    this.internalArrLength = cardResponse.data.internalParticipants.length
+    this.externalArrLength = cardResponse.data.externalParticipants.length
+
     // set value of internal participant table
-    for (let i = 0; i < internalArrLength; i++) {
+    for (let i = 0; i < this.internalArrLength; i++) {
       let idInternalUser = cardResponse.data.internalParticipants[i]
       let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idInternalUser}`)
       let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${internalNameResponse.data.idPosition}`)
@@ -266,7 +270,7 @@ export default {
       this.tableData[i].department = internalDepartmentResponse.data.name
     }
     // set value of external participant table
-    for (let i = 0; i < externalArrLength; i++) {
+    for (let i = 0; i < this.externalArrLength; i++) {
       let idExternalUser = cardResponse.data.externalParticipants[i]
       let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idExternalUser}`)
       let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${externalNameResponse.data.idPosition}`)
@@ -278,38 +282,19 @@ export default {
       this.tableData2[i].department = externalDepartmentResponse.data.name
     }
   },
-  components: {
-    RequestFinishDialog,
-    RequestDeleteDialog
+  // change format of date each time that click
+  watch: {
+    'date': function (val) {
+      this.date[0] = moment(val[0]).format('YYYY-MM-DD')
+      this.date[1] = moment(val[1]).format('YYYY-MM-DD')
+    }
   }
 }
 </script>
 
 <style scoped>
-.update-project--button-request-finish {
-  margin: 0;
-}
-/*.create-section {
-  margin: 20px;
-}
-.no-border {
-  border: 0;
-}
-.placeholder {
-  color: #BDBDBD;
-}
-.title-field {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
+.create-project-card--container {
   background-color: #fff;
-  height: 48px;
+  padding: 30px;
 }
-textarea {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  background-color: #fff;
-  height: 300px;
-}*/
 </style>

@@ -1,12 +1,12 @@
 <template lang="html">
-  <div class="department-task--container">
-    <section class="department-task-table--body">
+  <div class="department-project--container">
+    <section class="department-project--table-body">
       <div style="font-size: 18px;">
         <b>Department {{department}}</b>
       </div>
       <br>
       <b-table
-          class="task-management--table"
+          class="department-project--table"
           :data="tableData"
           :paginated="true"
           :per-page="7"
@@ -90,11 +90,11 @@ export default {
 </script>
 
 <style scoped>
-.department-task--container {
+.department-project--container {
   background-color: #fff;
   padding: 30px;
 }
-.department-task--table {
+.department-project--table {
   margin-top: 20px;
 }
 </style>
