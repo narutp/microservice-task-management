@@ -60,6 +60,7 @@ export default {
   },
   async mounted () {
     let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    console.log(response.data)
     this.tableData = response.data
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
