@@ -517,6 +517,22 @@ public class TaskManagementRest {
 		return !projectCardDAO.isProjectCardNameExist(projectCardName,projectName);
 	}
 	
+	@GET
+	@Path("get/internal-participants")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getInternalUserListAPI(@QueryParam("idProjectCard") String idProjectCard) {
+		return projectCardDAO.getInternalUserList(idProjectCard);
+	}
+	
+	@GET
+	@Path("get/external-participants")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getExternalUserListAPI(@QueryParam("idProjectCard") String idProjectCard) {
+		return projectCardDAO.getExternalUserList(idProjectCard);
+	}
+	
+	
+	
 	
 
 }
