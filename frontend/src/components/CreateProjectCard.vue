@@ -253,6 +253,7 @@ export default {
     let idCard = localStorage.getItem('id_create_card')
     let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
 
+    console.log(cardResponse.data)
     // get arr length of both internal and external user in a card to find their names
     this.internalArrLength = cardResponse.data.internalParticipants.length
     this.externalArrLength = cardResponse.data.externalParticipants.length
