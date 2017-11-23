@@ -391,7 +391,7 @@ public class TaskManagementRest {
 	}
 	
 	@GET
-	@Path("get/id-project-card-list")
+	@Path("get/id-project-card-history")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getIdProjectCardListAPI(@QueryParam("idUser") String idUser) {
 		return userHistoryDAO.getIdProjectCardList(idUser);
