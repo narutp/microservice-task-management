@@ -377,4 +377,10 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		
 	}
 
+	@Override
+	public List<String> getIdProjectCardList(String idUser) {
+		UserHistory userHistory = getUserHistoryByIdUser(idUser);
+		return userHistory.getIdProjectCards();
+	}
+
 }
