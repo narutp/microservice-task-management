@@ -25,6 +25,9 @@
             <el-alert v-if="alertErrorDuplicate" type="error" show-icon :closable="false"
               title="Duplicate project card name">
             </el-alert>
+            <el-alert v-if="disabledInput" type="success" show-icon :closable="false"
+              title="Add participant success">
+            </el-alert>
           </template>
         </div>
       </div>
@@ -32,10 +35,10 @@
 
     <div class="columns">
       <div class="column">
-        <input v-model="cardName" class="input title-field" type="text" placeholder="Card name">
+        <input v-model="cardName" class="input title-field" type="text" placeholder="Card name" :disabled="disabledInput">
       </div>
       <div class="column">
-        <b-select v-model="project" align="right" placeholder="Project">
+        <b-select v-model="project" align="right" placeholder="Project" :disabled="disabledInput">
           <option
             v-for="option in allProject"
             :value="option"
@@ -48,13 +51,14 @@
 
     <div class="columns">
       <div class="column">
-        <textarea v-model="description" class="textarea" placeholder="Description"></textarea>
+        <textarea v-model="description" class="textarea" placeholder="Description" :disabled="disabledInput"></textarea>
       </div>
     </div>
 
     <div class="columns">
       <div class="column is-one-quarters">
         <el-date-picker
+          :disabled="disabledInput"
           v-model="date"
           type="daterange"
           range-separator=" to "
@@ -63,7 +67,7 @@
         </el-date-picker>
       </div>
       <div class="column" align="right">
-        <button class="button" style="width: 200px" @click="addParticipant()">
+        <button class="button" style="width: 200px" @click="addParticipant()" :disabled="disabledInput">
           <span> Add Participants + </span>
         </button>
       </div>
@@ -72,15 +76,12 @@
     <section class="create-project-card--table-body">
       <b-table
           class="create-project-card--table"
-          :data="tableData"
+          :data="tableDataInternal"
           :paginated="true"
           :per-page="5"
+          :loading="isInternalLoading"
           default-sort="title">
           <template scope="props">
-              <b-table-column field="no" label="No" width="50" sortable numeric centered>
-                  {{ props.row.no }}
-              </b-table-column>
-
               <b-table-column field="department" label="Department" width="150" sortable centered>
                   {{ props.row.department }}
               </b-table-column>
@@ -89,17 +90,17 @@
                   {{ props.row.user }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Position" sortable>
+              <b-table-column field="position" label="Position" sortable>
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Registered Date" sortable>
+              <b-table-column field="email" label="Email" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
               <b-table-column field="status" label="Status"centered>
-                  <span class="tag is-success" v-if="props.row.status === 'INTERNAL'">
-                      {{ props.row.status }}
+                  <span class="tag is-success">
+                      Internal
                   </span>
               </b-table-column>
           </template>
@@ -110,15 +111,12 @@
     <section class="create-project-card--table-body">
       <b-table
           class="create-project-card--table"
-          :data="tableData2"
+          :data="tableDataExternal"
           :paginated="true"
           :per-page="5"
+          :loading="isExternalLoading"
           default-sort="title">
           <template scope="props">
-              <b-table-column field="no" label="No" width="50" sortable numeric centered>
-                  {{ props.row.no }}
-              </b-table-column>
-
               <b-table-column field="department" label="Department" width="150" sortable centered>
                   {{ props.row.department }}
               </b-table-column>
@@ -127,17 +125,17 @@
                   {{ props.row.user }}
               </b-table-column>
 
-              <b-table-column field="writer" label="Position" sortable>
+              <b-table-column field="position2" label="Position" sortable>
                   {{ props.row.position }}
               </b-table-column>
 
-              <b-table-column field="email" label="Registered Date" sortable>
+              <b-table-column field="email" label="Email" sortable>
                   {{ props.row.email }}
               </b-table-column>
 
               <b-table-column field="status" label="Status"centered>
-                  <span class="tag is-info" v-if="props.row.status === 'EXTERNAL'">
-                      {{ props.row.status }}
+                  <span class="tag is-info">
+                      External
                   </span>
               </b-table-column>
           </template>
@@ -161,23 +159,16 @@ export default {
   data () {
     // TODO Bug when input data into the table, the table must already have temp data
     return {
-      tableData: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
-      tableData2: [{ 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' },
-      { 'no': '', 'user': '', 'department': '', 'position': '', 'email': '', 'status': '' }],
+      tableDataInternal: [{ 'user': '', 'department': '', 'position': '', 'email': '' }],
+      tableDataExternal: [{ 'user': '', 'department': '', 'position': '', 'email': '' }],
       cardName: '',
       project: '',
       description: '',
       date: '',
-      endDate: '',
+      isInternalLoading: true,
+      isExternalLoading: true,
+      // disabled input is false when come in first time, but will be true if already add participant
+      disabledInput: false,
       allProject: [],
       internalArrLength: '',
       externalArrLength: '',
@@ -251,37 +242,114 @@ export default {
 
     // get card to show participants inside the card
     let idCard = localStorage.getItem('id_create_card')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
+    // if id card = null -> didn't create card and add participant yet so id card doesn't exist
+    // else -> already add participants and back to create card
+    if (idCard === null) {
+      console.log('id card is null')
+    } else {
+      this.disabledInput = true
+      this.alertInfo = false
+      // get array string of participant
+      let internalResponse = await Axios.get(`http://localhost:8091/get/internal-participants?idProjectCard=${idCard}`)
+      let externalResponse = await Axios.get(`http://localhost:8091/get/external-participants?idProjectCard=${idCard}`)
 
-    console.log(cardResponse.data)
+      // then find length of the array to find User object to put in the table
+      let externalArrLength = externalResponse.data.length
+      let internalArrLength = internalResponse.data.length
+
+      // this array will keep all information of list of user
+      let externalUserArr = []
+      let internalUserArr = []
+
+      for (let i = 0; i < internalArrLength; i++) {
+        let idUser = internalResponse.data[i]
+        let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+        internalUserArr.push(userResponse.data)
+      }
+      // set internal table attribute to link with the array
+      this.tableDataInternal = internalUserArr
+
+      for (let i = 0; i < externalArrLength; i++) {
+        let idUser = externalResponse.data[i]
+        let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+        externalUserArr.push(userResponse.data)
+      }
+      // set external table attribute to link with the array
+      this.tableDataExternal = externalUserArr
+
+      // for loop to put exact information into the internal table
+      for (let i = 0; i < internalUserArr.length; i++) {
+        this.tableDataInternal[i].user = internalUserArr[i].name
+        this.tableDataInternal[i].email = internalUserArr[i].email
+
+        // get position by positionId
+        let idPosition = internalUserArr[i].idPosition
+        let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+
+        // get department by departmentId
+        let idDepartment = internalUserArr[i].idDepartment
+        let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+
+        // set position name and department name into table
+        setTimeout(() => {
+          this.isInternalLoading = false
+          this.tableDataInternal[i].position = internalPositionResponse.data.name
+          this.tableDataInternal[i].department = internalDepartmentResponse.data.name
+        }, 2 * 1000)
+      }
+
+      // then for loop again to put exact information into the table
+      for (let i = 0; i < externalUserArr.length; i++) {
+        this.tableDataExternal[i].user = externalUserArr[i].name
+        this.tableDataExternal[i].email = externalUserArr[i].email
+
+        // get position by positionId
+        let idPosition = externalUserArr[i].idPosition
+        let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+
+        // get department by departmentId
+        let idDepartment = externalUserArr[i].idDepartment
+        let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+
+        // set position name and department name into table
+        setTimeout(() => {
+          this.isExternalLoading = false
+          this.tableDataExternal[i].position = externalPositionResponse.data.name
+          this.tableDataExternal[i].department = externalDepartmentResponse.data.name
+        }, 2 * 1000)
+      }
+    }
+    // let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
+
+    // console.log(cardResponse.data)
     // get arr length of both internal and external user in a card to find their names
-    this.internalArrLength = cardResponse.data.internalParticipants.length
-    this.externalArrLength = cardResponse.data.externalParticipants.length
-
-    // set value of internal participant table
-    for (let i = 0; i < this.internalArrLength; i++) {
-      let idInternalUser = cardResponse.data.internalParticipants[i]
-      let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idInternalUser}`)
-      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${internalNameResponse.data.idPosition}`)
-      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${internalNameResponse.data.idDepartment}`)
-      this.tableData[i].user = internalNameResponse.data.name
-      this.tableData[i].email = internalNameResponse.data.email
-      this.tableData[i].status = 'INTERNAL'
-      this.tableData[i].position = internalPositionResponse.data.name
-      this.tableData[i].department = internalDepartmentResponse.data.name
-    }
-    // set value of external participant table
-    for (let i = 0; i < this.externalArrLength; i++) {
-      let idExternalUser = cardResponse.data.externalParticipants[i]
-      let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idExternalUser}`)
-      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${externalNameResponse.data.idPosition}`)
-      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${externalNameResponse.data.idDepartment}`)
-      this.tableData2[i].user = externalNameResponse.data.name
-      this.tableData2[i].email = externalNameResponse.data.email
-      this.tableData2[i].status = 'EXTERNAL'
-      this.tableData2[i].position = externalPositionResponse.data.name
-      this.tableData2[i].department = externalDepartmentResponse.data.name
-    }
+    // this.internalArrLength = cardResponse.data.internalParticipants.length
+    // this.externalArrLength = cardResponse.data.externalParticipants.length
+    //
+    // // set value of internal participant table
+    // for (let i = 0; i < this.internalArrLength; i++) {
+    //   let idInternalUser = cardResponse.data.internalParticipants[i]
+    //   let internalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idInternalUser}`)
+    //   let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${internalNameResponse.data.idPosition}`)
+    //   let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${internalNameResponse.data.idDepartment}`)
+    //   this.tableData[i].user = internalNameResponse.data.name
+    //   this.tableData[i].email = internalNameResponse.data.email
+    //   this.tableData[i].status = 'INTERNAL'
+    //   this.tableData[i].position = internalPositionResponse.data.name
+    //   this.tableData[i].department = internalDepartmentResponse.data.name
+    // }
+    // // set value of external participant table
+    // for (let i = 0; i < this.externalArrLength; i++) {
+    //   let idExternalUser = cardResponse.data.externalParticipants[i]
+    //   let externalNameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idExternalUser}`)
+    //   let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${externalNameResponse.data.idPosition}`)
+    //   let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${externalNameResponse.data.idDepartment}`)
+    //   this.tableData2[i].user = externalNameResponse.data.name
+    //   this.tableData2[i].email = externalNameResponse.data.email
+    //   this.tableData2[i].status = 'EXTERNAL'
+    //   this.tableData2[i].position = externalPositionResponse.data.name
+    //   this.tableData2[i].department = externalDepartmentResponse.data.name
+    // }
   },
   // change format of date each time that click
   watch: {
