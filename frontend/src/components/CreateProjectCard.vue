@@ -157,7 +157,6 @@ import Axios from 'axios'
 import moment from 'moment'
 export default {
   data () {
-    // TODO Bug when input data into the table, the table must already have temp data
     return {
       tableDataInternal: [{ 'user': '', 'department': '', 'position': '', 'email': '' }],
       tableDataExternal: [{ 'user': '', 'department': '', 'position': '', 'email': '' }],
