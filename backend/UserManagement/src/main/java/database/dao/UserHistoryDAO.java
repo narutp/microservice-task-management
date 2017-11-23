@@ -16,4 +16,6 @@ public interface UserHistoryDAO {
 
 	public void addIdProjectCard(String idUser, String idProjectCard);
 
+	public List<String> getIdProjectCardList(String idUser);
+
 }

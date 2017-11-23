@@ -390,6 +390,13 @@ public class TaskManagementRest {
 		return userDAO.getCountPositionInDepartmentByName(departmentName, positionName);
 	}
 	
+	@GET
+	@Path("get/id-project-card-list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getIdProjectCardListAPI(@QueryParam("idUser") String idUser) {
+		return userHistoryDAO.getIdProjectCardList(idUser);
+	}
+	
 	
 	
 	

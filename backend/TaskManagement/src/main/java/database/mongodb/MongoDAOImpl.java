@@ -492,6 +492,7 @@ public class MongoDAOImpl implements ProjectCardDAO, ProjectDAO, TerminationRequ
 	public List<String> getExternalUserList(String idProjectCard) {
 		ProjectCard projectCard = getProjectCardByIdProjectCard(idProjectCard);
 		return projectCard.getExternalParticipants();
+		
 	}
 
 }
