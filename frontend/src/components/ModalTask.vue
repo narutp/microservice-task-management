@@ -6,19 +6,12 @@
     <el-dialog
       title="Task Card from Each department"
       :visible.sync="dialogVisible"
-      width="100%"
-      :before-close="handleClose">
+      width="100%">
       <div class="in-modal-mask">
         <div v-for="n in 4" class="small-chart">
           <span> Department {{departmentList[n-1]}}</span>
           <pie-chart :data="projectCardPieChart[n-1]"></pie-chart>
           <br>
-        </div>
-      </div>
-      <div class="in-modal-mask">
-        <div v-for="item in items" class="small-chart">
-          <span> {{item.department}} </span>
-          <pie-project></pie-project>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">

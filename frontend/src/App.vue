@@ -56,7 +56,7 @@
                 </el-menu-item>
               </div>
             </b-collapse>
-            <b-collapse :open.sync="isOpen">
+            <b-collapse>
               <div slot="trigger" class="full-width">
                 <hr><el-menu-item-group title="Management" class="inline">
                 </el-menu-item-group>
