@@ -41,7 +41,7 @@
                 {{ props.row.numProject }}
             </b-table-column>
             <b-table-column field="numProjectCard" label="Cards">
-                {{ props.row.numTaskCard }}
+                {{ props.row.numProjectCard }}
             </b-table-column>
           </template>
         </b-table>
@@ -68,23 +68,24 @@ export default {
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.tableUserData = response.data
     this.tableProjectData = response.data
+
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
       // user data
-      let id = response.data[i].idDepartment
-      let numUserResponse = await Axios.get(`http://localhost:8090/get/internal-user-list/department/${id}`)
-      this.tableUserData[i].numUser = numUserResponse.data.length
-      // project data
       let name = response.data[i].name
-      let userListResponse = await Axios.get(`http://localhost:8090/get/idUser/department/A`)
-      let departmentProjectResponse = await Axios.get(`http://localhost:8091/get/department-project/${userListResponse.data}`)
-      let departmentCardResponse = await Axios.get(`http://localhost:8091/get/department-project-card/${userListResponse.data}`)
-      console.log(name)
-      console.log(departmentProjectResponse)
-      console.log(departmentCardResponse)
-      this.tableProjectData[i].numProject = departmentProjectResponse.data.length
-      this.tableProjectData[i].numProjectCard = departmentCardResponse.data.length
-      console.log('---')
+      // console.log(name)
+      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${name}`)
+      this.tableUserData[i].numUser = userList.data.length
+      // console.log(userList.data)
+
+      // project data
+      let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
+      // console.log(projectResponse)
+      this.tableProjectData[i].numProject = projectResponse.data.length
+
+      let cardResponse = await Axios.get(`http://localhost:8091/get/department-project-card?idUserList=${userList.data}`)
+      // console.log(cardResponse.data.length)
+      this.tableProjectData[i].numProjectCard = cardResponse.data.length
     }
   },
   computed: {

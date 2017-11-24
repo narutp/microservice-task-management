@@ -33,14 +33,13 @@
             <el-menu-item index="1" class="app--menu-item" @click="DashboardClicked()">
               <i class="app--icon fa fa-pie-chart" aria-hidden="true" style="display: inline"></i>Dashboard
             </el-menu-item>
-            <b-collapse :open.sync="isOpen">
+            <b-collapse>
               <div slot="trigger" class="full-width">
                 <hr><el-menu-item-group title="Project" class="inline">
                   <template slot="title">Project</template>
                 </el-menu-item-group>
                 <a class="card-header-icon inline">
-                  <b-icon :icon="isOpen ?
-                      'arrow_drop_up' : 'arrow_drop_down'">
+                  <b-icon :icon="'arrow_drop_down'">
                   </b-icon>
                 </a>
               </div>
@@ -56,13 +55,12 @@
                 </el-menu-item>
               </div>
             </b-collapse>
-            <b-collapse :open.sync="isOpen">
+            <b-collapse>
               <div slot="trigger" class="full-width">
                 <hr><el-menu-item-group title="Management" class="inline">
                 </el-menu-item-group>
                 <a class="card-header-icon inline">
-                  <b-icon :icon="isOpen ?
-                      'arrow_drop_up' : 'arrow_drop_down'">
+                  <b-icon :icon="'arrow_drop_down'">
                   </b-icon>
                 </a>
               </div>
@@ -120,6 +118,9 @@ export default {
     //   getUser: 'GET_USER'
     // }),
     index () {
+      // TODO: add dialog when click logout
+      // TODO: manage vuex
+      // TODO: check all logic
       if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }

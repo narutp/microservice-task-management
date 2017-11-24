@@ -151,30 +151,28 @@
           <b-table
               class="update-user--table"
               :data="tableData"
-              :paginated="isPaginated"
-              :per-page="5">
+              :paginated="true"
+              :per-page="10"
+              :loading="isHistoryLoading"
+              default-sort="title">
 
               <template scope="props">
-                  <b-table-column field="no" label="No" width="50" sortable numeric centered>
-                      {{ props.row.no }}
-                  </b-table-column>
+                <b-table-column field="projectName" label="Project Name" width="200" sortable>
+                    {{ props.row.idProject }}
+                    <!-- {{ props.row }} -->
+                </b-table-column>
 
-                  <b-table-column field="projectName" label="Project Name" width="200" sortable>
-                      {{ props.row.idProject }}
-                      <!-- {{ props.row }} -->
-                  </b-table-column>
+                <b-table-column field="idProjectCard" label="Card Name" width="200" sortable>
+                    {{ props.row.idProjectCard }}
+                </b-table-column>
 
-                  <b-table-column field="card Name" label="Card Name" width="200" sortable>
-                      {{ props.row.idProjectCards }}
-                  </b-table-column>
+                <b-table-column field="Start date" label="Start date" width="150" sortable>
+                    {{ props.row.startDate }}
+                </b-table-column>
 
-                  <b-table-column field="Start date" label="Start date" width="150" sortable>
-                      {{ props.row.startDate }}
-                  </b-table-column>
-
-                  <b-table-column field="End date" label="End date" width="150" sortable>
-                      {{ props.row.endDate }}
-                  </b-table-column>
+                <b-table-column field="End date" label="End date" width="150" sortable>
+                    {{ props.row.endDate }}
+                </b-table-column>
               </template>
           </b-table>
         </section>
@@ -238,13 +236,10 @@ export default {
       }
     }
     return {
-      tableData: [{ 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
-      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
-      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
-      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' },
-      { 'no': '', 'idProject': '', 'idProjectCards': '', 'startDate': '', 'endDate': '' }],
+      tableData: [{ 'no': '', 'idProject': '', 'idProjectCard': '', 'startDate': '', 'endDate': '' }],
       index: true,
       isPaginated: true,
+      isHistoryLoading: true,
       form: {
         name: '',
         birthdate: '',
@@ -314,25 +309,59 @@ export default {
     async fetchUserHistory () {
       this.index = false
       let idUser = localStorage.getItem('user_userId')
-      let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history?idUser=${idUser}`)
-      console.log(userHistoryResponse.data)
-      let arrLength = userHistoryResponse.data.idProjectCards.length
-      for (let i = 0; i < arrLength; i++) {
-        console.log(userHistoryResponse.data.idProjectCards[i])
-        let idCard = userHistoryResponse.data.idProjectCards[i]
-        this.tableData[i].idProjectCards = idCard
 
-        // get card detail to show in table
-        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
-        this.tableData[i].idProjectCards = cardResponse.data.name
-        this.tableData[i].startDate = cardResponse.data.startDate
-        this.tableData[i].endDate = cardResponse.data.endDate
+      // get array of project card history
+      let projectCardResponse = await Axios.get(`http://localhost:8090/get/id-project-card-history?idUser=${idUser}`)
 
-        // get project
-        let idProject = cardResponse.data.idProject
-        let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
-        this.tableData[i].idProject = projectResponse.data.name
+      // then find length of the array to find Project Card object to put in the table
+      let projectCardArrLength = projectCardResponse.data.length
+
+      // this array will keep all information of list of project card
+      let projectCardArr = []
+
+      for (let i = 0; i < projectCardArrLength; i++) {
+        let idProjectCard = projectCardResponse.data[i]
+        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idProjectCard}`)
+        projectCardArr.push(cardResponse.data)
       }
+      // set table attribute to link with the array
+      this.tableData = projectCardArr
+
+      // for loop to put exact information into the table
+      for (let i = 0; i < projectCardArr.length; i++) {
+        this.tableData[i].idProjectCard = projectCardArr[i].name
+      }
+
+      for (let i = 0; i < projectCardArr.length; i++) {
+        let idProject = projectCardArr[i].idProject
+        let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
+
+        // set project name into table run loading for 3 sec
+        setTimeout(() => {
+          this.isHistoryLoading = false
+          this.tableData[i].idProject = projectResponse.data.name
+        }, 3 * 1000)
+      }
+
+      // let userHistoryResponse = await Axios.get(`http://localhost:8090/get/user-history?idUser=${idUser}`)
+      // console.log(userHistoryResponse.data)
+      // let arrLength = userHistoryResponse.data.idProjectCards.length
+      // for (let i = 0; i < arrLength; i++) {
+      //   console.log(userHistoryResponse.data.idProjectCards[i])
+      //   let idCard = userHistoryResponse.data.idProjectCards[i]
+      //   this.tableData[i].idProjectCards = idCard
+      //
+      //   // get card detail to show in table
+      //   let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
+      //   this.tableData[i].idProjectCards = cardResponse.data.name
+      //   this.tableData[i].startDate = cardResponse.data.startDate
+      //   this.tableData[i].endDate = cardResponse.data.endDate
+      //
+      //   // get project
+      //   let idProject = cardResponse.data.idProject
+      //   let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
+      //   this.tableData[i].idProject = projectResponse.data.name
+      // }
     },
     async setUser () {
       // localStorage.clear()
