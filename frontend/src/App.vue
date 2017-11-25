@@ -109,14 +109,7 @@ export default {
     // this.userTaskAuthority = localStorage.getItem('user_task_authority')
     this.userEmail = localStorage.getItem('user_email')
   },
-  // mounted () {
-  //   this.user = this.getUser
-  //   console.log('a ' + this.getUser)
-  // },
   computed: {
-    // ...mapGetters({
-    //   getUser: 'GET_USER'
-    // }),
     index () {
       // TODO: add dialog when click logout
       // TODO: manage vuex
@@ -132,9 +125,6 @@ export default {
     }
   },
   methods: {
-    // ...mapActions({
-    //   setUser: 'SET_USER'
-    // }),
     updateUser () {
       this.$router.replace({ path: '/update-user' })
     },
