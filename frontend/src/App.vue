@@ -107,14 +107,10 @@ export default {
   },
   mounted () {
     this.userName = localStorage.getItem('user_name')
-    // this.userTaskAuthority = localStorage.getItem('user_task_authority')
     this.userEmail = localStorage.getItem('user_email')
   },
   computed: {
     index () {
-      // TODO: add dialog when click logout
-      // TODO: manage vuex
-      // TODO: check all logic
       if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }

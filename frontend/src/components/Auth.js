@@ -3,7 +3,5 @@ export default ({
     loggedIn: true,
     login: function () { this.loggedIn = true },
     logout: function () { this.loggedIn = false }
-  },
-  mounted () {
   }
 })

@@ -22,7 +22,8 @@ var routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: { requiresAuth: false }
   },
   {
     path: '/register',
@@ -108,8 +109,6 @@ var router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('auth')
-  console.log(Auth.authenticate.loggedIn)
   if (to.matched.some(record => record.meta.requiresAuth) && !Auth.authenticate.loggedIn) {
     next({ path: '/' })
   } else {

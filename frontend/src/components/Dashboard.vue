@@ -55,6 +55,7 @@
 import ModalTask from '@/components/ModalTask'
 import ModalPerson from '@/components/ModalPerson'
 import Axios from 'axios'
+import Auth from '@/components/Auth'
 
 export default {
   data () {
@@ -66,6 +67,7 @@ export default {
     }
   },
   async mounted () {
+    Auth.authenticate.loggedIn.login()
     let response = await Axios.get(`http://localhost:8090/get/all-department`)
     this.tableUserData = response.data
     this.tableProjectData = response.data
