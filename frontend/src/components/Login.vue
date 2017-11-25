@@ -56,8 +56,7 @@ export default {
   components: {
   },
   async mounted () {
-    console.log('Auth.authenticate1')
-    console.log(Auth.authenticate)
+    Auth.authenticate.logout()
   },
   methods: {
     registerUser () {
@@ -67,9 +66,9 @@ export default {
       let self = this
       Axios.get(`http://localhost:8090/login?username=${this.username}&password=${this.password}`).then(function (response) {
         if (response.data === true) {
+          Auth.authenticate.login()
           self.setUser(self.username)
           self.checkLoginFailed = false
-          Auth.authenticate.login()
         } else {
           self.checkLoginFailed = true
         }
@@ -110,7 +109,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login--container {
   background-color: #2A323B;

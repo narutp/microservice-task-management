@@ -22,8 +22,7 @@ var routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login,
-    meta: { requiresAuth: false }
+    component: Login
   },
   {
     path: '/register',
