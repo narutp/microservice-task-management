@@ -30,25 +30,25 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public MongoDAOImpl(MongoOperations mongoOps) {
 		this.mongoOps = mongoOps;
 
-		String[] departmentArr = { "A", "B", "C", "D" };
-		String[] positionArr = { "Intern", "Professor", "Student" };
-		List<Department> departmentList = getAllDepartment();
-		List<Position> positionList = getAllPosition();
-		if (departmentList.size() != 4) {
-			for (int i = 0; i < departmentArr.length; i++) {
-				Department department = new Department();
-				department.setName(departmentArr[i]);
-				createDepartment(department);
-			}
-		}
-
-		if (positionList.size() != 3) {
-			for (int i = 0; i < positionArr.length; i++) {
-				Position position = new Position();
-				position.setName(positionArr[i]);
-				createPosition(position);
-			}
-		}
+//		String[] departmentArr = { "A", "B", "C", "D" };
+//		String[] positionArr = { "Intern", "Professor", "Student" };
+//		List<Department> departmentList = getAllDepartment();
+//		List<Position> positionList = getAllPosition();
+//		if (departmentList.size() != 4) {
+//			for (int i = 0; i < departmentArr.length; i++) {
+//				Department department = new Department();
+//				department.setName(departmentArr[i]);
+//				createDepartment(department);
+//			}
+//		}
+//
+//		if (positionList.size() != 3) {
+//			for (int i = 0; i < positionArr.length; i++) {
+//				Position position = new Position();
+//				position.setName(positionArr[i]);
+//				createPosition(position);
+//			}
+//		}
 	}
 
 	public MongoDAOImpl() {

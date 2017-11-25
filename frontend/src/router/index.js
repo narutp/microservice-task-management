@@ -14,6 +14,7 @@ import DoneProject from '@/components/DoneProject'
 import RequestProject from '@/components/RequestProject'
 import UpdateUser from '@/components/UpdateUser'
 import UpdateParticipants from '@/components/UpdateParticipants'
+import Auth from '@/components/Auth'
 
 Vue.use(Router)
 
@@ -102,6 +103,18 @@ var routes = [
   }
 ]
 
-export default new Router({
+var router = new Router({
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  console.log('auth')
+  console.log(Auth.authenticate.loggedIn)
+  if (to.matched.some(record => record.meta.requiresAuth) && !Auth.authenticate.loggedIn) {
+    next({ path: '/' })
+  } else {
+    next()
+  }
+})
+
+export default (router)

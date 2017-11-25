@@ -21,10 +21,10 @@
         </div>
         <div>
         <hr>
-        <button class="button is-danger is-outlined button margin-right" @click="register()">
+        <button class="button is-danger is-outlined button margin-right" @click="registerUser()">
           Register
         </button>
-        <button class="button is-danger button" @click="login()">
+        <button class="button is-danger button" @click="loginUser()">
           Login
         </button>
         <span class="login--signup">Forget your password?</span>
@@ -42,6 +42,7 @@
 <script>
 // import { mapActions } from 'vuex'
 import Axios from 'axios'
+import Auth from '@/components/Auth'
 
 export default {
   data () {
@@ -54,17 +55,21 @@ export default {
   },
   components: {
   },
+  async mounted () {
+    console.log('Auth.authenticate1')
+    console.log(Auth.authenticate)
+  },
   methods: {
-    register () {
+    registerUser () {
       this.$router.replace({ path: '/register' })
     },
-    login () {
+    loginUser () {
       let self = this
       Axios.get(`http://localhost:8090/login?username=${this.username}&password=${this.password}`).then(function (response) {
         if (response.data === true) {
-          // self.setUser(self.username)
           self.setUser(self.username)
           self.checkLoginFailed = false
+          Auth.authenticate.login()
         } else {
           self.checkLoginFailed = true
         }
@@ -76,7 +81,6 @@ export default {
       let response = await Axios.get(`http://localhost:8090/get/user/username?username=${username}`)
       // Save data to the current local store
       this.isLoading = true
-
       localStorage.setItem('user_name', response.data.name)
       localStorage.setItem('user_task_authority', response.data.taskAuthority)
       localStorage.setItem('user_email', response.data.email)

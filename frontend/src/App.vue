@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logoutUser()">
             <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
           </button>
         </div>
@@ -88,8 +88,9 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import Footerbar from '@/components/Footer.vue'
+import Navbar from '@/components/Navbar'
+import Footerbar from '@/components/Footer'
+import Auth from '@/components/Auth'
 // import { mapGetters } from 'vuex'
 export default {
   name: 'app',
@@ -128,9 +129,9 @@ export default {
     updateUser () {
       this.$router.replace({ path: '/update-user' })
     },
-    logout () {
+    logoutUser () {
       localStorage.clear()
-      console.log(localStorage.getItem('user'))
+      Auth.authenticate.logout()
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {
