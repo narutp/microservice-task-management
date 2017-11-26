@@ -297,7 +297,7 @@ export default {
           this.isInternalLoading = false
           this.tableDataInternal[i].position = internalPositionResponse.data.name
           this.tableDataInternal[i].department = internalDepartmentResponse.data.name
-        }, 2 * 1000)
+        }, 10 * 1000)
       }
 
       // then for loop again to put exact information into the table
@@ -318,7 +318,7 @@ export default {
           this.isExternalLoading = false
           this.tableDataExternal[i].position = externalPositionResponse.data.name
           this.tableDataExternal[i].department = externalDepartmentResponse.data.name
-        }, 2 * 1000)
+        }, 10 * 1000)
       }
     }
     // let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
