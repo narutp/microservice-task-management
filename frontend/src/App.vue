@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logout()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logoutUser()">
             <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
           </button>
         </div>
@@ -88,8 +88,9 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import Footerbar from '@/components/Footer.vue'
+import Navbar from '@/components/Navbar'
+import Footerbar from '@/components/Footer'
+import Auth from '@/components/Auth'
 // import { mapGetters } from 'vuex'
 export default {
   name: 'app',
@@ -106,21 +107,15 @@ export default {
   },
   mounted () {
     this.userName = localStorage.getItem('user_name')
-    // this.userTaskAuthority = localStorage.getItem('user_task_authority')
     this.userEmail = localStorage.getItem('user_email')
   },
-  // mounted () {
-  //   this.user = this.getUser
-  //   console.log('a ' + this.getUser)
-  // },
   computed: {
-    // ...mapGetters({
-    //   getUser: 'GET_USER'
-    // }),
     index () {
       // TODO: add dialog when click logout
       // TODO: manage vuex
       // TODO: check all logic
+      // TODO: add footer?
+      // TODO: authenticate?
       if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
@@ -132,15 +127,12 @@ export default {
     }
   },
   methods: {
-    // ...mapActions({
-    //   setUser: 'SET_USER'
-    // }),
     updateUser () {
       this.$router.replace({ path: '/update-user' })
     },
-    logout () {
+    logoutUser () {
       localStorage.clear()
-      console.log(localStorage.getItem('user'))
+      Auth.authenticate.logout()
       this.$router.replace({ path: '/' })
     },
     DashboardClicked () {

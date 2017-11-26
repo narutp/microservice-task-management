@@ -226,6 +226,7 @@ export default {
       }
     },
     createCard () {
+      localStorage.setItem('id_create_card', 'null')
       this.$router.replace({ path: 'my-project' })
     }
   },
@@ -243,7 +244,9 @@ export default {
     let idCard = localStorage.getItem('id_create_card')
     // if id card = null -> didn't create card and add participant yet so id card doesn't exist
     // else -> already add participants and back to create card
-    if (idCard === null) {
+    console.log(idCard)
+    if (idCard === null || idCard === 'null') {
+      this.disabledInput = false
       console.log('id card is null')
     } else {
       this.disabledInput = true

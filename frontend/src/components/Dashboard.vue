@@ -55,6 +55,7 @@
 import ModalTask from '@/components/ModalTask'
 import ModalPerson from '@/components/ModalPerson'
 import Axios from 'axios'
+
 export default {
   data () {
     return {
