@@ -66,7 +66,7 @@
             Register
           </button>
         </div>
-        <span class="register--signup" @click="login()">Already have an account? <b>Back to login</b></span>
+        <span class="register--signup" @click="loginUser()">Already have an account? <b>Back to login</b></span>
       </div>
     </div>
   </div>
@@ -187,21 +187,21 @@ export default {
     }
   },
   methods: {
-    login () {
+    loginUser () {
       this.$router.replace({ path: '/' })
     },
     submitForm (form) {
       var self = this
       this.$refs[form].validate((valid) => {
         if (valid) {
-          self.register()
+          self.registerUser()
         } else {
           console.log('error submit!!')
           return false
         }
       })
     },
-    register () {
+    registerUser () {
       let self = this
       // Axios.get(`http://localhost:8090/create/department/${this.form.department}`).then(function (response) {
       // }).catch(function (error) {

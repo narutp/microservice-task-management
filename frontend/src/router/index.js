@@ -14,81 +14,109 @@ import DoneProject from '@/components/DoneProject'
 import RequestProject from '@/components/RequestProject'
 import UpdateUser from '@/components/UpdateUser'
 import UpdateParticipants from '@/components/UpdateParticipants'
+import Auth from '@/components/Auth'
 
 Vue.use(Router)
 
-// Link each url with vue components
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
-    {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: Dashboard
-    },
-    {
-      path: '/my-project',
-      name: 'MyProject',
-      component: MyProject
-    },
-    {
-      path: '/create-project',
-      name: 'CreateProject',
-      component: CreateProject
-    },
-    {
-      path: '/create-card',
-      name: 'CreateProjectCard',
-      component: CreateProjectCard
-    },
-    {
-      path: '/update-card',
-      name: 'UpdateProjectCard',
-      component: UpdateProjectCard
-    },
-    {
-      path: '/update-participants',
-      name: 'UpdateParticipants',
-      component: UpdateParticipants
-    },
-    {
-      path: '/add-participants',
-      name: 'AddParticipants',
-      component: AddParticipants
-    },
-    {
-      path: '/project-management',
-      name: 'ProjectManagement',
-      component: ProjectManagement
-    },
-    {
-      path: '/department-project',
-      name: 'DepartmentProject',
-      component: DepartmentProject
-    },
-    {
-      path: '/done-project',
-      name: 'DoneProject',
-      component: DoneProject
-    },
-    {
-      path: '/request-project',
-      name: 'RequestProject',
-      component: RequestProject
-    },
-    {
-      path: '/update-user',
-      name: 'UpdateUser',
-      component: UpdateUser
-    }
-  ]
+var routes = [
+  {
+    path: '/',
+    name: 'Login',
+    component: Login,
+    meta: { requiresNotAuth: true }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { requiresNotAuth: true }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/my-project',
+    name: 'MyProject',
+    component: MyProject,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/create-project',
+    name: 'CreateProject',
+    component: CreateProject,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/create-card',
+    name: 'CreateProjectCard',
+    component: CreateProjectCard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/update-card',
+    name: 'UpdateProjectCard',
+    component: UpdateProjectCard,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/update-participants',
+    name: 'UpdateParticipants',
+    component: UpdateParticipants,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/add-participants',
+    name: 'AddParticipants',
+    component: AddParticipants,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/project-management',
+    name: 'ProjectManagement',
+    component: ProjectManagement,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/department-project',
+    name: 'DepartmentProject',
+    component: DepartmentProject,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/done-project',
+    name: 'DoneProject',
+    component: DoneProject,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/request-project',
+    name: 'RequestProject',
+    component: RequestProject,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/update-user',
+    name: 'UpdateUser',
+    component: UpdateUser,
+    meta: { requiresAuth: true }
+  }
+]
+
+var router = new Router({
+  routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth) && !Auth.authenticate.loggedIn) {
+    next({ path: '/' })
+  } else if (to.matched.some(record => record.meta.requiresNotAuth) && Auth.authenticate.loggedIn) {
+    next({ path: '/dashboard' })
+  } else {
+    next()
+  }
+})
+
+export default (router)
