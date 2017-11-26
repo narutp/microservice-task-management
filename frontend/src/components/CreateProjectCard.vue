@@ -242,12 +242,11 @@ export default {
 
     // get card to show participants inside the card
     let idCard = localStorage.getItem('id_create_card')
+    console.log(idCard)
     // if id card = null -> didn't create card and add participant yet so id card doesn't exist
     // else -> already add participants and back to create card
-    console.log(idCard)
     if (idCard === null || idCard === 'null') {
       this.disabledInput = false
-      console.log('id card is null')
     } else {
       this.disabledInput = true
       this.alertInfo = false
@@ -295,16 +294,15 @@ export default {
         // set position name and department name into table
         setTimeout(() => {
           this.isInternalLoading = false
-          this.tableDataInternal[i].position = internalPositionResponse.data.name
-          this.tableDataInternal[i].department = internalDepartmentResponse.data.name
         }, 2 * 1000)
+        this.tableDataInternal[i].position = internalPositionResponse.data.name
+        this.tableDataInternal[i].department = internalDepartmentResponse.data.name
       }
 
       // then for loop again to put exact information into the table
       for (let i = 0; i < externalUserArr.length; i++) {
         this.tableDataExternal[i].user = externalUserArr[i].name
         this.tableDataExternal[i].email = externalUserArr[i].email
-
         // get position by positionId
         let idPosition = externalUserArr[i].idPosition
         let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
@@ -316,9 +314,9 @@ export default {
         // set position name and department name into table
         setTimeout(() => {
           this.isExternalLoading = false
-          this.tableDataExternal[i].position = externalPositionResponse.data.name
-          this.tableDataExternal[i].department = externalDepartmentResponse.data.name
         }, 2 * 1000)
+        this.tableDataExternal[i].position = externalPositionResponse.data.name
+        this.tableDataExternal[i].department = externalDepartmentResponse.data.name
       }
     }
     // let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idCard}`)
