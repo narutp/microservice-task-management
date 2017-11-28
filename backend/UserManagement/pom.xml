@@ -53,9 +53,9 @@
             <artifactId>dockerfile-maven-plugin</artifactId>
             <version>1.0.0</version>
             <configuration>
-                <repository>springio/MicroserviceUserManagement</repository>
+                <repository>pranger54/MicroserviceUserManagement</repository>
 	<buildArgs>
-		<JAR_FILE>target/MicroserviceUserManagement.jar</JAR_FILE>
+		<JAR_FILE>target/microserviceusermanagement.jar</JAR_FILE>
 	</buildArgs>
             </configuration>
         </plugin>
