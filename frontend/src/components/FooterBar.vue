@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="footer--container">
     <footer class="footer">
-      <!-- <div class="container">
+      <div class="container">
         <div class="content has-text-centered">
           <p>
             <strong>Project</strong> by <a href="http://jgthms.com">SKE</a>. This project is created for practice using
@@ -14,7 +14,7 @@
             </a>
           </p>
         </div>
-      </div> -->
+      </div>
     </footer>
   </div>
 </template>

@@ -84,15 +84,13 @@
       </el-row>
     </div>
     <logoutDialog :logout-list="logoutList"></logoutDialog>
-    <!-- <navbar></navbar> -->
+    <footerBar></footerBar>
   </div>
 </template>
 
 <script>
-import Footerbar from '@/components/Footer'
+import FooterBar from '@/components/FooterBar'
 import LogoutDialog from '@/components/LogoutDialog'
-// import Auth from '@/components/Auth'
-// import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data () {
@@ -106,7 +104,7 @@ export default {
     }
   },
   components: {
-    Footerbar,
+    FooterBar,
     LogoutDialog
   },
   mounted () {
@@ -115,10 +113,7 @@ export default {
   },
   computed: {
     index () {
-      // TODO: add dialog when click logout
-      // TODO: manage vuex
       // TODO: check all logic
-      // TODO: add footer?
       if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
