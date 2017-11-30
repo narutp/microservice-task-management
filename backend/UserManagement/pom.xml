@@ -6,9 +6,11 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>1.2.5.RELEASE</version>
   </parent>
+  
   <groupId>MicroserviceTaskManagement</groupId>
   <artifactId>MicroserviceTaskManagement</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
   <dependencies>
   	<dependency>
 	    <groupId>org.springframework.boot</groupId>
@@ -39,4 +41,37 @@
   		<version>2.12.3</version>
   	</dependency>
   </dependencies>
+  
+  <build>
+  <plugins>
+    <plugin>
+      <!-- Build an executable JAR -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.0.2</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <classpathPrefix>lib/</classpathPrefix>
+            <mainClass>main.Application</mainClass>
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+  </plugins>
+</build>
 </project>
