@@ -21,10 +21,10 @@
         </div>
         <div>
         <hr>
-        <button class="button is-danger is-outlined button margin-right" @click="registerUser()">
+        <button class="button is-success is-outlined button margin-right" @click="registerUser()">
           Register
         </button>
-        <button class="button is-danger button" @click="loginUser()">
+        <button class="button is-success button" @click="loginUser()">
           Login
         </button>
         <span class="login--signup">Forget your password?</span>
