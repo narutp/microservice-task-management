@@ -18,7 +18,7 @@
           <span v-if="index == 6">Request Project</span>
           <span v-if="index == 7">Create Project</span>
           <span v-if="index == 8">Update Project</span>
-          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logoutUser()">
+          <button v-if="$route.path !== '/' && $route.path !== '/register'" class="app--logout-button button is-small is-danger pull-right" @click="logoutList.dialogLogoutClicked=true">
             <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
           </button>
         </div>
@@ -83,25 +83,31 @@
         </el-col>
       </el-row>
     </div>
+    <logoutDialog :logout-list="logoutList"></logoutDialog>
     <!-- <navbar></navbar> -->
   </div>
 </template>
 
 <script>
 import Footerbar from '@/components/Footer'
-import Auth from '@/components/Auth'
+import LogoutDialog from '@/components/LogoutDialog'
+// import Auth from '@/components/Auth'
 // import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data () {
     return {
       userName: 'user',
-      userEmail: 'email'
+      userEmail: 'email',
+      logoutList: {
+        dialogLogoutClicked: false
+      }
       // userTaskAuthority: false
     }
   },
   components: {
-    Footerbar
+    Footerbar,
+    LogoutDialog
   },
   mounted () {
     this.userName = localStorage.getItem('user_name')
@@ -113,7 +119,6 @@ export default {
       // TODO: manage vuex
       // TODO: check all logic
       // TODO: add footer?
-      // TODO: authenticate?
       if (this.$route.path === '/dashboard') { return '1' }
       if (this.$route.path === '/my-project') { return '2' }
       if (this.$route.path === '/department-project') { return '3' }
@@ -128,11 +133,11 @@ export default {
     updateUser () {
       this.$router.replace({ path: '/update-user' })
     },
-    logoutUser () {
-      localStorage.clear()
-      Auth.authenticate.logout()
-      this.$router.replace({ path: '/' })
-    },
+    // logoutUser () {
+    //   localStorage.clear()
+    //   Auth.authenticate.logout()
+    //   this.$router.replace({ path: '/' })
+    // },
     DashboardClicked () {
       this.$router.replace({ path: '/dashboard' })
     },
