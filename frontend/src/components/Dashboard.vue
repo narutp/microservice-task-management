@@ -9,9 +9,10 @@
           :data="tableUserData"
           :paginated="true"
           :per-page="7"
+          :loading="isLoading"
           default-sort="title">
           <template scope="props">
-            <b-table-column field="department" label="Department">
+            <b-table-column field="name" label="Department">
                 {{ props.row.name }}
             </b-table-column>
             <b-table-column field="numUser" label="Internal">
@@ -32,9 +33,10 @@
           :data="tableProjectData"
           :paginated="true"
           :per-page="7"
+          :loading="isLoading"
           default-sort="title">
           <template scope="props">
-            <b-table-column field="department" label="Department">
+            <b-table-column field="name" label="Departments">
                 {{ props.row.name }}
             </b-table-column>
             <b-table-column field="numProject" label="Projects">
@@ -61,30 +63,32 @@ export default {
     return {
       arrLength: 0,
       dialogVisible: false,
-      tableUserData: [{ 'name': 'DapartmentName', 'numUser': 'Internal' }],
-      tableProjectData: [{ 'name': 'DapartmentName', 'numProject': '3', 'numProjectCard': '5' }]
+      tableUserData: [{ 'name': '', 'numUser': '' }],
+      tableProjectData: [{ 'name': 'DapartmentName', 'numProject': '', 'numProjectCard': '' }],
+      isLoading: true
     }
   },
   async mounted () {
     let response = await Axios.get(`//210.121.158.165:8090/get/all-department`)
+    console.log(response)
+
     this.tableUserData = response.data
     this.tableProjectData = response.data
+    let arrLength = response.data.length
 
-    this.arrLength = response.data.length
-    for (let i = 0; i < this.arrLength; i++) {
-      // user data
-      let name = response.data[i].name
-      // console.log(name)
-      let userList = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${name}`)
-      this.tableUserData[i].numUser = userList.data.length
-      // console.log(userList.data)
-
-      // project data
-      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/department-project?idUserList=${userList.data}`)
+    for (let i = 0; i < arrLength; i++) {
+      let departmentName = response.data[i].name
+      let userListResponse = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${departmentName}`)
+      let countUser = userListResponse.data.length
+      setTimeout(() => {
+        this.isLoading = false
+      }, 2 * 1000)
+      this.tableUserData[i].numUser = countUser
+      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/department-project?idUserList=${userListResponse.data}`)
       // console.log(projectResponse)
       this.tableProjectData[i].numProject = projectResponse.data.length
 
-      let cardResponse = await Axios.get(`//210.121.158.162:8091/get/department-project-card?idUserList=${userList.data}`)
+      let cardResponse = await Axios.get(`//210.121.158.162:8091/get/department-project-card?idUserList=${userListResponse.data}`)
       // console.log(cardResponse.data.length)
       this.tableProjectData[i].numProjectCard = cardResponse.data.length
     }

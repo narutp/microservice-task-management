@@ -74,7 +74,7 @@ export default {
         // console.log(id)
         let projectName = projectResponse.data[i].name
         // console.log(projectName)
-        let cardResponse = await Axios.get(`http://localhost:8091/get/count/project-card/idProject?idProject=${id}`)
+        let cardResponse = await Axios.get(`//210.121.158.162:8091/get/count/project-card/idProject?idProject=${id}`)
         // console.log('cardResponse')
         // console.log(cardResponse.data)
         data.push(projectName, cardResponse.data)
