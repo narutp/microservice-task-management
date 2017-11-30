@@ -294,7 +294,6 @@ export default {
         // set position name and department name into table
         setTimeout(() => {
           this.isInternalLoading = false
-
         }, 2 * 1000)
         this.tableDataInternal[i].position = internalPositionResponse.data.name
         this.tableDataInternal[i].department = internalDepartmentResponse.data.name

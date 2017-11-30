@@ -7,7 +7,7 @@
   </parent>
   
   <groupId>MicroserviceTaskManagement</groupId>
-  <artifactId>MicroserviceTaskManagement</artifactId>
+  <artifactId>TaskService</artifactId>
   <version>0.0.1-SNAPSHOT</version>
     
   <properties>
@@ -47,17 +47,39 @@
 
 <build>
     <plugins>
+         <plugin>
+        <!-- Build an executable JAR -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+         <configuration>
+            <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>main.Application</mainClass>
+            </manifest>
+           </archive>
+        </configuration>
+      </plugin>
+
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+
         <plugin>
             <groupId>com.spotify</groupId>
             <artifactId>dockerfile-maven-plugin</artifactId>
-            <version>1.3.6<version>
+            <version>1.3.6</version>
             <configuration>
                 <repository>pranger54/microservicetaskmanagement</repository>
-	<buildArgs>
-		<JAR_FILE>target/MicroserviceTaskManagement.jar</JAR_FILE>
-	</buildArgs>
+        <buildArgs>
+                <JAR_FILE>target/TaskService-0.0.1-SNAPSHOT.jar</JAR_FILE>
+        </buildArgs>
             </configuration>
         </plugin>
+
     </plugins>
 </build>
 
