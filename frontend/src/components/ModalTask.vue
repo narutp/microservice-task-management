@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="content" align="center">
     <div class="modal-mask" @click="dialogVisible = true">
-      <pie-chart :data="projectPieChart"></pie-chart>
+      <pie-chart :donut="true" :data="projectPieChart"></pie-chart>
     </div>
     <el-dialog
       title="Task Card from Each department"
