@@ -47,7 +47,7 @@ export default {
   methods: {
     updateProject () {
       let self = this
-      Axios.post(`http://localhost:8091/edit/project?idProject=${this.updateProjectList.projectId}&name=${this.updateProjectList.projectName}&description=${this.updateProjectList.projectDescription}`).then(function (response) {
+      Axios.post(`//210.121.158.162:8091/edit/project?idProject=${this.updateProjectList.projectId}&name=${this.updateProjectList.projectName}&description=${this.updateProjectList.projectDescription}`).then(function (response) {
         self.$router.go({
           path: '/project-management',
           force: true

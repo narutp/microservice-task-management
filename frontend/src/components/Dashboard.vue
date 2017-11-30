@@ -66,7 +66,7 @@ export default {
     }
   },
   async mounted () {
-    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    let response = await Axios.get(`//210.121.158.165:8090/get/all-department`)
     this.tableUserData = response.data
     this.tableProjectData = response.data
 
@@ -75,16 +75,16 @@ export default {
       // user data
       let name = response.data[i].name
       // console.log(name)
-      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${name}`)
+      let userList = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${name}`)
       this.tableUserData[i].numUser = userList.data.length
       // console.log(userList.data)
 
       // project data
-      let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
+      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/department-project?idUserList=${userList.data}`)
       // console.log(projectResponse)
       this.tableProjectData[i].numProject = projectResponse.data.length
 
-      let cardResponse = await Axios.get(`http://localhost:8091/get/department-project-card?idUserList=${userList.data}`)
+      let cardResponse = await Axios.get(`//210.121.158.162:8091/get/department-project-card?idUserList=${userList.data}`)
       // console.log(cardResponse.data.length)
       this.tableProjectData[i].numProjectCard = cardResponse.data.length
     }

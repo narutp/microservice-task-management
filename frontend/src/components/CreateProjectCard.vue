@@ -189,15 +189,15 @@ export default {
         this.alertInfo = false
       }
       // check if the project card name is same in database
-      let checkDuplicateResponse = await Axios.get(`http://localhost:8091/check/project-card-name?projectName=${this.project}&projectCardName=${this.cardName}`)
+      let checkDuplicateResponse = await Axios.get(`//210.121.158.162:8091/check/project-card-name?projectName=${this.project}&projectCardName=${this.cardName}`)
       // false is already have this project name
 
       if (checkDuplicateResponse.data === true) {
         let idUser = localStorage.getItem('user_userId')
-        let response = await Axios.post(`http://localhost:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
+        let response = await Axios.post(`//210.121.158.162:8091/create/project-card?idUser=${idUser}&projectName=${this.project}&name=${this.cardName}&description=${this.description}&startDate=${this.date[0]}&endDate=${this.date[1]}`)
         let idCard = ''
         if (response.data === true) {
-          let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
+          let cardResponse = await Axios.get(`//210.121.158.162:8091/get/project-card/projectName?projectName=${this.project}&projectCardName=${this.cardName}`)
           idCard = cardResponse.data.idProjectCard
         } else {
           // if response failed, the alert error occur
@@ -205,7 +205,7 @@ export default {
           this.alertInfo = false
         }
         localStorage.setItem('id_create_card', idCard)
-        let idDepartmentResponse = await Axios.get(`http://localhost:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
+        let idDepartmentResponse = await Axios.get(`//210.121.158.162:8091/get/idDepartment/project-card?idProjectCard=${idCard}`)
         let idDepartment = idDepartmentResponse.data
         // console.log(idDepartmentResponse)
 
@@ -218,7 +218,7 @@ export default {
     },
     async cancle () {
       let idCard = localStorage.getItem('id_create_card')
-      let cancleResponse = await Axios.post(`http://localhost:8091/delete/project-card?idProjectCard=${idCard}`)
+      let cancleResponse = await Axios.post(`//210.121.158.162:8091/delete/project-card?idProjectCard=${idCard}`)
       if (cancleResponse.data === true) {
         this.$router.replace({ path: '/my-project' })
       } else {
@@ -231,7 +231,7 @@ export default {
     }
   },
   async mounted () {
-    let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    let response = await Axios.get(`//210.121.158.162:8091/get/all-project/`)
 
     // can now get project at once by set all project array to equal to data that recieve first
     // then set it to equal to project name
@@ -251,8 +251,8 @@ export default {
       this.disabledInput = true
       this.alertInfo = false
       // get array string of participant
-      let internalResponse = await Axios.get(`http://localhost:8091/get/internal-participants?idProjectCard=${idCard}`)
-      let externalResponse = await Axios.get(`http://localhost:8091/get/external-participants?idProjectCard=${idCard}`)
+      let internalResponse = await Axios.get(`//210.121.158.162:8091/get/internal-participants?idProjectCard=${idCard}`)
+      let externalResponse = await Axios.get(`//210.121.158.162:8091/get/external-participants?idProjectCard=${idCard}`)
 
       // then find length of the array to find User object to put in the table
       let externalArrLength = externalResponse.data.length
@@ -264,7 +264,7 @@ export default {
 
       for (let i = 0; i < internalArrLength; i++) {
         let idUser = internalResponse.data[i]
-        let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+        let userResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idUser}`)
         internalUserArr.push(userResponse.data)
       }
       // set internal table attribute to link with the array
@@ -272,7 +272,7 @@ export default {
 
       for (let i = 0; i < externalArrLength; i++) {
         let idUser = externalResponse.data[i]
-        let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+        let userResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idUser}`)
         externalUserArr.push(userResponse.data)
       }
       // set external table attribute to link with the array
@@ -285,11 +285,11 @@ export default {
 
         // get position by positionId
         let idPosition = internalUserArr[i].idPosition
-        let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+        let internalPositionResponse = await Axios.get(`//210.121.158.165:8090/get/position/id?id=${idPosition}`)
 
         // get department by departmentId
         let idDepartment = internalUserArr[i].idDepartment
-        let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+        let internalDepartmentResponse = await Axios.get(`//210.121.158.165:8090/get/department/id?id=${idDepartment}`)
 
         // set position name and department name into table
         setTimeout(() => {
@@ -305,11 +305,11 @@ export default {
         this.tableDataExternal[i].email = externalUserArr[i].email
         // get position by positionId
         let idPosition = externalUserArr[i].idPosition
-        let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+        let externalPositionResponse = await Axios.get(`//210.121.158.165:8090/get/position/id?id=${idPosition}`)
 
         // get department by departmentId
         let idDepartment = externalUserArr[i].idDepartment
-        let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+        let externalDepartmentResponse = await Axios.get(`//210.121.158.165:8090/get/department/id?id=${idDepartment}`)
 
         // set position name and department name into table
         setTimeout(() => {

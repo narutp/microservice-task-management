@@ -34,7 +34,7 @@ export default {
   },
   async mounted () {
     // Department
-    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    let response = await Axios.get(`//210.121.158.165:8090/get/all-department`)
     // console.log(response)
     this.arrLength = response.data.length
     var datasets = []
@@ -47,7 +47,7 @@ export default {
       let departmentName = response.data[i].name
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
-      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      let userList = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${departmentName}`)
       // console.log(userList)
       data.push(departmentName, userList.data.length)
       datasets.push(data)
@@ -56,14 +56,14 @@ export default {
     this.userColumnChart = datasets
 
     for (let j = 0; j < this.arrLength; j++) {
-      let positionResponse = await Axios.get(`http://localhost:8090/get/all-position`)
+      let positionResponse = await Axios.get(`//210.121.158.165:8090/get/all-position`)
       this.positionLength = positionResponse.data.length
       let departmentName = response.data[j].name
       for (let i = 0; i < this.positionLength; i++) {
         let data = []
         let positionName = positionResponse.data[i].name
         // console.log(departmentName)
-        let numPositionResponse = await Axios.get(`http://localhost:8090/get/count/position-in-department?departmentName=${departmentName}&positionName=${positionName}`)
+        let numPositionResponse = await Axios.get(`//210.121.158.165:8090/get/count/position-in-department?departmentName=${departmentName}&positionName=${positionName}`)
         // console.log(numPositionResponse.data)
         data.push(positionName, numPositionResponse.data)
         datasets2.push(data)
