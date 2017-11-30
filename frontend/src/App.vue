@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
 import Footerbar from '@/components/Footer'
 import Auth from '@/components/Auth'
 // import { mapGetters } from 'vuex'
@@ -102,7 +101,6 @@ export default {
     }
   },
   components: {
-    Navbar,
     Footerbar
   },
   mounted () {

@@ -70,7 +70,6 @@ export default {
   },
   async mounted () {
     let response = await Axios.get(`//210.121.158.165:8090/get/all-department`)
-    console.log(response)
 
     this.tableUserData = response.data
     this.tableProjectData = response.data
