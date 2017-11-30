@@ -22,14 +22,12 @@ var routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login,
-    meta: { requiresNotAuth: true }
+    component: Login
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register,
-    meta: { requiresNotAuth: true }
+    component: Register
   },
   {
     path: '/dashboard',
@@ -112,8 +110,6 @@ var router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth) && !Auth.authenticate.loggedIn) {
     next({ path: '/' })
-  } else if (to.matched.some(record => record.meta.requiresNotAuth) && Auth.authenticate.loggedIn) {
-    next({ path: '/dashboard' })
   } else {
     next()
   }
