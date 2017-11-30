@@ -225,8 +225,8 @@ export default {
     this.requestDeleteList.idCard = this.idCard
     this.requestDeleteList.idUser = this.idUser
 
-    let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
-    let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${cardResponse.data.idProject}`)
+    let cardResponse = await Axios.get(`//210.121.158.162:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
+    let projectResponse = await Axios.get(`//210.121.158.162:8091/get/project?idProject=${cardResponse.data.idProject}`)
     let idUserOfCard = cardResponse.data.idUser
 
     // Check owner authority (can be update or not)
@@ -243,8 +243,8 @@ export default {
     this.projectName = projectResponse.data.name
 
     // get array string of participant
-    let internalResponse = await Axios.get(`http://localhost:8091/get/internal-participants?idProjectCard=${this.idCard}`)
-    let externalResponse = await Axios.get(`http://localhost:8091/get/external-participants?idProjectCard=${this.idCard}`)
+    let internalResponse = await Axios.get(`//210.121.158.162:8091/get/internal-participants?idProjectCard=${this.idCard}`)
+    let externalResponse = await Axios.get(`//210.121.158.162:8091/get/external-participants?idProjectCard=${this.idCard}`)
 
     // then find length of the array to find User object to put in the table
     let externalArrLength = externalResponse.data.length
@@ -256,7 +256,7 @@ export default {
 
     for (let i = 0; i < internalArrLength; i++) {
       let idUser = internalResponse.data[i]
-      let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+      let userResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idUser}`)
       internalUserArr.push(userResponse.data)
     }
     // set internal table attribute to link with the array
@@ -264,7 +264,7 @@ export default {
 
     for (let i = 0; i < externalArrLength; i++) {
       let idUser = externalResponse.data[i]
-      let userResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+      let userResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idUser}`)
       externalUserArr.push(userResponse.data)
     }
     // set external table attribute to link with the array
@@ -277,11 +277,11 @@ export default {
 
       // get position by positionId
       let idPosition = internalUserArr[i].idPosition
-      let internalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+      let internalPositionResponse = await Axios.get(`//210.121.158.165:8090/get/position/id?id=${idPosition}`)
 
       // get department by departmentId
       let idDepartment = internalUserArr[i].idDepartment
-      let internalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+      let internalDepartmentResponse = await Axios.get(`//210.121.158.165:8090/get/department/id?id=${idDepartment}`)
 
       // set position name and department name into table
       setTimeout(() => {
@@ -298,11 +298,11 @@ export default {
 
       // get position by positionId
       let idPosition = externalUserArr[i].idPosition
-      let externalPositionResponse = await Axios.get(`http://localhost:8090/get/position/id?id=${idPosition}`)
+      let externalPositionResponse = await Axios.get(`//210.121.158.165:8090/get/position/id?id=${idPosition}`)
 
       // get department by departmentId
       let idDepartment = externalUserArr[i].idDepartment
-      let externalDepartmentResponse = await Axios.get(`http://localhost:8090/get/department/id?id=${idDepartment}`)
+      let externalDepartmentResponse = await Axios.get(`//210.121.158.165:8090/get/department/id?id=${idDepartment}`)
 
       // set position name and department name into table
       setTimeout(() => {
