@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: MicroserviceTaskManagement
+Implementation-Title: UserService
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Administrator
 Implementation-Vendor-Id: MicroserviceTaskManagement
@@ -38,8 +38,7 @@ Class-Path: lib/spring-boot-autoconfigure-1.2.3.RELEASE.jar lib/spring
  over-slf4j-1.7.12.jar lib/spring-core-4.1.7.RELEASE.jar lib/mongo-jav
  a-driver-2.12.3.jar
 Build-Jdk: 1.8.0_131
-Implementation-URL: http://projects.spring.io/spring-boot/Microservice
- TaskManagement/
+Implementation-URL: http://projects.spring.io/spring-boot/UserService/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 Main-Class: main.Application

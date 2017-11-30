@@ -1,0 +1,16 @@
+main/model/Department.class
+main/rest/TaskManagementRest.class
+main/SimpleCORSFilter.class
+main/ApplicationConfig.class
+main/model/Position.class
+main/model/User.class
+main/Application.class
+database/dao/PositionDAO.class
+database/mongodb/MongoDBMain.class
+database/mongodb/MongoDAOImpl.class
+database/dao/UserDAO.class
+main/model/UserHistory.class
+database/dao/DepartmentDAO.class
+main/ApplicationConfig$JerseyConfig.class
+database/dao/DatabaseModel.class
+database/dao/UserHistoryDAO.class
