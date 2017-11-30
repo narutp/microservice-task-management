@@ -71,11 +71,11 @@ export default {
   methods: {
     async createProject () {
       // check if the project name is same in database
-      let checkDuplicateResponse = await Axios.get(`http://localhost:8091/check/project-name?projectName=${this.projectName}`)
+      let checkDuplicateResponse = await Axios.get(`//210.121.158.162:8091/check/project-name?projectName=${this.projectName}`)
       // false is already have this project name
       if (checkDuplicateResponse.data === true) {
         let idDepartment = localStorage.getItem('user_departmentId')
-        let response = await Axios.post(`http://localhost:8091/create/project?name=${this.projectName}&description=${this.projectDescription}&idUser=${this.userId}&idDepartment=${idDepartment}`)
+        let response = await Axios.post(`//210.121.158.162:8091/create/project?name=${this.projectName}&description=${this.projectDescription}&idUser=${this.userId}&idDepartment=${idDepartment}`)
         if (response.data === true) {
           this.back()
         } else {

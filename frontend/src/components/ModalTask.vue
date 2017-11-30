@@ -35,7 +35,7 @@ export default {
   },
   async mounted () {
     // Department
-    let response = await Axios.get(`http://localhost:8090/get/all-department`)
+    let response = await Axios.get(`//210.121.158.165:8090/get/all-department`)
     this.arrLength = response.data.length
     var datasets = []
     var datasets2 = []
@@ -47,10 +47,10 @@ export default {
       let departmentName = response.data[i].name
       this.departmentList.push(departmentName)
       // console.log('id : ' + departmentName)
-      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      let userList = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${departmentName}`)
       // console.log('user list in modal task' + i)
       // console.log(userList.data)
-      let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
+      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/department-project?idUserList=${userList.data}`)
       // console.log(projectResponse.data)
       data.push(departmentName, projectResponse.data.length)
       datasets.push(data)
@@ -60,9 +60,9 @@ export default {
     for (let j = 0; j < this.arrLength; j++) {
       let departmentName = response.data[j].name
       // console.log(departmentName)
-      let userList = await Axios.get(`http://localhost:8090/get/idUser?departmentName=${departmentName}`)
+      let userList = await Axios.get(`//210.121.158.165:8090/get/idUser?departmentName=${departmentName}`)
       // console.log(userList)
-      let projectResponse = await Axios.get(`http://localhost:8091/get/department-project?idUserList=${userList.data}`)
+      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/department-project?idUserList=${userList.data}`)
       // console.log(projectResponse.data.length)
       let numProject = projectResponse.data.length
       // console.log('numproject')

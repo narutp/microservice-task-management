@@ -59,13 +59,13 @@ export default {
     }
   },
   async mounted () {
-    let response = await Axios.get(`http://localhost:8091/get/all-project/`)
+    let response = await Axios.get(`//210.121.158.162:8091/get/all-project/`)
     console.log(response.data)
     this.tableData = response.data
     this.arrLength = response.data.length
     for (let i = 0; i < this.arrLength; i++) {
       let id = response.data[i].idUser
-      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${id}`)
+      let nameResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${id}`)
       console.log(nameResponse)
       this.tableData[i].idUser = nameResponse.data.name
     }

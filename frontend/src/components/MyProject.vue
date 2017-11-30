@@ -79,15 +79,15 @@ export default {
   },
   async mounted () {
     let id = localStorage.getItem('user_userId')
-    let cardResponse = await Axios.get(`http://localhost:8091/get/all-project-card/idUser?idUser=${id}`)
+    let cardResponse = await Axios.get(`//210.121.158.162:8091/get/all-project-card/idUser?idUser=${id}`)
     this.tableData = cardResponse.data
     this.arrLength = cardResponse.data.length
 
     for (let i = 0; i < this.arrLength; i++) {
       let idProject = cardResponse.data[i].idProject
       let idUser = cardResponse.data[i].idUser
-      let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
-      let nameResponse = await Axios.get(`http://localhost:8090/get/user/id?id=${idUser}`)
+      let projectResponse = await Axios.get(`//210.121.158.162:8091/get/project?idProject=${idProject}`)
+      let nameResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idUser}`)
       this.tableData[i].idProject = projectResponse.data.name
       this.tableData[i].idUser = nameResponse.data.name
     }

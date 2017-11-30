@@ -209,7 +209,7 @@ export default {
       // })
       // Format date YYYY-MM-DD
       let date = moment(this.form.birthdate).format('YYYY-MM-DD')
-      Axios.post(`http://localhost:8090/register?name=${this.form.name}&birth=${date}&phone=${this.form.phone}&department=${this.form.department}&position=${this.form.position}&email=${this.form.email}&username=${this.form.username}&password=${this.form.password}`).then(function (response) {
+      Axios.post(`//210.121.158.165:8090/register?name=${this.form.name}&birth=${date}&phone=${this.form.phone}&department=${this.form.department}&position=${this.form.position}&email=${this.form.email}&username=${this.form.username}&password=${this.form.password}`).then(function (response) {
         self.$router.replace({ path: '/' })
       }).catch(function (error) {
         console.log(error)

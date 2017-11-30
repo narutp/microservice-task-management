@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async requestDelete () {
-      let requestResponse = await Axios.post(`http://localhost:8091/request/delete?idProjectCard=${this.requestDeleteList.idCard}&reason=${this.reason}&idRequester=${this.requestDeleteList.idUser}`)
+      let requestResponse = await Axios.post(`//210.121.158.162:8091/request/delete?idProjectCard=${this.requestDeleteList.idCard}&reason=${this.reason}&idRequester=${this.requestDeleteList.idUser}`)
       if (requestResponse.data === true) {
         this.$router.replace({ path: 'my-project' })
       } else {

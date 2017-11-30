@@ -295,7 +295,7 @@ export default {
   },
   methods: {
     async updateUser () {
-      let response = await Axios.post(`http://localhost:8090/edit/user?username=${this.form.username}&name=
+      let response = await Axios.post(`//210.121.158.165:8090/edit/user?username=${this.form.username}&name=
         ${this.form.name}&birth=${this.form.birthdate}&phone=${this.form.phone}&department=${this.form.department}&position=
         ${this.form.position}&email=${this.form.email}&password=${this.form.newPassword}`)
 
@@ -311,7 +311,7 @@ export default {
       let idUser = localStorage.getItem('user_userId')
 
       // get array of project card history
-      let projectCardResponse = await Axios.get(`http://localhost:8090/get/id-project-card-history?idUser=${idUser}`)
+      let projectCardResponse = await Axios.get(`//210.121.158.165:8090/get/id-project-card-history?idUser=${idUser}`)
 
       // then find length of the array to find Project Card object to put in the table
       let projectCardArrLength = projectCardResponse.data.length
@@ -321,7 +321,7 @@ export default {
 
       for (let i = 0; i < projectCardArrLength; i++) {
         let idProjectCard = projectCardResponse.data[i]
-        let cardResponse = await Axios.get(`http://localhost:8091/get/project-card/idProjectCard?idProjectCard=${idProjectCard}`)
+        let cardResponse = await Axios.get(`//210.121.158.162:8091/get/project-card/idProjectCard?idProjectCard=${idProjectCard}`)
         projectCardArr.push(cardResponse.data)
       }
       // set table attribute to link with the array
@@ -334,7 +334,7 @@ export default {
 
       for (let i = 0; i < projectCardArr.length; i++) {
         let idProject = projectCardArr[i].idProject
-        let projectResponse = await Axios.get(`http://localhost:8091/get/project?idProject=${idProject}`)
+        let projectResponse = await Axios.get(`//210.121.158.162:8091/get/project?idProject=${idProject}`)
 
         // set project name into table run loading for 3 sec
         setTimeout(() => {
