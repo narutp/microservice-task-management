@@ -286,9 +286,9 @@ export default {
       // set position name and department name into table
       setTimeout(() => {
         this.isInternalLoading = false
-        this.tableDataInternal[i].position = internalPositionResponse.data.name
-        this.tableDataInternal[i].department = internalDepartmentResponse.data.name
       }, 2 * 1000)
+      this.tableDataInternal[i].position = internalPositionResponse.data.name
+      this.tableDataInternal[i].department = internalDepartmentResponse.data.name
     }
 
     // then for loop again to put exact information into the table
@@ -307,9 +307,9 @@ export default {
       // set position name and department name into table
       setTimeout(() => {
         this.isExternalLoading = false
-        this.tableDataExternal[i].position = externalPositionResponse.data.name
-        this.tableDataExternal[i].department = externalDepartmentResponse.data.name
       }, 2 * 1000)
+      this.tableDataExternal[i].position = externalPositionResponse.data.name
+      this.tableDataExternal[i].department = externalDepartmentResponse.data.name
     }
 
     //
