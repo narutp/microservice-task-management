@@ -97,8 +97,8 @@
               </b-table-column>
 
               <b-table-column field="status" label="Status"centered>
-                  <span class="tag is-success" v-if="props.row.status === 'INTERNAL'">
-                      {{ props.row.status }}
+                  <span class="tag is-success">
+                      Internal
                   </span>
               </b-table-column>
           </template>
@@ -136,8 +136,8 @@
               </b-table-column>
 
               <b-table-column field="status" label="Status"centered>
-                  <span class="tag is-info" v-if="props.row.status === 'EXTERNAL'">
-                      {{ props.row.status }}
+                  <span class="tag is-info">
+                      External
                   </span>
               </b-table-column>
           </template>
