@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script src="@/components/RequestProject">
+<script src="@/components/่js/RequestProject">
 // import ApproveRequestDialog from '@/components/Dialog/ApproveRequestDialog'
 // import Axios from 'axios'
 // export default {
