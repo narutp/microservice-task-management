@@ -29,26 +29,6 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 
 	public MongoDAOImpl(MongoOperations mongoOps) {
 		this.mongoOps = mongoOps;
-
-//		String[] departmentArr = { "A", "B", "C", "D" };
-//		String[] positionArr = { "Intern", "Professor", "Student" };
-//		List<Department> departmentList = getAllDepartment();
-//		List<Position> positionList = getAllPosition();
-//		if (departmentList.size() != 4) {
-//			for (int i = 0; i < departmentArr.length; i++) {
-//				Department department = new Department();
-//				department.setName(departmentArr[i]);
-//				createDepartment(department);
-//			}
-//		}
-//
-//		if (positionList.size() != 3) {
-//			for (int i = 0; i < positionArr.length; i++) {
-//				Position position = new Position();
-//				position.setName(positionArr[i]);
-//				createPosition(position);
-//			}
-//		}
 	}
 
 	public MongoDAOImpl() {
@@ -59,15 +39,56 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	public void createUser(User user) {
 		collection = MongoDBMain.getUserCollection();
 		System.out.println("DAO: Add new user");
-
 		this.mongoOps.insert(user, collection);
 	}
 
 	@Override
+	public void createPosition(Position position) {
+		collection = MongoDBMain.getPositionCollection();
+		System.out.println("DAO: Add new position");
+		this.mongoOps.insert(position, collection);
+	}
+
+	@Override
+	public void createDepartment(Department department) {
+		collection = MongoDBMain.getDepartmentCollection();
+		System.out.println("DAO: Add new department");
+		this.mongoOps.insert(department, collection);
+	}
+	
+	@Override
+	public void createUserHistory(UserHistory userHistory) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		System.out.println("DAO: Add new user history");
+		this.mongoOps.insert(userHistory, collection);
+	}
+
+	@Override
 	public List<User> getAllUser() {
-		System.out.println("ALL");
 		collection = MongoDBMain.getUserCollection();
+		System.out.println("DAO: Get all user");
 		return this.mongoOps.findAll(User.class, collection);
+	}
+	
+	@Override
+	public List<Position> getAllPosition() {
+		collection = MongoDBMain.getPositionCollection();
+		System.out.println("DAO: Get all position");
+		return this.mongoOps.findAll(Position.class, collection);
+	}
+
+	@Override
+	public List<Department> getAllDepartment() {
+		collection = MongoDBMain.getDepartmentCollection();
+		System.out.println("DAO: Get all department");
+		return this.mongoOps.findAll(Department.class, collection);
+	}
+	
+	@Override
+	public List<UserHistory> getAllUserHistory() {
+		collection = MongoDBMain.getUserHistoryCollection();
+		System.out.println("DAO: Get all user history");
+		return this.mongoOps.findAll(UserHistory.class, collection);
 	}
 
 	@Override
@@ -76,6 +97,16 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		Query query = new Query();
 		System.out.println(id);
 		query.addCriteria(Criteria.where("idUser").is(id));
+		System.out.println("DAO: Get user by id: " + id);
+		return this.mongoOps.findOne(query, User.class, collection);
+	}
+	
+	@Override
+	public User getUserByUsername(String username) {
+		collection = MongoDBMain.getUserCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("username").is(username));
+		System.out.println("DAO: Get user by username: " + username);
 		return this.mongoOps.findOne(query, User.class, collection);
 	}
 
@@ -84,7 +115,53 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		collection = MongoDBMain.getUserCollection();
 		Query query = new Query();
 		query.addCriteria(Criteria.where("name").is(name));
+		System.out.println("DAO: Get user by name: " + name);
 		return this.mongoOps.findOne(query, User.class, collection);
+	}
+	
+	@Override
+	public Position getPositionById(String idPosition) {
+		collection = MongoDBMain.getPositionCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idPosition").is(idPosition));
+		System.out.println("DAO: Get position by id: " + idPosition);
+		return this.mongoOps.findOne(query, Position.class, collection);
+	}
+	
+	@Override
+	public Position getPositionByName(String name) {
+		collection = MongoDBMain.getPositionCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		System.out.println("DAO: Get position by name: " + name);
+		return this.mongoOps.findOne(query, Position.class, collection);
+	}
+	
+	@Override
+	public Department getDepartmentById(String idDepartment) {
+		collection = MongoDBMain.getDepartmentCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idDepartment").is(idDepartment));
+		System.out.println("DAO: Get department by id: " + idDepartment);
+		return this.mongoOps.findOne(query, Department.class, collection);
+	}
+
+	@Override
+	public Department getDepartmentByName(String name) {
+		collection = MongoDBMain.getDepartmentCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("name").is(name));
+		System.out.println("DAO: Get department by name: " + name);
+		return this.mongoOps.findOne(query, Department.class, collection);
+	}
+	
+	@Override
+	public UserHistory getUserHistoryByIdUser(String idUser) {
+		collection = MongoDBMain.getUserHistoryCollection();
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUser").is(idUser));
+		System.out.println("DAO: Get user history by id user: " + idUser);
+		return this.mongoOps.findOne(query, UserHistory.class, collection);
 	}
 
 	@Override
@@ -101,22 +178,15 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		update.set("email", user.getEmail());
 		if (!user.getPassword().equals(""))
 			update.set("password", user.getPassword());
+		System.out.println("DAO: Edit user");
 		this.mongoOps.findAndModify(query, update, User.class, collection);
 	}
 
 	@Override
-	public void deleteUserById(String id) {
-		collection = MongoDBMain.getUserCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idUser").is(id));
-		WriteResult result = this.mongoOps.remove(query, User.class, collection);
-	}
-
-	@Override
 	public boolean checkLogin(String username, String password) {
+		System.out.println("DAO: Check login " + username + ", " + password);
 		List<User> userList = getAllUser();
 		for (User user : userList) {
-			System.out.println("Check login: " + user.getUsername() + ", " + user.getPassword());
 			if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
 				return true;
 			}
@@ -126,11 +196,11 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 
 	@Override
 	public boolean isUsernameExist(String username) {
+		System.out.println("DAO: Check username: " + username);
 		List<User> userList = getAllUser();
 		if (userList == null)
 			return false;
 		for (User user : userList) {
-			System.out.println("Check Username: " + user.getUsername());
 			if (username.equals(user.getUsername())) {
 				return true;
 			}
@@ -140,11 +210,11 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 
 	@Override
 	public boolean isEmailExist(String email) {
+		System.out.println("DAO: Check email: " + email);
 		List<User> userList = getAllUser();
 		if (userList == null)
 			return false;
 		for (User user : userList) {
-			System.out.println("Check email: " + user.getEmail());
 			if (email.equals(user.getEmail())) {
 				return true;
 			}
@@ -153,90 +223,11 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	}
 
 	@Override
-	public Position getPositionByName(String name) {
-		collection = MongoDBMain.getPositionCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
-		return this.mongoOps.findOne(query, Position.class, collection);
-	}
-
-	@Override
-	public Department getDepartmentByName(String name) {
-		collection = MongoDBMain.getDepartmentCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
-		return this.mongoOps.findOne(query, Department.class, collection);
-	}
-
-	@Override
-	public List<Position> getAllPosition() {
-		collection = MongoDBMain.getPositionCollection();
-		return this.mongoOps.findAll(Position.class, collection);
-	}
-
-	@Override
-	public List<Department> getAllDepartment() {
-		collection = MongoDBMain.getDepartmentCollection();
-		return this.mongoOps.findAll(Department.class, collection);
-	}
-
-	@Override
 	public boolean checkPasswordById(String id, String password) {
 		collection = MongoDBMain.getUserCollection();
 		User user = getUserById(id);
+		System.out.println("DAO: Check password");
 		return user.getPassword().equals(password);
-	}
-
-	@Override
-	public void createPosition(Position position) {
-		collection = MongoDBMain.getPositionCollection();
-		System.out.println("DAO: Add new position");
-		this.mongoOps.insert(position, collection);
-	}
-
-	@Override
-	public void createDepartment(Department department) {
-		collection = MongoDBMain.getDepartmentCollection();
-		System.out.println("DAO: Add new department");
-		this.mongoOps.insert(department, collection);
-	}
-
-	@Override
-	public void deleteDepartment(String name) {
-		collection = MongoDBMain.getDepartmentCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
-		WriteResult result = this.mongoOps.remove(query, Department.class, collection);
-	}
-
-	@Override
-	public void deletePosition(String name) {
-		collection = MongoDBMain.getPositionCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("name").is(name));
-		WriteResult result = this.mongoOps.remove(query, Position.class, collection);
-	}
-
-	@Override
-	public List<UserHistory> getAllUserHistory() {
-		collection = MongoDBMain.getUserHistoryCollection();
-		return this.mongoOps.findAll(UserHistory.class, collection);
-	}
-
-	@Override
-	public List<UserHistory> getAllUserHistoryByIdUser(String idUser) {
-		collection = MongoDBMain.getUserHistoryCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idUser").is(idUser));
-		return this.mongoOps.find(query, UserHistory.class, collection);
-	}
-
-	@Override
-	public User getUserByUsername(String username) {
-		collection = MongoDBMain.getUserCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("username").is(username));
-		return this.mongoOps.findOne(query, User.class, collection);
 	}
 
 	@Override
@@ -248,6 +239,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 			if (user.getIdDepartment().equals(idDepartment))
 				idUserList.add(user.getIdUser());
 		}
+		System.out.println("DAO: Get id list by department name: " + departmentName);
 		return idUserList;
 	}
 
@@ -258,21 +250,20 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		query.addCriteria(Criteria.where("username").is(user.getUsername()));
 		Update update = new Update();
 		update.set("taskAuthority", true);
+		System.out.println("DAO: Set taskAuthority of user");
 		this.mongoOps.findAndModify(query, update, User.class, collection);
 	}
 
 	@Override
 	public List<User> getInternalUserListByIdDepartment(String idDepartment) {
-		System.out.println("ID : " + idDepartment);
 		List<User> allUser = getAllUser();
 		List<User> userList = new ArrayList<User>();
 		for (User user : allUser) {
-			System.out.println(user.getIdDepartment());
 			if (user.getIdDepartment().equals(idDepartment)) {
-				System.out.println("1");
 				userList.add(user);
 			}
 		}
+		System.out.println("DAO: Get internal user list of department by id: " + idDepartment);
 		return userList;
 	}
 
@@ -281,44 +272,12 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		List<User> allUser = getAllUser();
 		List<User> userList = new ArrayList<User>();
 		for (User user : allUser) {
-			if (!user.getIdDepartment().equals(idDepartment))
+			if (!user.getIdDepartment().equals(idDepartment)) {
 				userList.add(user);
+			}
 		}
+		System.out.println("DAO: Get external user list of department by id: " + idDepartment);
 		return userList;
-	}
-
-	@Override
-	public Position getPositionById(String idPosition) {
-		collection = MongoDBMain.getPositionCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idPosition").is(idPosition));
-		return this.mongoOps.findOne(query, Position.class, collection);
-	}
-
-	@Override
-	public Department getDepartmentById(String idDepartment) {
-		collection = MongoDBMain.getDepartmentCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idDepartment").is(idDepartment));
-		return this.mongoOps.findOne(query, Department.class, collection);
-	}
-
-	@Override
-	public void deleteAllPosition() {
-		collection = MongoDBMain.getPositionCollection();
-		this.mongoOps.remove(new Query(), collection);
-	}
-
-	@Override
-	public void deleteAllDepartment() {
-		collection = MongoDBMain.getDepartmentCollection();
-		this.mongoOps.remove(new Query(), collection);
-	}
-
-	@Override
-	public void deleteAllUser() {
-		collection = MongoDBMain.getUserCollection();
-		this.mongoOps.remove(new Query(), collection);
 	}
 
 	@Override
@@ -326,29 +285,14 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		collection = MongoDBMain.getUserCollection();
 		List<String> idList = new ArrayList<String>();
 		for (String name : nameList) {
-			System.out.println(name);
 			idList.add(getUserByName(name).getIdUser());
 		}
+		System.out.println("DAO: Get id list by name list");
 		return idList;
 	}
 
 	@Override
-	public void createUserHistory(UserHistory userHistory) {
-		collection = MongoDBMain.getUserHistoryCollection();
-		this.mongoOps.insert(userHistory, collection);
-	}
-
-	@Override
-	public UserHistory getUserHistoryByIdUser(String idUser) {
-		collection = MongoDBMain.getUserHistoryCollection();
-		Query query = new Query();
-		query.addCriteria(Criteria.where("idUser").is(idUser));
-		return this.mongoOps.findOne(query, UserHistory.class, collection);
-	}
-
-	@Override
 	public void addIdProjectCard(String idUser, String idProjectCard) {
-		System.out.println(idUser);
 		UserHistory userHistory = getUserHistoryByIdUser(idUser);
 		List<String> list = userHistory.getIdProjectCards();
 		list.add(idProjectCard);
@@ -359,6 +303,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 		query.addCriteria(Criteria.where("idUser").is(idUser));
 		Update update = new Update();
 		update.set("idProjectCards", userHistory.getIdProjectCards());
+		System.out.println("DAO: Add id project card in user history");
 		this.mongoOps.findAndModify(query, update, UserHistory.class, collection);
 	}
 
@@ -373,6 +318,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 				counter++;
 			}
 		}
+		System.out.println("DAO: Get count position(" + positionName + ") in department(" + departmentName + ")");
 		return counter;
 		
 	}
@@ -380,6 +326,7 @@ public class MongoDAOImpl implements UserDAO, DepartmentDAO, PositionDAO, UserHi
 	@Override
 	public List<String> getIdProjectCardList(String idUser) {
 		UserHistory userHistory = getUserHistoryByIdUser(idUser);
+		System.out.println("DAO: Get id project card by id user: " + idUser);
 		return userHistory.getIdProjectCards();
 	}
 

@@ -16,8 +16,6 @@ public interface ProjectCardDAO {
 
 	public void deleteProjectCardById(String idProjectCard);
 
-	public int getCountProjectCard();
-
 	public List<ProjectCard> getFinishProjectCardByIdUser(String idUser);
 
 	public List<ProjectCard> getAllProjectCardByIdUserList(List<String> userList);
@@ -26,15 +24,7 @@ public interface ProjectCardDAO {
 
 	public int getCountAllProjectCardByIdUserList(List<String> idUserList);
 
-	public void deleteAllProjectCard();
-
-	public void addInternalParticipantByIdProjectCard(String idProjectCard, ProjectCard projectCard);
-
-	public void addExternalParticipantByIdProjectCard(String idProjectCard, ProjectCard projectCard);
-
 	public void addParticipantsByIdProjectCard(String idProjectCard, ProjectCard projectCard);
-
-	public void setFinish(String idProjectCard, ProjectCard projectCard);
 
 	public void requestToFinishProjectCard(ProjectCard projectCard);
 

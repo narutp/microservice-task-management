@@ -16,7 +16,7 @@ public class MongoDBMain implements DatabaseModel {
     private static final String USER_HISTORY_COLLECTION = "user_history";
     private static final String POSITION_COLLECTION = "position";
     private static final String DEPARTMENT_COLLECTION = "department";
-    private static final String MONGO_HOST = "localhost";
+    private static final String MONGO_HOST = "210.121.158.165";
     private static final int MONGO_PORT = 27017;
     private static MongoClient mongo;
     private ClassPathXmlApplicationContext ctx = null;

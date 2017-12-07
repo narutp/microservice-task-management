@@ -14,8 +14,6 @@ public interface UserDAO {
 	
 	public void editUserById (String id, User user);
 	
-	public void deleteUserById (String name);
-	
 	public boolean checkLogin (String username, String password);
 	
 	public boolean isUsernameExist (String username);
@@ -33,8 +31,6 @@ public interface UserDAO {
 	public List<User> getInternalUserListByIdDepartment (String idDepartment);
 	
 	public List<User> getExternalUserListByIdDepartment (String idDepartment);
-	
-	public void deleteAllUser ();
 	
 	public List<String> getIdUserListByNameList (List<String> nameList);
 

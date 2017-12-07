@@ -13,9 +13,5 @@ public interface PositionDAO {
 
 	public void createPosition(Position position);
 
-	public void deletePosition(String name);
-
 	public Position getPositionById(String idPosition);
-
-	public void deleteAllPosition();
 }

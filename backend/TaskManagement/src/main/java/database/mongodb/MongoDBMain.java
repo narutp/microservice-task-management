@@ -15,7 +15,7 @@ public class MongoDBMain implements DatabaseModel {
 	private static final String PROJECT_CARD_COLLECTION = "project_card";
 	private static final String PROJECT_COLLECTION = "project";
 	private static final String TERMINATION_REQUEST_COLLECTION = "termination_request";
-	private static final String MONGO_HOST = "localhost";
+	private static final String MONGO_HOST = "210.121.158.162";
 	private static final int MONGO_PORT = 27017;
 	private static MongoClient mongo;
 	private ClassPathXmlApplicationContext ctx = null;

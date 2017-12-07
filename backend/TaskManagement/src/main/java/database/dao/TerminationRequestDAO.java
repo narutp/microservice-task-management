@@ -13,15 +13,11 @@ public interface TerminationRequestDAO {
 
 	public void approveTerminationRequestById(String idTerminationRequest, String approveDate);
 
-	public void rejectTerminationRequestById(TerminationRequest terminationRequest, ProjectCard projectCard);
+	public void rejectTerminationRequest(TerminationRequest terminationRequest, ProjectCard projectCard);
 
 	public List<TerminationRequest> getAllTerminationRequest();
 
 	public TerminationRequest getTerminationRequestByProjectAndProjectCardName(String projectName,
 			String projectCardName);
-
-	public TerminationRequest getTerminationRequestById(String idTerminationRequest);
-
-	public void deleteAllTerminationRequest();
 
 }

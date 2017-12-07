@@ -14,15 +14,9 @@ public interface ProjectDAO {
 
 	public Project getProjectById(String idProject);
 
-	public int getCountProject();
-
-	public void deleteProjectById(String idProject);
-
 	public List<Project> getAllProjectByIdUserList(List<String> idUserList);
-
+	
 	public int getCountAllProjectByIdUserList(List<String> idUserList);
-
-	public void deleteAllProject();
 
 	public Project getProjectByIdProjectCard(String idProjectCard);
 

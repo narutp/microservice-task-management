@@ -78,29 +78,11 @@ public class TaskManagementRest {
 		projectDAO.createProject(project);
 		return true;
 	}
-
-	@POST
-	@Path("edit/project")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean editProjectAPI(@QueryParam("idProject") String idProject, @QueryParam("name") String name,
-			@QueryParam("description") String description) {
-		project = projectDAO.getProjectById(idProject);
-		if (name.equals(""))
-			return false;
-		else
-			project.setName(name);
-		if (description.equals(""))
-			project.setDescription("-");
-		else
-			project.setDescription(description);
-		projectDAO.editProjectById(project, idProject);
-		return true;
-	}
-
+	
 	@POST
 	@Path("create/project-card")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean createProjectCardWithoutParticipantAPI(@QueryParam("idUser") String idUser,
+	public boolean createProjectCardAPI(@QueryParam("idUser") String idUser,
 			@QueryParam("projectName") String projectName, @QueryParam("name") String name,
 			@QueryParam("description") String description, @QueryParam("startDate") String startDate,
 			@QueryParam("endDate") String endDate) {
@@ -139,7 +121,103 @@ public class TaskManagementRest {
 
 		projectCardDAO.createProjectCard(projectCard);
 		return true;
+	}
+	
+	@GET
+	@Path("get/all-project")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Project> getAllProjectAPI() {
+		return projectDAO.getAllProject();
+	}
+	
+	@GET
+	@Path("get/all-project-card")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProjectCard> getAllProjectCardAPI() {
+		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCard();
+		return projectCardList;
+	}
+	
+	@GET
+	@Path("get/all-termination-request")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TerminationRequest> getAllTerminationRequestAPI() {
+		return terminationRequestDAO.getAllTerminationRequest();
+	}
+	
+	@GET
+	@Path("get/project")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Project getProjectByIdProjectAPI(@QueryParam("idProject") String idProject) {
+		Project project = projectDAO.getProjectById(idProject);
+		return project;
+	}
+	
+	@GET
+	@Path("get/project-card/idProjectCard")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ProjectCard getProjectCardByIdProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard) {
+		return projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+	}
 
+	@GET
+	@Path("get/project-card/projectName")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ProjectCard getProjectCardByProjectAndProjectCardNameAPI(@QueryParam("projectName") String projectName,
+			@QueryParam("projectCardName") String projectCardName) {
+		return projectCardDAO.getProjectCardByProjectAndProjectCardName(projectName, projectCardName);
+	}
+
+	@POST
+	@Path("edit/project")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean editProjectAPI(@QueryParam("idProject") String idProject, @QueryParam("name") String name,
+			@QueryParam("description") String description) {
+		project = projectDAO.getProjectById(idProject);
+		if (name.equals(""))
+			return false;
+		else
+			project.setName(name);
+		if (description.equals(""))
+			project.setDescription("-");
+		else
+			project.setDescription(description);
+		projectDAO.editProjectById(project, idProject);
+		return true;
+	}
+	
+	@POST
+	@Path("update/project-card")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean updateProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard, @QueryParam("name") String name,
+			@QueryParam("description") String description, @QueryParam("endDate") String endDate,
+			@QueryParam("internalParticipants") List<String> internalParticipants,
+			@QueryParam("externalParticipants") List<String> externalParticipants) {
+
+		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
+		if (name.equals(""))
+			return false;
+		else
+			projectCard.setName(name);
+		if (description.equals(""))
+			projectCard.setDescription("-");
+		else
+			projectCard.setDescription(description);
+		if (endDate.equals(""))
+			projectCard.setEndDate("-");
+		else
+			projectCard.setEndDate(endDate);
+		if (internalParticipants.equals(null))
+			projectCard.setInternalParticipants(null);
+		else
+			projectCard.setInternalParticipants(internalParticipants);
+		if (externalParticipants.equals(null))
+			projectCard.setExternalParticipants(null);
+		else
+			projectCard.setExternalParticipants(externalParticipants);
+
+		projectCardDAO.updateProjectCardByIdProjectCard(idProjectCard, projectCard);
+		return true;
 	}
 
 	@POST
@@ -149,8 +227,6 @@ public class TaskManagementRest {
 			@QueryParam("idInternalUserList") List<String> idInList,
 			@QueryParam("idExternalUserList") List<String> idExList) {
 
-		System.out.println("ININ ===============================");
-		System.out.println(idExList.get(0));
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
 		if (!idInList.get(0).equals("null")) {
 			List<String> tempInUserList = Arrays.asList(idInList.get(0).split("\\s*,\\s*"));
@@ -210,40 +286,6 @@ public class TaskManagementRest {
 		return true;
 	}
 
-	@POST
-	@Path("update/project-card")
-	@Produces(MediaType.TEXT_PLAIN)
-	public boolean updateProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard, @QueryParam("name") String name,
-			@QueryParam("description") String description, @QueryParam("endDate") String endDate,
-			@QueryParam("internalParticipants") List<String> internalParticipants,
-			@QueryParam("externalParticipants") List<String> externalParticipants) {
-
-		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
-		if (name.equals(""))
-			return false;
-		else
-			projectCard.setName(name);
-		if (description.equals(""))
-			projectCard.setDescription("-");
-		else
-			projectCard.setDescription(description);
-		if (endDate.equals(""))
-			projectCard.setEndDate("-");
-		else
-			projectCard.setEndDate(endDate);
-		if (internalParticipants.equals(null))
-			projectCard.setInternalParticipants(null);
-		else
-			projectCard.setInternalParticipants(internalParticipants);
-		if (externalParticipants.equals(null))
-			projectCard.setExternalParticipants(null);
-		else
-			projectCard.setExternalParticipants(externalParticipants);
-
-		projectCardDAO.updateProjectCardByIdProjectCard(idProjectCard, projectCard);
-		return true;
-	}
-
 	@GET
 	@Path("get/all-termination-request/idUser")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -251,13 +293,6 @@ public class TaskManagementRest {
 		List<TerminationRequest> terminationRequestList = terminationRequestDAO
 				.getAllTerminationRequestByIdUser(idUser);
 		return terminationRequestList;
-	}
-
-	@GET
-	@Path("get/all-termination-request")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<TerminationRequest> getAllTerminationRequestAPI() {
-		return terminationRequestDAO.getAllTerminationRequest();
 	}
 
 	@POST
@@ -284,17 +319,9 @@ public class TaskManagementRest {
 				projectCardName);
 		projectCard = projectCardDAO.getProjectCardByIdProjectCard(terminationRequest.getIdProjectCard());
 		projectCard.setStatus("In progress");
-		terminationRequestDAO.rejectTerminationRequestById(terminationRequest, projectCard);
+		terminationRequestDAO.rejectTerminationRequest(terminationRequest, projectCard);
 
 		return true;
-	}
-
-	@GET
-	@Path("get/all-project-card")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectCard> getAllProjectCardAPI() {
-		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCard();
-		return projectCardList;
 	}
 
 	@GET
@@ -303,14 +330,6 @@ public class TaskManagementRest {
 	public List<ProjectCard> getAllProjectCardByUserIdAPI(@QueryParam("idUser") String idUser) {
 		List<ProjectCard> projectCardList = projectCardDAO.getAllProjectCardByIdUserParticipated(idUser);
 		return projectCardList;
-	}
-
-	@GET
-	@Path("get/project")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Project getProjectByIdProjectAPI(@QueryParam("idProject") String idProject) {
-		Project project = projectDAO.getProjectById(idProject);
-		return project;
 	}
 
 	@GET
@@ -346,20 +365,6 @@ public class TaskManagementRest {
 			returnedList.add(temp);
 		}
 		return projectDAO.getAllProjectByIdUserList(returnedList);
-	}
-
-	@GET
-	@Path("get/count/department-project-card")
-	@Produces(MediaType.APPLICATION_JSON)
-	public int getCountDepartmentProjectCardByIdUserListAPI(@QueryParam("idUserList") List<String> idUserList) {
-		return projectCardDAO.getCountAllProjectCardByIdUserList(idUserList);
-	}
-
-	@GET
-	@Path("get/count/department-project")
-	@Produces(MediaType.APPLICATION_JSON)
-	public int getCountDepartmentProjectByIdUserListAPI(@QueryParam("idUserList") List<String> idUserList) {
-		return projectDAO.getCountAllProjectByIdUserList(idUserList);
 	}
 
 	@POST
@@ -407,21 +412,6 @@ public class TaskManagementRest {
 		return true;
 	}
 
-	@GET
-	@Path("get/all-project")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Project> getAllProjectAPI() {
-		return projectDAO.getAllProject();
-	}
-
-	@GET
-	@Path("delete/project/idProject")
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteProjectByIdAPI(@QueryParam("idProject") String idProject) {
-		projectDAO.deleteProjectById(idProject);
-		return true;
-	}
-
 	@POST
 	@Path("delete/project-card/idProjectCard")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -430,76 +420,12 @@ public class TaskManagementRest {
 		return true;
 	}
 
-	@POST
-	@Path("delete/all-project")
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteAllProjectAPI() {
-		projectDAO.deleteAllProject();
-		return true;
-	}
-
-	@POST
-	@Path("delete/all-project-card")
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteAllProjectCardAPI() {
-		projectCardDAO.deleteAllProjectCard();
-		return true;
-	}
-
-	@POST
-	@Path("delete/all-request")
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean deleteAllTerminationRequestAPI() {
-		terminationRequestDAO.deleteAllTerminationRequest();
-		return true;
-	}
-
 	@GET
 	@Path("get/idDepartment/project-card")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getIdDepartmentByIdProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard) {
-		System.out.println(idProjectCard);
 		String idDepartment = projectDAO.getIdDepartmentByIdProjectCard(idProjectCard);
-		System.out.println("In get idDepartment");
-		System.out.println(idDepartment);
 		return idDepartment;
-	}
-
-	@GET
-	@Path("get/project-card/idProjectCard")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ProjectCard getProjectCardByIdProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard) {
-		return projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
-	}
-
-	@POST
-	@Path("finish/project-card")
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean finishProjectCardByIdProjectCardAPI(@QueryParam("idProjectCard") String idProjectCard) {
-		projectCard = projectCardDAO.getProjectCardByIdProjectCard(idProjectCard);
-		projectCard.setStatus("Finish");
-		Date date = new Date();
-		date = Calendar.getInstance().getTime();
-		String finishDate = DATEFORMAT.format(date);
-		System.out.println(finishDate);
-		projectCard.setFinishDate(finishDate);
-		projectCardDAO.setFinish(idProjectCard, projectCard);
-		return true;
-	}
-
-	@GET
-	@Path("get/project-card/projectName")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ProjectCard getProjectCardByProjectAndProjectCardNameAPI(@QueryParam("projectName") String projectName,
-			@QueryParam("projectCardName") String projectCardName) {
-		return projectCardDAO.getProjectCardByProjectAndProjectCardName(projectName, projectCardName);
-	}
-	
-	@GET
-	@Path("get/count/project-card/idProject")
-	@Produces(MediaType.APPLICATION_JSON)
-	public int getCountProjectCardByIdProjectAPI(@QueryParam("idProject") String idProject) {
-		return projectCardDAO.getCountProjectCardByIdProject(idProject);
 	}
 	
 	@GET
@@ -530,6 +456,28 @@ public class TaskManagementRest {
 	public List<String> getExternalUserListAPI(@QueryParam("idProjectCard") String idProjectCard) {
 		return projectCardDAO.getExternalUserList(idProjectCard);
 	}
+	
+	@GET
+	@Path("get/count/project-card/idProject")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getCountProjectCardByIdProjectAPI(@QueryParam("idProject") String idProject) {
+		return projectCardDAO.getCountProjectCardByIdProject(idProject);
+	}
+	
+	@GET
+	@Path("get/count/department-project-card")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getCountDepartmentProjectCardByIdUserListAPI(@QueryParam("idUserList") List<String> idUserList) {
+		return projectCardDAO.getCountAllProjectCardByIdUserList(idUserList);
+	}
+
+	@GET
+	@Path("get/count/department-project")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getCountDepartmentProjectByIdUserListAPI(@QueryParam("idUserList") List<String> idUserList) {
+		return projectDAO.getCountAllProjectByIdUserList(idUserList);
+	}
+
 	
 	
 	
