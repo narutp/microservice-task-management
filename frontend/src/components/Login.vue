@@ -22,7 +22,7 @@
         <div>
         <hr>
         <button class="button is-success is-outlined button margin-right" @click="registerUser()">
-          Register
+          Registerห
         </button>
         <button class="button is-success button" @click="loginUser()">
           Login
