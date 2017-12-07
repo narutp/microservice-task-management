@@ -42,7 +42,7 @@
 <script>
 // import { mapActions } from 'vuex'
 import Axios from 'axios'
-import Auth from '@/components/Auth'
+import Auth from '@/components/js/Auth'
 
 export default {
   data () {

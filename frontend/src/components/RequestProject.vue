@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import ApproveRequestDialog from '@/components/ApproveRequestDialog'
+import ApproveRequestDialog from '@/components/Dialog/ApproveRequestDialog'
 import Axios from 'axios'
 export default {
   data () {

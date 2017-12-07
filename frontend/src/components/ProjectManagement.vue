@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import UpdateProject from '@/components/UpdateProject'
+import UpdateProject from '@/components/Dialog/UpdateProject'
 import Axios from 'axios'
 export default {
   data () {

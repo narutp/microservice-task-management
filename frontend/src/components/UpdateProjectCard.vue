@@ -157,8 +157,8 @@
 </template>
 
 <script>
-import RequestDeleteDialog from '@/components/RequestDeleteDialog'
-import RequestFinishDialog from '@/components/RequestFinishDialog'
+import RequestDeleteDialog from '@/components/Dialog/RequestDeleteDialog'
+import RequestFinishDialog from '@/components/Dialog/RequestFinishDialog'
 import Axios from 'axios'
 import moment from 'moment'
 export default {

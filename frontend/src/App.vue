@@ -90,7 +90,7 @@
 
 <script>
 import FooterBar from '@/components/FooterBar'
-import LogoutDialog from '@/components/LogoutDialog'
+import LogoutDialog from '@/components/Dialog/LogoutDialog'
 export default {
   name: 'app',
   data () {

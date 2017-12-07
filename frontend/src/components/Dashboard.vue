@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import ModalTask from '@/components/ModalTask'
-import ModalPerson from '@/components/ModalPerson'
+import ModalTask from '@/components/Dialog/DashboardProjectDialog'
+import ModalPerson from '@/components/Dialog/DashboardUserDialog'
 import Axios from 'axios'
 
 export default {

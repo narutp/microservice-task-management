@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Auth from '@/components/Auth'
+import Auth from '@/components/js/Auth'
 export default {
   props: ['logoutList'],
   data () {

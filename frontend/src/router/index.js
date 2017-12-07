@@ -14,7 +14,7 @@ import DoneProject from '@/components/DoneProject'
 import RequestProject from '@/components/RequestProject'
 import UpdateUser from '@/components/UpdateUser'
 import UpdateParticipants from '@/components/UpdateParticipants'
-import Auth from '@/components/Auth'
+import Auth from '@/components/js/Auth'
 
 Vue.use(Router)
 

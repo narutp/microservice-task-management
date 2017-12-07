@@ -106,7 +106,6 @@ export default {
       externalAddList: []
     }
   },
-  // TODO can't get data in select at first
   async mounted () {
     this.idCard = localStorage.getItem('id_create_card')
     let cardResponse = await Axios.get(`//210.121.158.162:8091/get/project-card/idProjectCard?idProjectCard=${this.idCard}`)
@@ -114,7 +113,6 @@ export default {
     let internalArr = cardResponse.data.internalParticipants.length
     let externalArr = cardResponse.data.externalParticipants.length
 
-    // TODO duplicate participant to add and can add same participant
     for (let i = 0; i < internalArr; i++) {
       let idInternalUser = cardResponse.data.internalParticipants[i]
       let userResponse = await Axios.get(`//210.121.158.165:8090/get/user/id?id=${idInternalUser}`)
