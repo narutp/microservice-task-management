@@ -1,0 +1,13 @@
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/Application.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/rest/TaskManagementRest.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/ApplicationConfig.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/dao/ProjectDAO.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/model/TerminationRequest.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/model/ProjectCard.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/SimpleCORSFilter.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/dao/ProjectCardDAO.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/dao/TerminationRequestDAO.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/dao/DatabaseModel.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/mongodb/MongoDBMain.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/main/model/Project.java
+/home/ubuntu/microservice-task-management/backend/TaskManagement/src/main/java/database/mongodb/MongoDAOImpl.java
