@@ -1,0 +1,14 @@
+main/rest/TaskManagementRest.class
+main/SimpleCORSFilter.class
+main/model/Project.class
+main/ApplicationConfig.class
+main/Application.class
+database/dao/ProjectDAO.class
+database/mongodb/MongoDBMain.class
+database/mongodb/MongoDAOImpl.class
+main/ApplicationConfig$JerseyConfig.class
+database/dao/DatabaseModel.class
+database/dao/TerminationRequestDAO.class
+database/dao/ProjectCardDAO.class
+main/model/TerminationRequest.class
+main/model/ProjectCard.class
